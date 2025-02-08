@@ -18,13 +18,13 @@ $(document).ready(function () {
         }
     });
 
-    // تعطيل تشغيل الصوت عند ظهور إشعار زيارة البروفايل
-    const originalAudioPlay = HTMLAudioElement.prototype.play;
-    HTMLAudioElement.prototype.play = function () {
-        if (document.body.innerHTML.includes("هذا المستخدم قد زار بروفايلك")) {
-            console.log("تم منع تشغيل صوت الإشعار");
-            return; // منع تشغيل الصوت
+    // تعطيل تشغيل صوت الإشعار عند زيارة البروفايل
+    const originalAudio = window.Audio;
+    window.Audio = function (src) {
+        if (src === "/imgs/beep.mp3" && document.body.innerHTML.includes("هذا المستخدم قد زار بروفايلك")) {
+            console.log("تم منع تشغيل صوت إشعار زيارة البروفايل");
+            return { play: function () {} }; // تعطيل تشغيل الصوت
         }
-        return originalAudioPlay.apply(this, arguments);
+        return new originalAudio(src);
     };
 });
