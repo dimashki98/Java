@@ -1,7 +1,7 @@
-q$(document).ready(function() {
+$(document).ready(function() {
     // إضافة مقياس البينغ مع إشارة الواي فاي
     let pingWithWiFi = $('<div id="ping-container" style="padding: 6px; width: 98%; margin-left: 3px; margin-top: 2px; margin-bottom: 4px; font-family: Aref Ruqaa, sans-serif;">' +
-        '<span id="ping" style="font-weight: bold; color: black;">ms</span>' +
+        '<span id="ping" style="font-weight: bold; color: black;">160ms</span>' +
         '<div id="ping-meter" style="width: 100%; height: 8px; background-color: lightgrey; border-radius: 5px; margin-top: 8px;">' +
         '<div id="ping-bar" style="height: 100%; width: 0%; background-color: green; border-radius: 5px;"></div>' +
         '</div>' +
