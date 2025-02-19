@@ -3,47 +3,42 @@ $(document).ready(function() { // إضافة مقياس البينغ مع إشا
 // إضافة العنصر قبل زر "حـفـظ"
 $("button:contains('حـفـظ')").before(pingWithWiFi);
 
-// دالة لحساب البينغ الحقيقي
 function getPing() {
-    let startTime = performance.now();
-    fetch(window.location.href).then(() => {
-        let pingValue = Math.round(performance.now() - startTime);
-        let pingText = pingValue + " ms";
-        let pingPercentage = (pingValue / 350) * 100;
+    let startTime = Date.now();
+    $.get('https://www.google.com', function() {
+        let pingValue = Date.now() - startTime;
+        let pingText = pingValue + "ms";
+        let pingPercentage = Math.min((pingValue / 350) * 100, 100); // التأكد من عدم تجاوز 100%
 
-        // تحديث النص
+        // تغيير النص
         $("#ping").text(pingText);
 
         // تحديث شريط المقياس
         $("#ping-bar").css("width", pingPercentage + "%");
 
-        // تغيير اللون والحالة بناءً على قيمة البينغ
+        // تغيير اللون بناءً على قيمة البينغ
         if (pingValue < 100) {
-            $("#ping").css("color", "green");
+            $("#ping").css("color", "green"); // سريع
             $("#ping-bar").css("background-color", "green");
             $("#wifi-icon").css("color", "green");
             $("#ping-status").text("حالة الشبكة: ممتازة").css("color", "green");
         } else if (pingValue >= 100 && pingValue <= 200) {
-            $("#ping").css("color", "orange");
+            $("#ping").css("color", "orange"); // متوسط
             $("#ping-bar").css("background-color", "orange");
             $("#wifi-icon").css("color", "orange");
             $("#ping-status").text("حالة الشبكة: متوسطة").css("color", "orange");
         } else {
-            $("#ping").css("color", "red");
+            $("#ping").css("color", "red"); // بطيء
             $("#ping-bar").css("background-color", "red");
             $("#wifi-icon").css("color", "red");
             $("#ping-status").text("حالة الشبكة: رديئة").css("color", "red");
         }
-    }).catch(() => {
-        $("#ping").text("تعذر اختبار البينغ");
-        $("#ping-status").text("حالة الشبكة: غير معروفة").css("color", "gray");
-        $("#wifi-icon").css("color", "gray");
     });
 }
 
-// تحديث قيمة البينغ كل 5 ثوانٍ
+// تحديث قيمة البينغ بشكل تفاعلي كل 5 ثوانٍ
 setInterval(getPing, 5000);
-getPing(); // استدعاء أول مرة عند تحميل الصفحة
+getPing(); // استدعاء أولي
 
 });
 
