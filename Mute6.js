@@ -14,7 +14,6 @@ $(document).ready(function () {
 
   let isMuted = false;
 
-  // دالة لكتم الأصوات
   function muteAllAudio() {
     $("audio, video").each(function () {
       this.muted = isMuted;
@@ -43,5 +42,15 @@ $(document).ready(function () {
     $("#mutePopup, #overlay").fadeOut();
   });
 
-  // إزالة setInterval لأنه غير مطلوب هنا ويؤدي لتكرار الصوت
+  // منع تكرار الصوت من المايك داخل الموقع
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    let audioTracks = stream.getAudioTracks();
+    audioTracks.forEach(track => {
+      track.enabled = true;
+      track.applyConstraints({ echoCancellation: true, noiseSuppression: true });
+    });
+  }).catch(error => console.error("خطأ في المايكروفون:", error));
+
+  // ضمان بقاء المايكات مكتومة عند إضافة أصوات جديدة
+  setInterval(muteAllAudio, 1000);
 });
