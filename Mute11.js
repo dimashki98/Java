@@ -3,11 +3,11 @@ $(document).ready(function () {
 
   function muteAllAudio() {
     $("audio, video").each(function () {
-      this.muted = isMuted; // كتم أو إلغاء كتم جميع الأصوات
+      this.muted = isMuted; // تطبيق حالة الكتم أو إلغاء الكتم
     });
   }
 
-  // عند الضغط على الزر
+  // عند الضغط على زر الكتم
   $("#muteaudio").click(function () {
     isMuted = !isMuted; // تبديل حالة الكتم
     muteAllAudio(); // تطبيق التغيير فورًا
@@ -20,6 +20,19 @@ $(document).ready(function () {
     }
   });
 
-  // ضمان بقاء الكتم مفعّلًا على أي أصوات جديدة تُضاف لاحقًا
-  setInterval(muteAllAudio, 1000);
+  // مراقبة DOM لكتم أي صوت جديد يتم إضافته للصفحة
+  const observer = new MutationObserver(() => {
+    if (isMuted) {
+      muteAllAudio();
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // التأكد من تحديث الكتم كل ثانية
+  setInterval(() => {
+    if (isMuted) {
+      muteAllAudio();
+    }
+  }, 1000);
 });
