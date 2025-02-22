@@ -14,6 +14,7 @@ $(document).ready(function () {
 
   let isMuted = false;
 
+  // دالة لكتم الأصوات
   function muteAllAudio() {
     $("audio, video").each(function () {
       this.muted = isMuted;
@@ -42,6 +43,5 @@ $(document).ready(function () {
     $("#mutePopup, #overlay").fadeOut();
   });
 
-  // ضمان بقاء المايكات مكتومة عند إضافة أصوات جديدة
-  setInterval(muteAllAudio, 1000);
+  // إزالة setInterval لأنه غير مطلوب هنا ويؤدي لتكرار الصوت
 });
