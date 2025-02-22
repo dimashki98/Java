@@ -4,18 +4,21 @@ $(document).ready(function () {
   // دالة لكتم جميع الأصوات
   function muteAllAudio() {
     $("audio, video").each(function () {
-      this.muted = isMuted;  // تطبيق الكتم على الأصوات
-      if (isMuted) {
-        this.pause();  // إيقاف الأصوات إذا كان الكتم مفعل
-      }
+      this.muted = isMuted; // تطبيق الكتم على الأصوات
     });
+    // التأكد من أن جميع المايكات مكتومة
+    if (isMuted) {
+      $("video, audio").each(function () {
+        $(this).prop('muted', true); // تأكيد كتم الصوت على العناصر الجديدة
+      });
+    }
   }
 
   // عند تفعيل أمر الكتم
   function enableMute() {
     if (!isMuted) {
       isMuted = true; // تفعيل الكتم
-      muteAllAudio(); // تطبيق الكتم
+      muteAllAudio(); // تطبيق الكتم على جميع الأصوات
     }
   }
 
@@ -27,7 +30,7 @@ $(document).ready(function () {
     }
   }
 
-  // عندما يتم الضغط على زر الكتم أو الزر المراد تفعيله:
+  // عند الضغط على الزر لتبديل حالة الكتم
   $("#muteaudio").click(function () {
     if (isMuted) {
       disableMute(); // إلغاء الكتم
@@ -37,6 +40,9 @@ $(document).ready(function () {
       $(this).text("المايكات مكتومة").css("background-color", "red");
     }
   });
+
+  // عند تفعيل الكتم مباشرة عند تحميل الصفحة
+  enableMute(); // الكتم سيكون مفعل منذ البداية ولن يتغير إلا يدويًا
 
   // تأكد من أن الأصوات تبقى مكتومة حتى بعد إضافة أصوات جديدة
   setInterval(function () {
