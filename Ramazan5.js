@@ -7,7 +7,7 @@ $(document).ready(function () {
     }, 1000); // تحقق كل ثانية
 
     function startEmojiEffect() {
-        const emojis = ['🌙', '🕌', '🌙', '🥰', '✨', '🌜', '🕋', '🎉', '🍽️', '🍵', '🧃', '🤲', '🌿', '🍞', '🥖', '🍇', '🍉', '🍊', '🍏', '🍒', '🍓', '🍬', '🍡', '🍪', '🕌', '🌙']; // مجموعة إيموجيات رمضانية
+        const emojis = ['🌙', '🕌', '🕋', '🌙', '🧧', '✨', '🥰', '🌜', '🕌', '🎉', '🌟', '🕌', '🕋', '🌙', '🧭', '🍽️']; // إيموجيات رمضانية وفانوس ومساجد
         let confettiInterval;
 
         // استمر في إضافة الإيموجيات بشكل مستمر
@@ -18,8 +18,8 @@ $(document).ready(function () {
                 let confetti = $("<div class='confetti'>" + emoji + "</div>");
                 $("body").append(confetti);
 
-                let leftPosition = Math.random() * 100 + 'vw';
-                let animationDuration = Math.random() * 3 + 2 + 's';
+                let leftPosition = Math.random() * 100 + 'vw'; // تحديد موضع الإيموجي في العرض
+                let animationDuration = Math.random() * 3 + 2 + 's'; // مدة الأنيميشن عشوائية
 
                 confetti.css({
                     'left': leftPosition,
@@ -28,8 +28,8 @@ $(document).ready(function () {
                     'animation-name': 'fall',
                     'font-size': '24px',
                     'color': 'blue', // يمكنك تغيير اللون هنا
-                    'position': 'fixed',
-                    'top': '0',
+                    'position': 'absolute', // تغيير من fixed إلى absolute
+                    'top': '0', // تبدأ من أعلى الصفحة
                     'z-index': '9999'
                 });
 
@@ -57,7 +57,7 @@ $(document).ready(function () {
             .confetti {
                 font-size: 24px;
                 color: blue; /* اللون الأزرق أو يمكنك تغييره */
-                position: fixed;
+                position: absolute; /* تغيير من fixed إلى absolute */
                 top: 0;
                 z-index: 9999;
                 animation: fall linear infinite;
