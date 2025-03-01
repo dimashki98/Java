@@ -28,7 +28,7 @@ $(document).ready(function () {
                     'animation-name': 'fall',
                     'font-size': '24px',
                     'color': 'blue', // يمكنك تغيير اللون هنا
-                    'position': 'absolute', // تغيير من fixed إلى absolute
+                    'position': 'fixed', // العودة إلى position: fixed
                     'top': '0', // تبدأ من أعلى الصفحة
                     'z-index': '9999'
                 });
@@ -37,7 +37,7 @@ $(document).ready(function () {
                     confetti.remove();
                 }, parseFloat(animationDuration) * 1000);
             }
-        }, 500); // تكرار التأثير كل 500 مللي ثانية
+        }, 100); // تكرار التأثير كل 100 مللي ثانية
 
         // إيقاف التأثير بعد ثانيتين
         setTimeout(() => {
@@ -57,7 +57,7 @@ $(document).ready(function () {
             .confetti {
                 font-size: 24px;
                 color: blue; /* اللون الأزرق أو يمكنك تغييره */
-                position: absolute; /* تغيير من fixed إلى absolute */
+                position: fixed; /* العودة إلى position: fixed */
                 top: 0;
                 z-index: 9999;
                 animation: fall linear infinite;
