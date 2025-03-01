@@ -1,8 +1,12 @@
 $(document).ready(function () {
-    // فحص ما إذا كان العنصر الذي يحتوي على رسالة "رمضان مبارك!" ظهر
+    let effectStarted = false; // متغير لتحديد ما إذا تم تشغيل التأثير بالفعل أم لا
+
+    // فحص ظهور النافذة المنبثقة فقط عند ظهورها لأول مرة
     const checkForPopup = setInterval(function () {
-        if ($('div.swal2-popup.swal2-show').length > 0) {
+        if ($('div.swal2-popup.swal2-show').length > 0 && !effectStarted) {
             startEmojiEffect(); // إذا ظهر العنصر، أطلق التأثير
+            effectStarted = true; // تم تشغيل التأثير بالفعل
+            clearInterval(checkForPopup); // إيقاف الفحص بعد تشغيل التأثير
         }
     }, 1000); // تحقق كل ثانية
 
