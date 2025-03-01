@@ -8,11 +8,11 @@ $(document).ready(function () {
 
     function startEmojiEffect() {
         const emojis = ['🌙', '🕌', '🕋', '🌙', '🧧', '✨', '🥰', '🌜', '🕌', '🎉', '🌟', '🕌', '🕋', '🌙', '🧭', '🍽️']; // إيموجيات رمضانية وفانوس ومساجد
-        let confettiInterval;
+        let emojiCount = 0; // عداد الإيموجيات
 
-        // استمر في إضافة الإيموجيات بشكل مستمر
-        confettiInterval = setInterval(() => {
-            for (let i = 0; i < 5; i++) {  // عدد الإيموجيات المتساقطة في كل مرة
+        // إضافة 30 إيموجي فقط
+        const interval = setInterval(() => {
+            if (emojiCount < 30) {
                 let emoji = emojis[Math.floor(Math.random() * emojis.length)];
 
                 let confetti = $("<div class='confetti'>" + emoji + "</div>");
@@ -36,12 +36,15 @@ $(document).ready(function () {
                 setTimeout(() => {
                     confetti.remove();
                 }, parseFloat(animationDuration) * 1000);
+
+                emojiCount++; // زيادة العداد
+            } else {
+                clearInterval(interval); // إيقاف التأثير بعد 30 إيموجي
             }
-        }, 100); // تكرار التأثير كل 100 مللي ثانية
+        }, 100); // إضافة الإيموجيات كل 100 مللي ثانية
 
         // إيقاف التأثير بعد ثانيتين
         setTimeout(() => {
-            clearInterval(confettiInterval); // إيقاف التأثير بعد مرور 2 ثانية
             $(".confetti").remove(); // إزالة جميع الإيموجيات
         }, 2000); // بعد مرور 2 ثانية
     }
