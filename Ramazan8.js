@@ -55,7 +55,7 @@ $(document).ready(function () {
         .html(`
             @keyframes fall {
                 0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-                100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+                100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } /* تعدل الحركة بحيث تذهب للإسفل أكثر */
             }
             .confetti {
                 font-size: 24px;
@@ -63,7 +63,7 @@ $(document).ready(function () {
                 position: fixed; /* العودة إلى position: fixed */
                 top: 0;
                 z-index: 9999;
-                animation: fall linear infinite;
+                animation: fall linear forwards; /* تعديل الأنيميشن ليكون للأمام */
             }
         `)
         .appendTo('head');
