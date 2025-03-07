@@ -8,7 +8,7 @@ $(document).ready(function () {
                             "border-radius": "12px", // حواف دائرية
                             "padding": "10px",
                             "margin": "8px 0",
-                            "background": "url('https://up6.cc/2025/03/174130012490121.gif') no-repeat center center", // الخلفية الجديدة (GIF)
+                            "background": "url('https://up6.cc/2025/03/174130790229041.gif') no-repeat center center", // الخلفية الجديدة (GIF)
                             "background-size": "cover", // تكبير الصورة لتغطية العنصر بالكامل
                             "box-shadow": "0 4px 8px rgba(0, 0, 0, 0.2)",
                             "transition": "all 0.3s"
@@ -50,7 +50,7 @@ $(document).ready(function () {
             "border-radius": "12px",
             "padding": "10px",
             "margin": "8px 0",
-            "background": "url('https://up6.cc/2025/03/174130012490121.gif') no-repeat center center", // الخلفية الجديدة (GIF)
+            "background": "url('https://up6.cc/2025/03/174130790229041.gif') no-repeat center center", // الخلفية الجديدة (GIF)
             "background-size": "cover", // تكبير الصورة لتغطية العنصر بالكامل
             "box-shadow": "0 4px 8px rgba(0, 0, 0, 0.2)",
             "transition": "all 0.3s"
