@@ -42,32 +42,6 @@ $(document).ready(function () {
                 box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
             }
 
-            .di2 {
-                text-align: center;
-                font-size: 18px;
-                font-weight: bold;
-                margin-top: 10px;
-                color: white;
-                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .di2 .fa-user-circle {
-                font-size: 24px;
-                margin-right: 8px;
-                color: rgba(255, 255, 255, 0.8);
-            }
-
-            .u-topic {
-                font-family: "Aref Ruqaa", serif;
-                color: white !important;
-                font-size: 20px;
-                font-weight: bold;
-                letter-spacing: 1px;
-            }
-
             #closecall .callstat {
                 background: rgba(255, 255, 255, 0.2);
                 color: white;
@@ -115,12 +89,6 @@ $(document).ready(function () {
                     <span class="callstat">الاتصال قيد التنفيذ...</span>
                 </div>
             </div>
-            
-            <div class="di2">
-                <i class="fa fa-user-circle"></i>
-                <span class="u-topic">◟ M.D.X ◝</span>
-            </div>
-
             <div>
                 <button class="btn callaccept fa fa-phone"></button>
                 <button class="btn calldeny fa fa-phone"></button>
