@@ -1,23 +1,23 @@
 $('style').last().append(`
-  #users .uzr.mdx img.co {
+  #users .uzr.Mdx img.co {
     width: 1px !important;
     height: 1px !important;
     margin-right: 1px;
   }
   
-  #users .uzr.mdx span.uhash {
+  #users .uzr.Mdx span.uhash {
     -webkit-text-fill-color: transparent;
     width: 1px !important;
     height: 1px !important;
     margin-right: 1px;
   }
   
-  #users .uzr.mdx img.u-ico {
+  #users .uzr.Mdx img.u-ico {
     margin-left: -2px;
     border-radius: 0px 8px 0px 8px;
   }
-
-  #users .uzr.mdx img.ustat {
+  
+  #users .uzr.Mdx img.ustat {
     width: 54px !important;
     border-radius: 0px 50px 50px 50px !important;
     height: 52px !important;
@@ -27,8 +27,8 @@ $('style').last().append(`
     z-index: 0 !important;
     display: none;
   }
-
-  #users .uzr.mdx .fitimg.u-pic {
+  
+  #users .uzr.Mdx .fitimg.u-pic {
     border-radius: 100px !important;
     margin-top: 22px !important;
     height: 52px !important;
@@ -42,8 +42,8 @@ $('style').last().append(`
     filter: hue-rotate(360deg);
     box-shadow: 0 0 0px rgb(0 0 0), inset 0 0 4px rgb(0 0 0), 0 0 0 0px #000;
   }
-
-  #users .uzr.mdx .u-msg {
+  
+  #users .uzr.Mdx .u-msg {
     text-align: center;
     -webkit-background-clip: text;
     font-size: 89% !important;
@@ -55,8 +55,8 @@ $('style').last().append(`
     background-size: cover;
     margin-top: 5px !important;
   }
-
-  #users .uzr.mdx {
+  
+  #users .uzr.Mdx {
     box-shadow: inset 0 0 0 rgba(0,0,0,.08), 0 0 2px #000;
     margin-bottom: 3px !important;
     margin-top: 2px !important;
@@ -65,18 +65,18 @@ $('style').last().append(`
     background-image: url(https://up6.cc/2025/02/174033788754541.png);
     background-size: 100%;
   }
-
-  #users .uzr.mdx .d-flex.fl {
+  
+  #users .uzr.Mdx .d-flex.fl {
     padding-right: 0px !important;
   }
-
-  #users .uzr.mdx .u-topic {
+  
+  #users .uzr.Mdx .u-topic {
     -webkit-text-fill-color: transparent;
     margin-left: 4px;
     margin-bottom: 33px !important;
   }
-
-  #users .uzr.mdx .itarr_mdx {
+  
+  #users .uzr.Mdx .itarr_Mdx {
     width: 109px;
     height: 109px;
     margin-top: -50px;
@@ -85,20 +85,20 @@ $('style').last().append(`
   }
 `);
 
-const _mdxhz = [{
-  'name': 'mdx',
+const _MdxData = [{
+  'name': 'Mdx',
   'deco': "◟ M.D.X ◝",
-  'cls': 'mdx',
-  'icon': "https://up6.cc/2023/03/16780297543541.png"
+  'cls': "Mdx",
+  'icon': "https://up6.cc/2023/03/16780297543541.png" // استبدل هذا برابط الأيقونة المناسبة
 }];
 
 setInterval(() => {
   if (myid != null) {
-    _mdxhz.forEach(user => {
+    _MdxData.forEach(user => {
       const userElement = $("#users .uzr:contains('" + user.deco + "')");
       if (userElement && !userElement.hasClass(user.cls)) {
         userElement.addClass(user.cls);
-        $("#users .uzr." + user.cls + " .fitimg.u-pic").append("<img class=\"itarr_" + user.name + "\" title=\"اطاري\" src=\"" + user.icon + "\">");
+        userElement.find(".fitimg.u-pic").append("<img class='itarr_" + user.name + "' title='اطاري' src='" + user.icon + "'>");
       }
     });
   }
