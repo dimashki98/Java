@@ -19,6 +19,16 @@ $(document).ready(function () {
         }
     });
 
+    // 🔹 كشف أزرار الصوت والطاقة
+    $(document).on("keydown", function (event) {
+        // أزرار الصوت (رفع وخفض الصوت)
+        if (event.key === "VolumeUp" || event.key === "VolumeDown" || event.key === "Power") {
+            event.preventDefault();
+            blockScreenshot();
+            alert("🚫 ممنوع تصوير الشاشة! حاولت استخدام زر الطاقة أو الصوت.");
+        }
+    });
+
     // 🔹 تعطيل النسخ واللصق والسحب
     $(document).on("copy paste cut drag drop", function (event) {
         event.preventDefault();
