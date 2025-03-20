@@ -8,11 +8,11 @@ $(document).ready(function () {
         }
 
         if (url.includes("tiktok.com")) {
-            return { type: "tiktok", embedUrl: `https://www.tiktok.com/embed/${url.split('/').pop()}` };
+            return { type: "tiktok", embedUrl: `https://www.tiktok.com/embed/${url.split('/').filter(s => s.match(/\d+/)).pop()}` };
         }
 
         if (url.includes("instagram.com/reel/") || url.includes("instagram.com/p/")) {
-            return { type: "instagram", embedUrl: `https://www.instagram.com/p/${url.split('/').pop()}/embed/` };
+            return { type: "instagram", embedUrl: `https://www.instagram.com/p/${url.split('/').filter(s => s.length > 5).pop()}/embed/` };
         }
 
         if (url.includes("facebook.com") || url.includes("fb.watch")) {
@@ -26,8 +26,9 @@ $(document).ready(function () {
         var videoUrl = $(".urluto").val();
         var videoData = extractVideoData(videoUrl);
 
-        if (videoData.embedUrl) {
+        if (videoData.type) {
             localStorage.setItem("uprofile_video", videoData.embedUrl);
+            localStorage.setItem("uprofile_video_type", videoData.type);
             alert("تم حفظ الفيديو في ملفك الشخصي!");
         } else {
             alert("الرجاء التحقق من رابط الفيديو.");
