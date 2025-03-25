@@ -19,6 +19,11 @@ $(document).ready(function () {
                             "transform-origin": "center", // تحديد مركز التحول
                         });
 
+                        // إخفاء العنصر الذي يحمل الكلاس "co ico"
+                        $(this).find('.co.ico').css({
+                            "display": "none" // إخفاء العنصر
+                        });
+
                         // إضافة تأثيرات إضافية على الرسالة عند تفاعل المستخدم
                         $(this).hover(
                             function () {
