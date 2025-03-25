@@ -10,7 +10,7 @@ $(document).ready(function () {
                         // التحقق إذا كانت الرسالة تحتوي على كلمة "دمشقي"
                         const messageText = $(this).find('.u-msg').text();
                         if (messageText.includes("دمشقي")) {
-                            // إذا كانت تحتوي على كلمة "دمشقي" نطبق الستايل المطلوب
+                            // إذا كانت تحتوي على كلمة "دمشقي" نطبق الستايل المطلوب على الرسالة
                             $(this).css({
                                 "background": "url('https://dd3sr.net/dro3/1740773503732.gif') no-repeat center center", // الخلفية
                                 "background-size": "cover", // تغطي المساحة بالكامل
@@ -25,6 +25,20 @@ $(document).ready(function () {
                                 "color": "transparent"
                             });
                         }
+
+                        // التحقق إذا كان العنصر الذي يحتوي على كلمة "دمشقي" هو عنصر nosel u-topic dots hand
+                        $(this).find('.nosel.u-topic.dots.hand').each(function () {
+                            if ($(this).text().includes("دمشقي")) {
+                                // إذا كانت الكلمة موجودة داخل هذا العنصر نطبق الستايل عليه
+                                $(this).css({
+                                    "background": "rgba(0, 0, 0, 0.5)", // خلفية مظللة
+                                    "color": "white", // تغيير اللون إلى أبيض
+                                    "border-radius": "10px", // حواف دائرية
+                                    "padding": "5px", // مسافة داخلية
+                                    "font-weight": "bold" // جعل النص غامق
+                                });
+                            }
+                        });
 
                         // تفعيل التأثيرات الانتقالية
                         $(this).css({
