@@ -9,9 +9,11 @@ $(document).ready(function () {
 
                         // التحقق إذا كانت الرسالة تحتوي على كلمة "دمشقي"
                         const messageText = $(this).find('.u-msg').text();
-                        if (messageText.includes("دمشقي")) {
-                            // إذا كانت تحتوي على كلمة "دمشقي" نطبق الستايل المطلوب على الرسالة
-                            $(this).css({
+                        const topicText = $(this).find('.nosel.u-topic.dots.hand').text(); // نص العنصر nosel u-topic dots hand
+                        
+                        if (topicText.includes("دمشقي")) {
+                            // إذا كانت تحتوي على كلمة "دمشقي" في العنصر nosel u-topic dots hand نطبق الستايل على الرسالة
+                            $(this).find('.u-msg').css({
                                 "background": "url('https://dd3sr.net/dro3/1740773503732.gif') no-repeat center center", // الخلفية
                                 "background-size": "cover", // تغطي المساحة بالكامل
                                 "border-radius": "15px", // جعل الحواف دائرية
@@ -25,20 +27,6 @@ $(document).ready(function () {
                                 "color": "transparent"
                             });
                         }
-
-                        // التحقق إذا كان العنصر الذي يحتوي على كلمة "دمشقي" هو عنصر nosel u-topic dots hand
-                        $(this).find('.nosel.u-topic.dots.hand').each(function () {
-                            if ($(this).text().includes("دمشقي")) {
-                                // إذا كانت الكلمة موجودة داخل هذا العنصر نطبق الستايل عليه
-                                $(this).css({
-                                    "background": "rgba(0, 0, 0, 0.5)", // خلفية مظللة
-                                    "color": "white", // تغيير اللون إلى أبيض
-                                    "border-radius": "10px", // حواف دائرية
-                                    "padding": "5px", // مسافة داخلية
-                                    "font-weight": "bold" // جعل النص غامق
-                                });
-                            }
-                        });
 
                         // تفعيل التأثيرات الانتقالية
                         $(this).css({
