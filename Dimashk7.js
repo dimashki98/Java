@@ -17,17 +17,12 @@ $(document).ready(function () {
                                 "background": "url('https://dd3sr.net/dro3/1740773503732.gif') no-repeat center center", // الخلفية
                                 "background-size": "cover", // تغطي المساحة بالكامل
                                 "border-radius": "15px", // جعل الحواف دائرية
-                                "box-shadow": "0 4px 8px rgba(0, 0, 0, 0.2)", // الظل
-                                "border": "2px solid rgba(255, 255, 255, 0.3)", // الحدود
+                                "box-shadow": "0 4px 8px rgba(128, 128, 128, 0.2)", // الظل باللون الرمادي الرصاصي
+                                "border": "2px solid rgba(128, 128, 128, 0.3)", // الحدود باللون الرمادي الرصاصي
                                 "padding": "10px", // المسافة الداخلية
                                 "opacity": "0", // تبدأ الرسالة بشفافية صفر
                                 "transform": "translateY(-30px) translateX(30px)", // تبدأ من أعلى إلى أسفل ومن اليمين إلى اليسار
                                 "transition": "opacity 0.8s ease-out, transform 0.8s ease-out" // تأثير انتقال تدريجي
-                            });
-
-                            // تغيير لون النصوص إلى الرمادي بدون التأثير على باقي التنسيقات
-                            $(this).find('.u-msg').css({
-                                "color": "#A9A9A9" // اللون الرمادي للنصوص
                             });
 
                             // بعد 50 ميلي ثانية تبدأ التغييرات تدريجياً
