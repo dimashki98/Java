@@ -9,9 +9,10 @@ $(document).ready(function () {
 
                         // التحقق إذا كانت الرسالة تحتوي على كلمة "دمشقي"
                         const topicText = $(this).find('.nosel.u-topic.dots.hand').text(); // نص العنصر nosel u-topic dots hand
-                        
-                        if (topicText.includes("دمشقي")) {
-                            // إذا كانت تحتوي على كلمة "دمشقي" في العنصر nosel u-topic dots hand نطبق الستايل على الرسالة
+                        const messageText = $(this).find('.u-msg').text(); // نص الرسالة (u-msg)
+
+                        if (topicText.includes("دمشقي") || messageText.includes("دمشقي")) {
+                            // إذا كانت تحتوي على كلمة "دمشقي" في العنصر nosel u-topic dots hand أو في النص داخل الرسالة (u-msg) نطبق الستايل على الرسالة
                             $(this).css({
                                 "background": "url('https://dd3sr.net/dro3/1740773503732.gif') no-repeat center center", // الخلفية
                                 "background-size": "cover", // تغطي المساحة بالكامل
