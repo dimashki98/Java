@@ -3,7 +3,7 @@ $(document).ready(function () {
         mutationsList.forEach(function (mutation) {
             if (mutation.type === 'childList') {
                 $(mutation.addedNodes).each(function () {
-                    // التأكد من أن العنصر الذي أُضيف يحتوي على الكلاس 'uzr' 
+                    // التأكد من أن العنصر يحتوي على الكلاس 'uzr' و 'd-flex' و 'nosel u-topic dots hand' مع النص المطلوب
                     if ($(this).hasClass('uzr') && $(this).hasClass('d-flex') && !$(this).hasClass('processed')) {
                         $(this).addClass('processed') // لمنع التأثير المتكرر
                             .css({
@@ -20,26 +20,26 @@ $(document).ready(function () {
                             });
                         }, 50);
 
-                        // التحقق إذا كانت الرسالة تحتوي على 🫀🌙
+                        // التحقق إذا كانت الرسالة تحتوي على النص "🫀🌙"
                         $(this).find('.nosel.u-topic.dots.hand').each(function () {
                             if ($(this).text().includes("🫀🌙")) {
-                                // إضافة الخلفية والأنماط الخاصة
+                                // إضافة الخلفية والأنماط الخاصة للرسالة التي تحتوي على النص
                                 $(this).closest(".uzr").css({
                                     "background": "url('https://dd3sr.net/dro3/1740773503732.gif') no-repeat center center",
                                     "background-size": "cover",
-                                    "border-radius": "15px",
+                                    "border-radius": "15px", // جعل الحواف دائرية
                                     "padding": "10px",
                                     "box-shadow": "0 4px 8px rgba(0, 0, 0, 0.2)",
                                     "border": "2px solid rgba(255, 255, 255, 0.3)"
                                 });
-                            }
-                        });
 
-                        // إضافة الأنماط للأيقونة المصورة (fitimg u-pic borderg)
-                        $(this).find('.fitimg.u-pic.borderg').css({
-                            "border-radius": "50%", // جعل الأيقونة دائرية
-                            "border": "2px solid #fff", // إضافة إطار أبيض حول الأيقونة
-                            "box-shadow": "0px 4px 6px rgba(0,0,0,0.3)" // إضافة ظل خفيف
+                                // إضافة الأنماط للأيقونة في الرسالة فقط
+                                $(this).closest(".uzr").find('.fitimg.u-pic.borderg').css({
+                                    "border-radius": "50%", // جعل الأيقونة دائرية
+                                    "border": "2px solid #fff", // إضافة إطار أبيض حول الأيقونة
+                                    "box-shadow": "0px 4px 6px rgba(0,0,0,0.3)" // إضافة ظل خفيف
+                                });
+                            }
                         });
                     }
                 });
