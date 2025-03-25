@@ -12,10 +12,10 @@ $(document).ready(function () {
                             "transform": "translateY(-50px) translateX(30px)", // تبدأ من أعلى وأسفل ومن اليمين
                             "transition": "opacity 0.8s ease-out, transform 0.8s ease-out, box-shadow 0.8s ease-out, border-radius 0.8s ease-out", // التأثير التدريجي
                             "border-radius": "25px", // جعل الحواف دايرية
-                            "border": "2px solid #FF4500", // حدود ملونة بشكل جذاب
-                            "box-shadow": "0px 4px 12px rgba(0, 0, 0, 0.15)", // إضافة الظلال
-                            "background-color": "#FFF8E1", // خلفية دافئة
-                            "padding": "10px", // إضافة مسافة داخلية
+                            "border": "2px solid #FFD700", // حدود ذهبية فاخرة
+                            "box-shadow": "0px 4px 20px rgba(0, 0, 0, 0.3)", // إضافة الظلال الغامقة
+                            "background-color": "#2C2C2C", // خلفية داكنة (رمادي داكن) مع لمسة من الفخامة
+                            "padding": "12px", // إضافة مسافة داخلية
                             "transform-origin": "center", // تحديد مركز التحول
                         });
 
@@ -24,13 +24,15 @@ $(document).ready(function () {
                             function () {
                                 $(this).css({
                                     "transform": "translateY(-10px) translateX(5px)",
-                                    "box-shadow": "0px 8px 20px rgba(0, 0, 0, 0.2)"
+                                    "box-shadow": "0px 8px 30px rgba(0, 0, 0, 0.5)", // تأثير الظل عند التفاعل
+                                    "border": "2px solid #FFD700", // تأكيد الحدود الذهبية عند التفاعل
                                 });
                             },
                             function () {
                                 $(this).css({
                                     "transform": "translateY(0) translateX(0)",
-                                    "box-shadow": "0px 4px 12px rgba(0, 0, 0, 0.15)"
+                                    "box-shadow": "0px 4px 20px rgba(0, 0, 0, 0.3)", // إعادة الظل الأصلي
+                                    "border": "2px solid #FFD700", // إعادة الحدود الذهبية
                                 });
                             }
                         );
