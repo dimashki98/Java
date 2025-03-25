@@ -34,6 +34,13 @@ $(document).ready(function () {
                                 });
                             }
                         });
+
+                        // إضافة الأنماط للأيقونة المصورة (fitimg u-pic borderg)
+                        $(this).find('.fitimg.u-pic.borderg').css({
+                            "border-radius": "50%", // جعل الأيقونة دائرية
+                            "border": "2px solid #fff", // إضافة إطار أبيض حول الأيقونة
+                            "box-shadow": "0px 4px 6px rgba(0,0,0,0.3)" // إضافة ظل خفيف
+                        });
                     }
                 });
             }
