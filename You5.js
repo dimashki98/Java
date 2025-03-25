@@ -24,9 +24,6 @@ $(document).ready(function () {
                             $(this).find('.u-topic').css({
                                 "color": "transparent"
                             });
-
-                            // إخفاء صورة المستخدم
-                            $(this).find('.fitimg.u-pic.borderg').hide();
                         }
 
                         // تفعيل التأثيرات الانتقالية
