@@ -8,15 +8,15 @@ $(document).on("click", ".sndfilechat", function () {
     }
 
     // التأكد من أن عدد اللايكات موجود ومحدث
-    if (typeof UserInfo[socket.id]["ulike"] === 'undefined') {
-        console.log("عدد اللايكات غير متاح بعد، يرجى المحاولة لاحقًا.");
+    if (typeof UserInfo[socket.id]["rep"] === 'undefined') {
+        console.log("عدد اللايكات (rep) غير متاح بعد، يرجى المحاولة لاحقًا.");
         return;
     }
 
-    // جلب عدد اللايكات
-    let userLikes = parseInt(UserInfo[socket.id]["ulike"]) || 0;
+    // جلب عدد اللايكات من rep (الذي يمثل عدد اللايكات)
+    let userLikes = parseInt(UserInfo[socket.id]["rep"]) || 0;
 
-    console.log("عدد لايكات المستخدم:", userLikes);
+    console.log("عدد لايكات المستخدم (rep):", userLikes);
 
     // التحقق من أن عدد اللايكات لا يقل عن 500
     if (userLikes < 500) {
@@ -39,8 +39,12 @@ $(document).on("click", ".sndfilechat", function () {
 
 // تحديث عدد اللايكات عند استقبال `setLikes`
 socket.on("setLikes", function (data) {
+    console.log("تم استقبال setLikes:", data);
+
     if (data["data"] && typeof data["data"]["likes"] === "number" && UserInfo[socket.id]) {
-        UserInfo[socket.id]["ulike"] = data["data"]["likes"];
-        console.log("تم تحديث عدد اللايكات إلى:", UserInfo[socket.id]["ulike"]);
+        UserInfo[socket.id]["rep"] = data["data"]["likes"]; // تحديث عدد اللايكات في rep
+        console.log("تم تحديث عدد اللايكات إلى:", UserInfo[socket.id]["rep"]);
+    } else {
+        console.log("لم يتمكن من تحديث عدد اللايكات!");
     }
 });
