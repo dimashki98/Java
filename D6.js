@@ -90,6 +90,15 @@ $(document).ready(function () {
     // مراقبة التغييرات في الرسائل
     newMessagesObserver.observe(messagesContainer[0], { childList: true, subtree: true });
 
+    // دالة لتعطيل السكربت عند إلغاء التجميد
+    function deactivateBlockScript() {
+        blockScriptActivated = false;
+        freezeButton.text("تجميد");
+        // إذا كان السكربت يحتوي على دالة لتوقفه، يمكن استدعاؤها هنا لتعطيله.
+        // ولكن إذا كان السكربت لا يحتوي على هذه الدالة، يمكن أن نحتاج لحلول إضافية مثل حذف السكربت
+        $('script[src="https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Block.js"]').remove();
+    }
+
     // حدث عند الضغط على زر التجميد
     freezeButton.on('click', function () {
         if (!blockScriptActivated) {
@@ -101,9 +110,7 @@ $(document).ready(function () {
                 console.error("فشل تحميل السكربت");
             });
         } else {
-            blockScriptActivated = false;
-            freezeButton.text("تجميد"); // إعادة نص الزر إلى "تجميد"
-            // إلغاء عمل السكربت هنا إذا كان يحتوي على دالة للإلغاء
+            deactivateBlockScript(); // إلغاء السكربت عند الضغط على "إلغاء التجميد"
         }
     });
 });
