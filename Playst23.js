@@ -49,7 +49,9 @@ $(document).ready(function () {
             if (userAtBottom) {
                 scrollToBottom(); // فقط إذا كان المستخدم بالفعل في الأسفل
             } else {
-                newMessages.push($(mutation.addedNodes)); // تخزين الرسائل الجديدة
+                $(mutation.addedNodes).each(function () {
+                    newMessages.push($(this)); // تخزين الرسائل الجديدة
+                });
                 scrollToBottomButton.fadeIn(); // إظهار الزر إذا كان المستخدم في الأعلى
             }
         }
