@@ -4,6 +4,7 @@ $(document).ready(function () {
     let userAtBottom = true; // هل المستخدم في الأسفل؟
     let msgload = false; // هل هناك رسائل جديدة لم يتم رؤيتها؟
     let scrollDisabled = false; // متغير لتعطيل التمرير التلقائي
+    let hiddenMessages = []; // مصفوفة لتخزين الرسائل المخفية
 
     // التحقق مما إذا كان المستخدم في الأسفل
     function checkIfUserAtBottom() {
@@ -21,6 +22,15 @@ $(document).ready(function () {
         scrollDisabled = true; // تعطيل التمرير التلقائي
     }
 
+    // إظهار الرسائل المخفية عند الضغط على الزر
+    function showHiddenMessages() {
+        hiddenMessages.forEach(function (message) {
+            message.show(); // إظهار الرسائل المخفية
+        });
+        hiddenMessages = []; // مسح الرسائل المخفية
+        scrollToBottom(); // التمرير إلى الأسفل بعد إظهار الرسائل
+    }
+
     // تحديث حالة المستخدم عند التمرير
     messagesContainer.on('scroll', function () {
         userAtBottom = checkIfUserAtBottom();
@@ -35,7 +45,7 @@ $(document).ready(function () {
 
     // عند الضغط على الزر، ينزل المستخدم إلى أحدث الرسائل
     scrollToBottomButton.on('click', function () {
-        scrollToBottom();
+        showHiddenMessages(); // إظهار الرسائل المخفية عند الضغط على الزر
     });
 
     // مراقبة إضافة رسائل جديدة
@@ -47,6 +57,12 @@ $(document).ready(function () {
                 $(mutation.addedNodes).each(function () {
                     if ($(this).hasClass('uzr')) { 
                         newMessageAdded = true;
+                        if (userAtBottom) {
+                            return; // إذا كان المستخدم في الأسفل لا نخفي الرسائل
+                        } else {
+                            hiddenMessages.push($(this)); // إذا كان المستخدم في الأعلى نخفي الرسالة
+                            $(this).hide(); // إخفاء الرسالة
+                        }
                     }
                 });
             }
