@@ -4,7 +4,7 @@ $(document).ready(function () {
     
     let userAtBottom = true;
     let isScrollLocked = false;
-    let blockScriptActivated = false; // لتتبع حالة السكربت
+    let blockScriptActivated = false;
 
     // وظيفة لفحص إذا كان المستخدم في الأسفل
     function checkIfUserAtBottom() {
@@ -94,8 +94,8 @@ $(document).ready(function () {
     function deactivateBlockScript() {
         blockScriptActivated = false;
         freezeButton.text("تجميد");
-        // إذا كان السكربت يحتوي على دالة لتوقفه، يمكن استدعاؤها هنا لتعطيله.
-        // ولكن إذا كان السكربت لا يحتوي على هذه الدالة، يمكن أن نحتاج لحلول إضافية مثل حذف السكربت
+
+        // إزالة السكربت من DOM
         $('script[src="https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Block.js"]').remove();
     }
 
