@@ -6,11 +6,7 @@ $(document).ready(function () {
         return;
     }
 
-    messagesContainer.css({
-        'overflow-anchor': 'none',
-        'scroll-behavior': 'auto'
-    });
-
+    // زر التنقل عند وجود رسائل جديدة
     const scrollToBottomButton = $('<button class="scrollToBottom" style="display: none; position: fixed; bottom: 10px; right: 10px; z-index: 1000; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">⬇️ رسائل جديدة</button>').appendTo('body');
 
     let userAtBottom = true;
@@ -60,26 +56,4 @@ $(document).ready(function () {
     });
 
     observer.observe(messagesContainer[0], { childList: true, subtree: true });
-
-    // **🚨 إجبار التمرير اليدوي فقط، وإيقاف أي كود آخر يجبر التمرير التلقائي**
-    setInterval(() => {
-        const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
-        if (forcedScroll && !userAtBottom) {
-            messagesContainer.stop();
-        }
-    }, 100);
-
-    // **❌ تعطيل أي محاولات إجبار التمرير عبر `scrollTop`**
-    let originalScrollTop = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTop');
-    Object.defineProperty(HTMLElement.prototype, 'scrollTop', {
-        set: function(value) {
-            if (!userAtBottom) {
-                console.warn("🚨 محاولة إجبار التمرير التلقائي تم منعها!");
-                return;
-            }
-            if (originalScrollTop && originalScrollTop.set) {
-                originalScrollTop.set.call(this, value);
-            }
-        }
-    });
 });
