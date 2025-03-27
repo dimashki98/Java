@@ -1,43 +1,47 @@
 $(document).ready(function () {
-    const messagesContainer = $('#d2'); // الحاوية التي تحتوي على الرسائل
+    const messagesContainer = $('#d2'); // حاوية الرسائل
+
+    if (messagesContainer.length === 0) {
+        console.error("❌ العنصر #d2 غير موجود! تحقق من العنصر الصحيح.");
+        return;
+    }
+
+    // زر الانتقال إلى الرسائل الجديدة
     const scrollToBottomButton = $('<button class="scrollToBottom" style="display: none; position: fixed; bottom: 10px; right: 10px; z-index: 1000; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">⬇️ رسائل جديدة</button>').appendTo('body');
 
-    let userAtBottom = true; // حالة المستخدم إذا كان في الأسفل أم لا
+    let userAtBottom = true; // هل المستخدم في الأسفل؟
 
-    // التحقق مما إذا كان المستخدم في الأسفل
     function checkIfUserAtBottom() {
         const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
         const scrollHeight = messagesContainer.prop('scrollHeight');
-        return scrollPosition >= scrollHeight - 10; // هامش بسيط
+        return scrollPosition >= scrollHeight - 5; // هامش بسيط لمنع مشاكل الحساب
     }
 
-    // التمرير للأسفل
     function scrollToBottom() {
         messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
         scrollToBottomButton.fadeOut();
     }
 
-    // تحديث حالة المستخدم عند التمرير
+    // عند تمرير المستخدم، نعرف إن كان بالأعلى أو لا
     messagesContainer.on('scroll', function () {
         userAtBottom = checkIfUserAtBottom();
         if (userAtBottom) {
-            scrollToBottomButton.fadeOut(); // إخفاء الزر إذا كان في الأسفل
+            scrollToBottomButton.fadeOut();
         }
     });
 
-    // عند الضغط على الزر، ينزل المستخدم إلى أحدث الرسائل
+    // عند الضغط على زر "رسائل جديدة"
     scrollToBottomButton.on('click', function () {
         scrollToBottom();
     });
 
-    // مراقبة إضافة رسائل جديدة
     const observer = new MutationObserver(function (mutationsList) {
         let newMessageAdded = false;
 
         mutationsList.forEach(function (mutation) {
             if (mutation.type === 'childList') {
                 $(mutation.addedNodes).each(function () {
-                    if ($(this).hasClass('uzr')) { 
+                    if ($(this).hasClass('uzr')) {
                         newMessageAdded = true;
                     }
                 });
@@ -46,9 +50,9 @@ $(document).ready(function () {
 
         if (newMessageAdded) {
             if (userAtBottom) {
-                scrollToBottom(); // فقط إذا كان المستخدم بالفعل في الأسفل
+                scrollToBottom(); // إذا المستخدم بأسفل المحادثة، انزل تلقائيًا
             } else {
-                scrollToBottomButton.fadeIn(); // إظهار الزر إذا كان المستخدم في الأعلى
+                scrollToBottomButton.fadeIn(); // إذا كان المستخدم يقرأ رسائل قديمة، أظهر الزر فقط
             }
         }
     });
