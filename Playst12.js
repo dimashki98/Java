@@ -22,6 +22,19 @@ $(document).ready(function () {
         scrollToBottomButton.fadeOut();
     }
 
+    // توقف التمرير التلقائي للرسائل
+    function preventAutoScroll() {
+        const previousScrollHeight = messagesContainer.prop('scrollHeight');
+        
+        setTimeout(function () {
+            const currentScrollHeight = messagesContainer.prop('scrollHeight');
+            // إذا تم إضافة رسائل جديدة ولكن المستخدم ليس في الأسفل، لا ننزل تلقائيًا
+            if (previousScrollHeight < currentScrollHeight && !userAtBottom) {
+                scrollToBottomButton.fadeIn();
+            }
+        }, 100);
+    }
+
     messagesContainer.on('scroll', function () {
         userAtBottom = checkIfUserAtBottom();
         if (userAtBottom) {
@@ -47,11 +60,7 @@ $(document).ready(function () {
         });
 
         if (newMessageAdded) {
-            if (userAtBottom) {
-                scrollToBottom();
-            } else {
-                scrollToBottomButton.fadeIn();
-            }
+            preventAutoScroll();
         }
     });
 
