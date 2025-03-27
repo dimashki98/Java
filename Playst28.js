@@ -37,8 +37,8 @@ $(document).ready(function () {
         mutationsList.forEach(function (mutation) {
             if (mutation.type === 'childList') {
                 $(mutation.addedNodes).each(function () {
-                    if ($(this).hasClass('msg')) { 
-                        newMessageAdded = true; // إذا كانت الرسالة هي من نوع msg
+                    if ($(this).hasClass('uzr')) { 
+                        newMessageAdded = true;
                     }
                 });
             }
@@ -54,4 +54,5 @@ $(document).ready(function () {
     });
 
     observer.observe(messagesContainer[0], { childList: true, subtree: true });
+
 });
