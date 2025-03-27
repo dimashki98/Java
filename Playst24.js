@@ -1,7 +1,7 @@
 $(document).ready(function () {
     const messagesContainer = $('#d2'); // الحاوية التي تحتوي على الرسائل
     const scrollToBottomButton = $('<button class="scrollToBottom" style="display: none; position: fixed; bottom: 10px; right: 10px; z-index: 1000; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">⬇️ رسائل جديدة</button>').appendTo('body');
-
+    
     let userAtBottom = true; // حالة المستخدم إذا كان في الأسفل أم لا
     let newMessages = []; // قائمة لتخزين الرسائل الجديدة التي لم يتم عرضها
 
@@ -61,10 +61,12 @@ $(document).ready(function () {
 
     // عند الضغط على زر "رسائل جديدة"، يعرض الرسائل المخفية
     scrollToBottomButton.on('click', function () {
-        newMessages.forEach(function (message) {
-            messagesContainer.append(message); // إضافة الرسائل المخفية
-        });
-        newMessages = []; // تفريغ القائمة بعد عرض الرسائل
-        scrollToBottom();
+        if (newMessages.length > 0) {
+            newMessages.forEach(function (message) {
+                messagesContainer.append(message); // إضافة الرسائل المخفية
+            });
+            newMessages = []; // تفريغ القائمة بعد عرض الرسائل
+            scrollToBottom(); // التمرير للأسفل بعد عرض الرسائل
+        }
     });
 });
