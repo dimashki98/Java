@@ -1,12 +1,12 @@
 $(document).ready(function () {
     const scrollToBottomButton = $('<button class="scrollToBottom" style="display: none; position: fixed; bottom: 10px; right: 10px; z-index: 1000; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">⬇️ رسائل جديدة</button>').appendTo('body');
 
-    const messagesContainer = $('#d2'); // استخدام #d2 لأنه يحتوي على الرسائل
+    const messagesContainer = $('#d2'); // تحديد الحاوية التي تحتوي على الرسائل
     let isAtBottom = true;
 
     // وظيفة التمرير للأسفل
     const scrollToBottom = function () {
-        messagesContainer.scrollTop(messagesContainer[0].scrollHeight);
+        messagesContainer.stop().animate({ scrollTop: messagesContainer[0].scrollHeight }, 300);
         isAtBottom = true;
         scrollToBottomButton.fadeOut();
     };
@@ -22,7 +22,6 @@ $(document).ready(function () {
             scrollToBottomButton.fadeOut();
         } else {
             isAtBottom = false;
-            scrollToBottomButton.fadeIn();
         }
     });
 
@@ -36,10 +35,11 @@ $(document).ready(function () {
         mutationsList.forEach(function (mutation) {
             if (mutation.type === 'childList') {
                 $(mutation.addedNodes).each(function () {
-                    // التحقق إذا كان العنصر الجديد رسالة جديدة
                     if ($(this).hasClass('uzr')) { 
-                        if (!isAtBottom) {
-                            scrollToBottomButton.fadeIn(); // إظهار الزر فقط إذا كان المستخدم ليس في الأسفل
+                        if (isAtBottom) {
+                            scrollToBottom(); // فقط إذا كان المستخدم بالفعل في الأسفل
+                        } else {
+                            scrollToBottomButton.fadeIn(); // إظهار الزر إذا كان المستخدم في الأعلى
                         }
                     }
                 });
