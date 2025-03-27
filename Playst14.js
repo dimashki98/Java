@@ -30,6 +30,13 @@ $(document).ready(function () {
         scrollToBottom(); // التمرير للأسفل
     }
 
+    // استئناف التمرير تلقائيًا إذا كان المستخدم في الأسفل عند إضافة رسالة جديدة
+    function autoScrollIfNeeded() {
+        if (userAtBottom && !isScrollLocked) {
+            scrollToBottom();
+        }
+    }
+
     // مراقبة التمرير داخل الحاوية
     messagesContainer.on('scroll', function () {
         userAtBottom = checkIfUserAtBottom();
@@ -56,6 +63,8 @@ $(document).ready(function () {
                         }
                     }
                 });
+                // بعد إضافة رسالة جديدة، التمرير إذا كان المستخدم في الأسفل
+                autoScrollIfNeeded();
             }
         });
     });
