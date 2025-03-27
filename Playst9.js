@@ -6,15 +6,21 @@ $(document).ready(function () {
         return;
     }
 
-    // زر الانتقال إلى الرسائل الجديدة
+    // تعطيل سلوك التمرير الافتراضي القسري
+    messagesContainer.css({
+        'overflow-anchor': 'none', // تعطيل التمرير التلقائي عند إضافة عناصر جديدة
+        'scroll-behavior': 'auto'  // منع التأثير السلس التلقائي الذي قد يسبب المشكلة
+    });
+
+    // زر التنقل إلى الرسائل الجديدة
     const scrollToBottomButton = $('<button class="scrollToBottom" style="display: none; position: fixed; bottom: 10px; right: 10px; z-index: 1000; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">⬇️ رسائل جديدة</button>').appendTo('body');
 
-    let userAtBottom = true; // هل المستخدم في الأسفل؟
+    let userAtBottom = true; // متغير لمعرفة إن كان المستخدم بالأسفل
 
     function checkIfUserAtBottom() {
         const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
         const scrollHeight = messagesContainer.prop('scrollHeight');
-        return scrollPosition >= scrollHeight - 5; // هامش بسيط لمنع مشاكل الحساب
+        return scrollPosition >= scrollHeight - 5; // هامش صغير لمنع أخطاء الحساب
     }
 
     function scrollToBottom() {
@@ -22,7 +28,7 @@ $(document).ready(function () {
         scrollToBottomButton.fadeOut();
     }
 
-    // عند تمرير المستخدم، نعرف إن كان بالأعلى أو لا
+    // مراقبة تمرير المستخدم يدويًا
     messagesContainer.on('scroll', function () {
         userAtBottom = checkIfUserAtBottom();
         if (userAtBottom) {
@@ -35,6 +41,7 @@ $(document).ready(function () {
         scrollToBottom();
     });
 
+    // مراقبة إضافة رسائل جديدة
     const observer = new MutationObserver(function (mutationsList) {
         let newMessageAdded = false;
 
@@ -50,7 +57,7 @@ $(document).ready(function () {
 
         if (newMessageAdded) {
             if (userAtBottom) {
-                scrollToBottom(); // إذا المستخدم بأسفل المحادثة، انزل تلقائيًا
+                scrollToBottom(); // إذا كان المستخدم بالأسفل، انزل تلقائيًا
             } else {
                 scrollToBottomButton.fadeIn(); // إذا كان المستخدم يقرأ رسائل قديمة، أظهر الزر فقط
             }
@@ -58,4 +65,12 @@ $(document).ready(function () {
     });
 
     observer.observe(messagesContainer[0], { childList: true, subtree: true });
+
+    // **🚨 تعطيل أي أكواد أخرى تجبر التمرير للأسفل**
+    setInterval(() => {
+        const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
+        if (forcedScroll && !userAtBottom) {
+            messagesContainer.stop(); // إيقاف أي تأثير تلقائي
+        }
+    }, 100); // فحص كل 100ms لمنع التمرير القسري
 });
