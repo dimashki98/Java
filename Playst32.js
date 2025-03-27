@@ -1,15 +1,14 @@
 $(document).ready(function () {
-    const messagesContainer = $('#d2'); // الحاوية التي تحتوي على الرسائل
+    const messagesContainer = $('#d2');
     const scrollToBottomButton = $('<button class="scrollToBottom" style="display: none; position: fixed; bottom: 10px; right: 10px; z-index: 1000; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">⬇️ رسائل جديدة</button>').appendTo('body');
 
     let userAtBottom = true; // حالة المستخدم إذا كان في الأسفل أم لا
-    let preventScroll = false; // منع التمرير التلقائي
 
     // التحقق مما إذا كان المستخدم في الأسفل
     function checkIfUserAtBottom() {
         const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
         const scrollHeight = messagesContainer.prop('scrollHeight');
-        return scrollPosition >= scrollHeight - 10; // هامش بسيط
+        return scrollPosition >= scrollHeight - 5; // هامش بسيط
     }
 
     // التمرير للأسفل
@@ -38,7 +37,7 @@ $(document).ready(function () {
         mutationsList.forEach(function (mutation) {
             if (mutation.type === 'childList') {
                 $(mutation.addedNodes).each(function () {
-                    if ($(this).hasClass('uzr')) {
+                    if ($(this).hasClass('uzr')) { 
                         newMessageAdded = true;
                     }
                 });
@@ -58,12 +57,9 @@ $(document).ready(function () {
 
     // **🚨 إجبار التمرير اليدوي فقط، وإيقاف أي كود آخر يجبر التمرير التلقائي**
     setInterval(() => {
-        // إذا كان المستخدم في الأعلى ومنع التمرير التلقائي
-        if (!userAtBottom) {
-            preventScroll = true; // منع التمرير
-            messagesContainer.stop(); // إيقاف التمرير التلقائي
-        } else {
-            preventScroll = false; // السماح بالتمرير التلقائي
+        const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
+        if (forcedScroll && !userAtBottom) {
+            messagesContainer.stop(); // إذا كان المستخدم في الأعلى، يتم منع التمرير
         }
     }, 100);
 
@@ -71,7 +67,7 @@ $(document).ready(function () {
     let originalScrollTop = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTop');
     Object.defineProperty(HTMLElement.prototype, 'scrollTop', {
         set: function(value) {
-            if (preventScroll) {
+            if (!userAtBottom) {
                 console.warn("🚨 محاولة إجبار التمرير التلقائي تم منعها!");
                 return;
             }
