@@ -15,7 +15,7 @@ $(document).ready(function () {
     // التمرير للأسفل
     function scrollToBottom() {
         messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
-        scrollToBottomButton.fadeOut();
+        scrollToBottomButton.fadeOut(); // إخفاء الزر عند التمرير للأسفل
     }
 
     // تحديث حالة المستخدم عند التمرير
@@ -52,7 +52,9 @@ $(document).ready(function () {
                 $(mutation.addedNodes).each(function () {
                     newMessages.push($(this)); // تخزين الرسائل الجديدة
                 });
-                scrollToBottomButton.fadeIn(); // إظهار الزر إذا كان المستخدم في الأعلى
+                if (newMessages.length > 0) {
+                    scrollToBottomButton.fadeIn(); // إظهار الزر إذا كانت هناك رسائل جديدة
+                }
             }
         }
     });
@@ -67,6 +69,7 @@ $(document).ready(function () {
             });
             newMessages = []; // تفريغ القائمة بعد عرض الرسائل
             scrollToBottom(); // التمرير للأسفل بعد عرض الرسائل
+            scrollToBottomButton.fadeOut(); // إخفاء الزر بعد عرض الرسائل
         }
     });
 });
