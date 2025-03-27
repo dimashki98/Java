@@ -14,7 +14,7 @@ $(document).ready(function () {
     // التمرير للأسفل
     function scrollToBottom() {
         messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
-        scrollToBottomButton.fadeOut();
+        scrollToBottomButton.fadeOut(); // إخفاء الزر بعد التمرير للأسفل
     }
 
     // تحديث حالة المستخدم عند التمرير
@@ -22,6 +22,8 @@ $(document).ready(function () {
         userAtBottom = checkIfUserAtBottom();
         if (userAtBottom) {
             scrollToBottomButton.fadeOut(); // إخفاء الزر إذا كان في الأسفل
+        } else {
+            scrollToBottomButton.fadeIn(); // إظهار الزر إذا كان في الأعلى
         }
     });
 
@@ -30,14 +32,14 @@ $(document).ready(function () {
         scrollToBottom();
     });
 
-    // مراقبة إضافة رسائل جديدة
+    // مراقبة إضافة رسائل جديدة باستخدام MutationObserver
     const observer = new MutationObserver(function (mutationsList) {
         let newMessageAdded = false;
 
         mutationsList.forEach(function (mutation) {
             if (mutation.type === 'childList') {
                 $(mutation.addedNodes).each(function () {
-                    if ($(this).hasClass('uzr')) { 
+                    if ($(this).hasClass('uzr')) { // تحقق إذا كانت الرسالة هي من نوع المستخدم
                         newMessageAdded = true;
                     }
                 });
@@ -46,13 +48,13 @@ $(document).ready(function () {
 
         if (newMessageAdded) {
             if (userAtBottom) {
-                scrollToBottom(); // فقط إذا كان المستخدم بالفعل في الأسفل
+                scrollToBottom(); // إذا كان المستخدم في الأسفل، نزله إلى الأسفل مباشرة
             } else {
-                scrollToBottomButton.fadeIn(); // إظهار الزر إذا كان المستخدم في الأعلى
+                scrollToBottomButton.fadeIn(); // إذا لم يكن في الأسفل، إظهار الزر
             }
         }
     });
 
+    // بدء المراقبة
     observer.observe(messagesContainer[0], { childList: true, subtree: true });
-
 });
