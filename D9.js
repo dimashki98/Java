@@ -102,13 +102,30 @@ $(document).ready(function () {
     // حدث عند الضغط على زر التجميد
     freezeButton.on('click', function () {
         if (!blockScriptActivated) {
-            $.getScript("https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Block.js", function() {
-                console.log("تم تحميل السكربت بنجاح");
-                blockScriptActivated = true;
-                freezeButton.text("إلغاء التجميد"); // تغيير نص الزر
-            }).fail(function() {
-                console.error("فشل تحميل السكربت");
+            // **إضافة الكود الذي يمنع التمرير التلقائي**
+            setInterval(() => {
+                const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
+                if (forcedScroll && !userAtBottom) {
+                    messagesContainer.stop();
+                }
+            }, 100);
+
+            // **❌ تعطيل أي محاولات إجبار التمرير عبر scrollTop**
+            let originalScrollTop = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTop');
+            Object.defineProperty(HTMLElement.prototype, 'scrollTop', {
+                set: function(value) {
+                    if (!userAtBottom) {
+                        console.warn("🚨 محاولة إجبار التمرير التلقائي تم منعها!");
+                        return;
+                    }
+                    if (originalScrollTop && originalScrollTop.set) {
+                        originalScrollTop.set.call(this, value);
+                    }
+                }
             });
+
+            blockScriptActivated = true;
+            freezeButton.text("إلغاء التجميد"); // تغيير نص الزر
         } else {
             deactivateBlockScript(); // إلغاء السكربت عند الضغط على "إلغاء التجميد"
         }
