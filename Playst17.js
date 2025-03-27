@@ -1,7 +1,7 @@
 $(document).ready(function () {
     const messagesContainer = $('#d2'); // الحاوية التي تحتوي على الرسائل
     const scrollToBottomButton = $('<button class="scrollToBottom" style="display: none; position: fixed; bottom: 10px; right: 10px; z-index: 1000; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">⬇️ رسائل جديدة</button>').appendTo('body');
-    const freezeScrollButton = $('<button class="freezeScroll" style="display: none; position: fixed; bottom: 50px; right: 10px; z-index: 1000; padding: 10px; background: #ff4500; color: white; border: none; border-radius: 5px; cursor: pointer;">تجميد التمرير</button>').appendTo('body'); // زر تجميد التمرير
+    const freezeScrollButton = $('<button class="freezeScroll" style="display: none; position: fixed; bottom: 50px; right: 10px; z-index: 1000; padding: 10px; background: #ff4500; color: white; border: none; border-radius: 5px; cursor: pointer;">إلغاء تجميد التمرير</button>').appendTo('body'); // زر إلغاء تجميد التمرير
 
     let userAtBottom = true; // حالة المستخدم إذا كان في الأسفل أم لا
     let isScrollFrozen = false; // لتحديد إذا كان التمرير مجمدًا أم لا
@@ -15,8 +15,10 @@ $(document).ready(function () {
 
     // التمرير للأسفل
     function scrollToBottom() {
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
-        scrollToBottomButton.fadeOut();
+        if (!isScrollFrozen) { // فقط إذا لم يكن التمرير مجمدًا
+            messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
+            scrollToBottomButton.fadeOut();
+        }
     }
 
     // تحديث حالة المستخدم عند التمرير
@@ -31,7 +33,7 @@ $(document).ready(function () {
             }
         }
 
-        // إظهار زر تجميد التمرير إذا كنت في الجزء العلوي
+        // إظهار زر إلغاء تجميد التمرير إذا كنت في الجزء العلوي
         if (messagesContainer.scrollTop() > 10 && !isScrollFrozen) {
             freezeScrollButton.fadeIn(); // إظهار الزر عندما تبدأ بالتمرير للأعلى
         } else {
@@ -44,15 +46,13 @@ $(document).ready(function () {
         scrollToBottom();
     });
 
-    // عند الضغط على زر "تجميد التمرير"
+    // عند الضغط على زر "إلغاء تجميد التمرير"
     freezeScrollButton.on('click', function () {
         isScrollFrozen = !isScrollFrozen; // عكس الحالة
         if (isScrollFrozen) {
-            freezeScrollButton.text('إلغاء تجميد التمرير'); // تغيير النص
-            messagesContainer.css('overflow-y', 'hidden'); // تجميد التمرير
+            freezeScrollButton.text('تجميد التمرير'); // تغيير النص
         } else {
-            freezeScrollButton.text('تجميد التمرير'); // إعادة النص
-            messagesContainer.css('overflow-y', 'auto'); // إلغاء تجميد التمرير
+            freezeScrollButton.text('إلغاء تجميد التمرير'); // إعادة النص
         }
     });
 
