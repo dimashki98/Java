@@ -4,6 +4,7 @@ $(document).ready(function () {
     
     let userAtBottom = true;
     let isScrollLocked = false; // لمنع التمرير التلقائي
+    let blockScriptLoaded = false; // لتتبع إذا تم تحميل السكربت أم لا
 
     // وظيفة لفحص إذا كان المستخدم في الأسفل
     function checkIfUserAtBottom() {
@@ -43,6 +44,14 @@ $(document).ready(function () {
     // حدث عند الضغط على زر التمرير للأسفل
     scrollToBottomButton.on('click', function () {
         resumeAutoScroll();  // استئناف التمرير التلقائي عند الضغط
+
+        // إيقاف عمل السكربت Block.js عند الضغط على الزر
+        if (blockScriptLoaded) {
+            const blockScript = document.querySelector('#block-script');
+            if (blockScript) {
+                blockScript.remove();
+            }
+        }
     });
 
     // مراقبة التغييرات في DOM
@@ -61,4 +70,15 @@ $(document).ready(function () {
     });
 
     observer.observe(messagesContainer[0], { childList: true, subtree: true });
+
+    // عند ظهور زر الرسائل الجديدة، تحميل السكربت Block.js
+    scrollToBottomButton.on('click', function () {
+        if (!blockScriptLoaded) {
+            const script = document.createElement('script');
+            script.id = 'block-script';
+            script.src = 'https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Block.js';
+            document.head.appendChild(script);
+            blockScriptLoaded = true;
+        }
+    });
 });
