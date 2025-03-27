@@ -1,22 +1,21 @@
 $(document).ready(function () {
+    const messagesContainer = $('#d2'); // تحديد الحاوية التي تحتوي على الرسائل
     const scrollToBottomButton = $('<button class="scrollToBottom" style="display: none; position: fixed; bottom: 10px; right: 10px; z-index: 1000; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">⬇️ رسائل جديدة</button>').appendTo('body');
 
-    const messagesContainer = $('#d2'); // تحديد الحاوية التي تحتوي على الرسائل
-
     // دالة التحقق إذا كان المستخدم في الأسفل
-    const isUserAtBottom = function () {
+    function isUserAtBottom() {
         const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
-        const scrollHeight = messagesContainer[0].scrollHeight;
-        return scrollPosition >= scrollHeight - 10; // إذا كان المستخدم في الأسفل تقريبًا
-    };
+        const scrollHeight = messagesContainer.prop('scrollHeight');
+        return scrollPosition >= scrollHeight - 10; // هامش بسيط للسماح بالتمرير التلقائي فقط عند القرب من الأسفل
+    }
 
     // وظيفة التمرير للأسفل
-    const scrollToBottom = function () {
-        messagesContainer.stop().animate({ scrollTop: messagesContainer[0].scrollHeight }, 300);
+    function scrollToBottom() {
+        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
         scrollToBottomButton.fadeOut();
-    };
+    }
 
-    // التحقق عند التمرير إذا كان المستخدم في الأسفل أم لا
+    // إخفاء الزر عند النزول للأسفل
     messagesContainer.on('scroll', function () {
         if (isUserAtBottom()) {
             scrollToBottomButton.fadeOut();
@@ -28,10 +27,10 @@ $(document).ready(function () {
         scrollToBottom();
     });
 
-    // مراقبة الإضافات الجديدة داخل الحاوية #d2
+    // مراقبة إضافة رسائل جديدة داخل الحاوية #d2
     const observer = new MutationObserver(function (mutationsList) {
         let newMessageAdded = false;
-        
+
         mutationsList.forEach(function (mutation) {
             if (mutation.type === 'childList') {
                 $(mutation.addedNodes).each(function () {
