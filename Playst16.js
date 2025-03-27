@@ -49,8 +49,10 @@ $(document).ready(function () {
         isScrollFrozen = !isScrollFrozen; // عكس الحالة
         if (isScrollFrozen) {
             freezeScrollButton.text('إلغاء تجميد التمرير'); // تغيير النص
+            messagesContainer.css('overflow-y', 'hidden'); // تجميد التمرير
         } else {
             freezeScrollButton.text('تجميد التمرير'); // إعادة النص
+            messagesContainer.css('overflow-y', 'auto'); // إلغاء تجميد التمرير
         }
     });
 
