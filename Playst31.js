@@ -1,42 +1,37 @@
 $(document).ready(function () {
-    const messagesContainer = $('#d2');
-
-    if (messagesContainer.length === 0) {
-        console.error("❌ العنصر #d2 غير موجود!");
-        return;
-    }
-
-    messagesContainer.css({
-        'overflow-anchor': 'none',
-        'scroll-behavior': 'auto'
-    });
-
+    const messagesContainer = $('#d2'); // الحاوية التي تحتوي على الرسائل
     const scrollToBottomButton = $('<button class="scrollToBottom" style="display: none; position: fixed; bottom: 10px; right: 10px; z-index: 1000; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">⬇️ رسائل جديدة</button>').appendTo('body');
 
-    let userAtBottom = true;
+    let userAtBottom = true; // حالة المستخدم إذا كان في الأسفل أم لا
+    let preventScroll = false; // منع التمرير التلقائي
 
+    // التحقق مما إذا كان المستخدم في الأسفل
     function checkIfUserAtBottom() {
         const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
         const scrollHeight = messagesContainer.prop('scrollHeight');
-        return scrollPosition >= scrollHeight - 5;
+        return scrollPosition >= scrollHeight - 10; // هامش بسيط
     }
 
+    // التمرير للأسفل
     function scrollToBottom() {
         messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
         scrollToBottomButton.fadeOut();
     }
 
+    // تحديث حالة المستخدم عند التمرير
     messagesContainer.on('scroll', function () {
         userAtBottom = checkIfUserAtBottom();
         if (userAtBottom) {
-            scrollToBottomButton.fadeOut();
+            scrollToBottomButton.fadeOut(); // إخفاء الزر إذا كان في الأسفل
         }
     });
 
+    // عند الضغط على الزر، ينزل المستخدم إلى أحدث الرسائل
     scrollToBottomButton.on('click', function () {
         scrollToBottom();
     });
 
+    // مراقبة إضافة رسائل جديدة
     const observer = new MutationObserver(function (mutationsList) {
         let newMessageAdded = false;
 
@@ -52,9 +47,9 @@ $(document).ready(function () {
 
         if (newMessageAdded) {
             if (userAtBottom) {
-                scrollToBottom();
+                scrollToBottom(); // فقط إذا كان المستخدم بالفعل في الأسفل
             } else {
-                scrollToBottomButton.fadeIn();
+                scrollToBottomButton.fadeIn(); // إظهار الزر إذا كان المستخدم في الأعلى
             }
         }
     });
@@ -63,9 +58,12 @@ $(document).ready(function () {
 
     // **🚨 إجبار التمرير اليدوي فقط، وإيقاف أي كود آخر يجبر التمرير التلقائي**
     setInterval(() => {
-        const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
-        if (forcedScroll && !userAtBottom) {
-            messagesContainer.stop();
+        // إذا كان المستخدم في الأعلى ومنع التمرير التلقائي
+        if (!userAtBottom) {
+            preventScroll = true; // منع التمرير
+            messagesContainer.stop(); // إيقاف التمرير التلقائي
+        } else {
+            preventScroll = false; // السماح بالتمرير التلقائي
         }
     }, 100);
 
@@ -73,7 +71,7 @@ $(document).ready(function () {
     let originalScrollTop = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTop');
     Object.defineProperty(HTMLElement.prototype, 'scrollTop', {
         set: function(value) {
-            if (!userAtBottom) {
+            if (preventScroll) {
                 console.warn("🚨 محاولة إجبار التمرير التلقائي تم منعها!");
                 return;
             }
