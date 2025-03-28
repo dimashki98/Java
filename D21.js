@@ -1,6 +1,5 @@
 $(document).ready(function () {
     const messagesContainer = $('#d2');
-
     // زر التجميد
     const freezeButton = $('<button class="freezeButton" style="display: none; position: fixed; bottom: 50px; right: 10px; z-index: 1000; padding: 10px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">🛑 تجميد</button>').appendTo('body');
 
@@ -8,64 +7,46 @@ $(document).ready(function () {
     const unfreezeButton = $('<button class="unfreezeButton" style="display: none; position: fixed; bottom: 100px; right: 10px; z-index: 1000; padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">❌ إلغاء التجميد</button>').appendTo('body');
 
     let isFrozen = false;
-    let blockScriptInterval = null;
-    let originalScrollTop = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTop');
-    let isAutoScrollEnabled = true;
 
     // وظيفة للتجميد
     function freezeScrolling() {
         if (isFrozen) return; // تجنب التكرار إذا كان التجميد مفعلًا بالفعل
 
-        // تعطيل التمرير التلقائي
-        blockScriptInterval = setInterval(() => {
-            const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
-            if (forcedScroll && isAutoScrollEnabled) {
-                messagesContainer.stop(); // إيقاف التمرير
-            }
-        }, 100);
+        console.log("تجميد التمرير...");
 
-        // تعطيل محاولات إجبار التمرير التلقائي عبر scrollTop
-        Object.defineProperty(HTMLElement.prototype, 'scrollTop', {
-            set: function (value) {
-                if (isAutoScrollEnabled) {
-                    console.warn("🚨 محاولة إجبار التمرير التلقائي تم منعها!");
-                    return;
-                }
-                if (originalScrollTop && originalScrollTop.set) {
-                    originalScrollTop.set.call(this, value);
-                }
-            }
-        });
+        // تعطيل التمرير عن طريق overflow: hidden
+        messagesContainer.css('overflow', 'hidden');
+        messagesContainer.css('pointer-events', 'none'); // تعطيل أي تفاعل مع الرسائل أثناء التجميد
 
         freezeButton.fadeOut();
         unfreezeButton.fadeIn();
         isFrozen = true;
-        isAutoScrollEnabled = false;
     }
 
     // وظيفة لإلغاء التجميد
     function unfreezeScrolling() {
         if (!isFrozen) return; // تجنب التكرار إذا لم يكن التجميد مفعلًا
 
-        // إعادة التمرير التلقائي
-        clearInterval(blockScriptInterval);
+        console.log("إلغاء التجميد...");
 
-        // استعادة وظيفة scrollTop الأصلية
-        Object.defineProperty(HTMLElement.prototype, 'scrollTop', originalScrollTop);
+        // إعادة تمكين التمرير عن طريق overflow: auto
+        messagesContainer.css('overflow', 'auto');
+        messagesContainer.css('pointer-events', 'auto'); // تمكين التفاعل مع الرسائل
 
         unfreezeButton.fadeOut();
         freezeButton.fadeIn();
         isFrozen = false;
-        isAutoScrollEnabled = true;
     }
 
     // زر التجميد
     freezeButton.on('click', function () {
+        console.log("تم الضغط على زر التجميد");
         freezeScrolling();
     });
 
     // زر إلغاء التجميد
     unfreezeButton.on('click', function () {
+        console.log("تم الضغط على زر إلغاء التجميد");
         unfreezeScrolling();
     });
 
