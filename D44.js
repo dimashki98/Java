@@ -10,9 +10,9 @@ $(document).ready(function () {
         return scrollPosition >= scrollHeight - 5;
     }
 
-    // النزول للأسفل بسرعة عادية
-    function normalScrollToBottom() {
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 500);
+    // النزول للأسفل بسرعة بطيئة جدًا
+    function slowScrollToBottom() {
+        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 5000); // وقت التمرير: 5000 مللي ثانية (5 ثوانٍ)
     }
 
     // منع النزول تمامًا عندما يكون المستخدم في الأعلى
@@ -21,7 +21,7 @@ $(document).ready(function () {
     }
 
     scrollButton.on('click', function () {
-        normalScrollToBottom();
+        slowScrollToBottom();
         scrollButton.hide();
     });
 
@@ -39,7 +39,7 @@ $(document).ready(function () {
 
     const resizeObserver = new ResizeObserver(() => {
         if (checkIfUserAtBottom()) {
-            normalScrollToBottom();
+            slowScrollToBottom();
         } else {
             stopScroll(); // التوقف عندما لا يكون في الأسفل
         }
