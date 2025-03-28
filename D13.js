@@ -10,11 +10,8 @@ $(document).ready(function () {
     let userAtBottom = true;
     let isScrollLocked = false;
     let isFrozen = false;
-    let blockScriptInterval;
+    let blockScriptInterval = null;
     
-    // حفظ الخاصية الأصلية للتمرير
-    const originalScrollTop = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(messagesContainer[0]), 'scrollTop');
-
     function checkIfUserAtBottom() {
         const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
         const scrollHeight = messagesContainer.prop('scrollHeight');
@@ -22,7 +19,9 @@ $(document).ready(function () {
     }
 
     function scrollToBottom() {
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
+        if (!isFrozen) {
+            messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
+        }
         scrollToBottomButton.fadeOut();
     }
 
@@ -55,7 +54,7 @@ $(document).ready(function () {
 
     freezeButton.on('click', function () {
         if (!isFrozen) {
-            // تفعيل التجميد
+            // **تفعيل التجميد**
             blockScriptInterval = setInterval(() => {
                 const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
                 if (forcedScroll && !userAtBottom) {
@@ -63,26 +62,13 @@ $(document).ready(function () {
                 }
             }, 100);
 
-            Object.defineProperty(Object.getPrototypeOf(messagesContainer[0]), 'scrollTop', {
-                set: function (value) {
-                    if (!userAtBottom) {
-                        console.warn("🚨 محاولة إجبار التمرير التلقائي تم منعها!");
-                        return;
-                    }
-                    if (originalScrollTop && originalScrollTop.set) {
-                        originalScrollTop.set.call(this, value);
-                    }
-                }
-            });
-
+            messagesContainer.css('overflow', 'hidden'); // تعطيل التمرير يدويًا
             freezeButton.text('❌ إلغاء التجميد').css('background', '#28a745');
             isFrozen = true;
         } else {
-            // إلغاء التجميد واستعادة التمرير الطبيعي
+            // **إلغاء التجميد**
             clearInterval(blockScriptInterval);
-
-            Object.defineProperty(Object.getPrototypeOf(messagesContainer[0]), 'scrollTop', originalScrollTop);
-
+            messagesContainer.css('overflow', 'auto'); // استعادة التمرير
             freezeButton.text('🛑 تجميد').css('background', '#dc3545');
             isFrozen = false;
         }
