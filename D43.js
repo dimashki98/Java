@@ -15,9 +15,9 @@ $(document).ready(function () {
         messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 500);
     }
 
-    // النزول للأسفل ببطء شديد جدًا
-    function ultraSlowScrollToBottom() {
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 20000); // 20 ثانية!
+    // منع النزول تمامًا عندما يكون المستخدم في الأعلى
+    function stopScroll() {
+        messagesContainer.stop(); // إيقاف الحركة
     }
 
     scrollButton.on('click', function () {
@@ -29,9 +29,11 @@ $(document).ready(function () {
         if (checkIfUserAtBottom()) {
             scrollButton.hide();
             isUserScrolling = false;
+            stopScroll();  // إيقاف الحركة عندما يكون في الأسفل
         } else {
             scrollButton.show();
             isUserScrolling = true;
+            stopScroll();  // إيقاف الحركة عندما يصعد المستخدم للأعلى
         }
     });
 
@@ -39,7 +41,7 @@ $(document).ready(function () {
         if (checkIfUserAtBottom()) {
             normalScrollToBottom();
         } else {
-            ultraSlowScrollToBottom();
+            stopScroll(); // التوقف عندما لا يكون في الأسفل
         }
     });
 
