@@ -14,25 +14,12 @@ $(document).ready(function () {
         scrollToBottom(); // التمرير للأسفل بعد إضافة الرسالة
     }
 
-    // مراقبة التمرير لرؤية إذا كان المستخدم قد وصل للأسفل أم لا
-    messagesContainer.on('scroll', function () {
-        const scrollPosition = messagesContainer.scrollTop();
-        const containerHeight = messagesContainer.innerHeight();
-        const scrollHeight = messagesContainer.prop('scrollHeight');
-        
-        // إذا كان المستخدم في الأسفل، لا يتم تعديل التمرير
-        if (scrollPosition + containerHeight >= scrollHeight - 5) {
-            scrollToBottom();
-        }
+    // مراقبة إضافة الرسائل بشكل مستمر وضمان التمرير للأسفل
+    messagesContainer.on('DOMNodeInserted', function () {
+        scrollToBottom(); // التمرير للأسفل فور إضافة أي عنصر جديد
     });
 
-    // إضافة الرسالة عند حدوث حدث معين، مثل الضغط على زر أو استلام رسالة جديدة
-    // هنا مثال على إضافة رسالة بعد 1 ثانية (يمكنك استبداله بإضافة الرسائل ديناميكيًا عند الحاجة)
-    setTimeout(function() {
-        addNewMessage("أي رسالة جديدة هنا");
-    }, 1000); // إضافة رسالة بعد 1 ثانية
-
-    // مثال آخر، إضافة رسالة عند الضغط على زر
+    // مثال على إضافة رسالة جديدة عبر الزر
     $('#addMessageButton').on('click', function() {
         const userMessage = $('#messageInput').val(); // الحصول على النص من مدخل المستخدم
         if (userMessage) {
