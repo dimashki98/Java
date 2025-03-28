@@ -4,7 +4,6 @@ $(document).ready(function () {
 
     let isUserScrolling = false;
     
-    // التحقق مما إذا كان المستخدم في الأسفل
     function checkIfUserAtBottom() {
         const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
         const scrollHeight = messagesContainer.prop('scrollHeight');
@@ -13,21 +12,19 @@ $(document).ready(function () {
 
     // النزول للأسفل بسرعة عادية
     function normalScrollToBottom() {
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 500); // سرعة عادية
+        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 500);
     }
 
-    // النزول للأسفل ببطء شديد
-    function slowScrollToBottom() {
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 4000); // بطيء جدًا
+    // النزول للأسفل ببطء شديد جدًا
+    function ultraSlowScrollToBottom() {
+        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 20000); // 20 ثانية!
     }
 
-    // عند الضغط على زر السهم، ينزل فورًا
     scrollButton.on('click', function () {
         normalScrollToBottom();
         scrollButton.hide();
     });
 
-    // مراقبة التمرير اليدوي للمستخدم
     messagesContainer.on('scroll', function () {
         if (checkIfUserAtBottom()) {
             scrollButton.hide();
@@ -38,12 +35,11 @@ $(document).ready(function () {
         }
     });
 
-    // مراقبة أي تغيير في حجم الدردشة (مثل إضافة رسائل جديدة)
     const resizeObserver = new ResizeObserver(() => {
         if (checkIfUserAtBottom()) {
-            normalScrollToBottom(); // إذا كان المستخدم في الأسفل، ينزل بسرعة عادية
+            normalScrollToBottom();
         } else {
-            slowScrollToBottom(); // إذا كان المستخدم فوق، ينزل ببطء شديد
+            ultraSlowScrollToBottom();
         }
     });
 
