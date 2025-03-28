@@ -18,7 +18,7 @@ $(document).ready(function () {
                                 "background-size": "cover", // تغطي المساحة بالكامل
                                 "border-radius": "15px", // جعل الحواف دائرية
                                 "box-shadow": "0 4px 8px rgba(0, 0, 0, 0.2)", // الظل
-                                "border": "2px solid rgb(255, 105, 180)", // وردي بناتي
+                                "border": "2px solid rgba(255, 255, 255, 0.3)", // الحدود
                                 "padding": "10px", // المسافة الداخلية
                                 "opacity": "0", // تبدأ الرسالة بشفافية صفر
                                 "transform": "translateY(-30px) translateX(30px)", // تبدأ من أعلى إلى أسفل ومن اليمين إلى اليسار
