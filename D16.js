@@ -7,35 +7,47 @@ $(document).ready(function () {
     let isFrozen = false;
     let blockScriptInterval = null;
     let originalScrollTop = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTop');
+    let isAutoScrollEnabled = true;
 
+    // وظيفة للتجميد
     function freezeScrolling() {
-        // **تعطيل التمرير التلقائي**
+        // تعطيل التمرير التلقائي
         blockScriptInterval = setInterval(() => {
             const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
-            if (forcedScroll) {
-                messagesContainer.stop();
+            if (forcedScroll && isAutoScrollEnabled) {
+                messagesContainer.stop(); // إيقاف التمرير
             }
         }, 100);
 
-        // **منع أي محاولات إجبار التمرير عبر `scrollTop`**
+        // تعطيل محاولات إجبار التمرير التلقائي عبر scrollTop
         Object.defineProperty(HTMLElement.prototype, 'scrollTop', {
             set: function (value) {
-                console.warn("🚨 محاولة إجبار التمرير التلقائي تم منعها!");
-                return;
+                if (isAutoScrollEnabled) {
+                    console.warn("🚨 محاولة إجبار التمرير التلقائي تم منعها!");
+                    return;
+                }
+                if (originalScrollTop && originalScrollTop.set) {
+                    originalScrollTop.set.call(this, value);
+                }
             }
         });
 
         freezeButton.text('❌ إلغاء التجميد').css('background', '#28a745');
         isFrozen = true;
+        isAutoScrollEnabled = false;
     }
 
+    // وظيفة لإلغاء التجميد
     function unfreezeScrolling() {
-        // **إلغاء التجميد وإعادة التمرير التلقائي**
+        // إعادة التمرير التلقائي
         clearInterval(blockScriptInterval);
+
+        // استعادة وظيفة scrollTop الأصلية
         Object.defineProperty(HTMLElement.prototype, 'scrollTop', originalScrollTop);
 
         freezeButton.text('🛑 تجميد').css('background', '#dc3545');
         isFrozen = false;
+        isAutoScrollEnabled = true;
     }
 
     // زر التجميد / إلغاء التجميد
@@ -47,7 +59,7 @@ $(document).ready(function () {
         }
     });
 
-    // إظهار زر التجميد فقط عند ظهور زر رسائل جديدة
+    // إظهار زر التجميد فقط عند ظهور زر "رسائل جديدة"
     const observer = new MutationObserver(function (mutationsList) {
         mutationsList.forEach(function (mutation) {
             $(mutation.addedNodes).each(function () {
