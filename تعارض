@@ -1,0 +1,9 @@
+$(document).ready(function() {
+    // إلغاء تحميل السكربت الأول
+    $('script[src="https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Dimashkuser.js"]').remove();
+
+    // إضافة السكربت الثاني
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Mdx2.js';
+    document.head.appendChild(script);
+});
