@@ -14,6 +14,8 @@ $(document).ready(function () {
 
     // وظيفة للتجميد
     function freezeScrolling() {
+        if (isFrozen) return; // تجنب التكرار إذا كان التجميد مفعلًا بالفعل
+
         // تعطيل التمرير التلقائي
         blockScriptInterval = setInterval(() => {
             const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
@@ -43,6 +45,8 @@ $(document).ready(function () {
 
     // وظيفة لإلغاء التجميد
     function unfreezeScrolling() {
+        if (!isFrozen) return; // تجنب التكرار إذا لم يكن التجميد مفعلًا
+
         // إعادة التمرير التلقائي
         clearInterval(blockScriptInterval);
 
