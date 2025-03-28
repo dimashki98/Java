@@ -8,12 +8,8 @@ $(document).ready(function () {
                         $(this).addClass('processed'); // لمنع التأثير المتكرر
 
                         // استخراج نصوص الموضوع والرسالة
-                        const topicText = $(this).find('.nosel.u-topic.dots.hand').text();
-                        const messageText = $(this).find('.u-msg').text();
-
-                        // إزالة الحركات من النصوص لمقارنة دقيقة
-                        const normalizedTopicText = topicText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                        const normalizedMessageText = messageText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                        const topicText = $(this).find('.nosel.u-topic.dots.hand').text().trim();
+                        const messageText = $(this).find('.u-msg').text().trim();
 
                         // تعريف العناصر المستهدفة مع صورهم
                         const customStyles = {
@@ -24,9 +20,10 @@ $(document).ready(function () {
                             "ياسو": "https://up6.cc/2025/03/174315747225292.jpg"  // صورة ياسو
                         };
 
-                        // التحقق مما إذا كانت الرسالة تحتوي على أحد الأسماء المستهدفة
+                        // التحقق من تطابق النصوص مع الأسماء المحددة
                         Object.keys(customStyles).forEach(name => {
-                            if (normalizedTopicText.includes(name) || normalizedMessageText.includes(name)) {
+                            // مقارنة دقيقة للأسماء (يجب أن تكون الأسماء التي يتم إدخالها تطابق تماماً)
+                            if (topicText === name || messageText === name) {
                                 // تطبيق الصورة المحددة للخلفية
                                 $(this).css({
                                     "background": `url('${customStyles[name]}') no-repeat center center`,
