@@ -11,7 +11,7 @@ $(document).ready(function () {
     let isScrollLocked = false;
     let isFrozen = false;
     let blockScriptInterval = null;
-    
+
     function checkIfUserAtBottom() {
         const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
         const scrollHeight = messagesContainer.prop('scrollHeight');
@@ -52,23 +52,20 @@ $(document).ready(function () {
         resumeAutoScroll();
     });
 
+    // تعطيل وإعادة تمكين التمرير التلقائي
     freezeButton.on('click', function () {
         if (!isFrozen) {
             // **تفعيل التجميد**
             blockScriptInterval = setInterval(() => {
-                const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
-                if (forcedScroll && !userAtBottom) {
-                    messagesContainer.stop();
-                }
-            }, 100);
+                messagesContainer.stop(); // إيقاف أي عمليات تمرير تلقائي
+            }, 50);
 
-            messagesContainer.css('overflow', 'hidden'); // تعطيل التمرير يدويًا
             freezeButton.text('❌ إلغاء التجميد').css('background', '#28a745');
             isFrozen = true;
         } else {
             // **إلغاء التجميد**
             clearInterval(blockScriptInterval);
-            messagesContainer.css('overflow', 'auto'); // استعادة التمرير
+            scrollToBottom(); // التمرير للأسفل مرة واحدة بعد إلغاء التجميد
             freezeButton.text('🛑 تجميد').css('background', '#dc3545');
             isFrozen = false;
         }
@@ -79,7 +76,7 @@ $(document).ready(function () {
             if (mutation.type === 'childList') {
                 $(mutation.addedNodes).each(function () {
                     if ($(this).hasClass('uzr')) {
-                        if (!userAtBottom && !isScrollLocked) {
+                        if (!userAtBottom && !isScrollLocked && !isFrozen) {
                             stopAutoScroll();
                         }
                     }
