@@ -10,18 +10,18 @@ $(document).ready(function () {
         return scrollPosition >= scrollHeight - 5;
     }
 
-    // النزول للأسفل بسرعة بطيئة جدًا
-    function slowScrollToBottom() {
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 5000); // وقت التمرير: 5000 مللي ثانية (5 ثوانٍ)
+    // النزول للأسفل بسرعة عادية
+    function normalScrollToBottom() {
+        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 500);
     }
 
-    // منع النزول تمامًا عندما يكون المستخدم في الأعلى
-    function stopScroll() {
-        messagesContainer.stop(); // إيقاف الحركة
+    // النزول للأسفل ببطء شديد جدًا (بطء مضاعف)
+    function ultraSlowScrollToBottom() {
+        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 40000); // 40 ثانية!
     }
 
     scrollButton.on('click', function () {
-        slowScrollToBottom();
+        normalScrollToBottom();
         scrollButton.hide();
     });
 
@@ -29,19 +29,17 @@ $(document).ready(function () {
         if (checkIfUserAtBottom()) {
             scrollButton.hide();
             isUserScrolling = false;
-            stopScroll();  // إيقاف الحركة عندما يكون في الأسفل
         } else {
             scrollButton.show();
             isUserScrolling = true;
-            stopScroll();  // إيقاف الحركة عندما يصعد المستخدم للأعلى
         }
     });
 
     const resizeObserver = new ResizeObserver(() => {
         if (checkIfUserAtBottom()) {
-            slowScrollToBottom();
+            normalScrollToBottom();
         } else {
-            stopScroll(); // التوقف عندما لا يكون في الأسفل
+            ultraSlowScrollToBottom();
         }
     });
 
