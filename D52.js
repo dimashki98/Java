@@ -5,6 +5,8 @@ $(document).ready(function () {
 
     let isFrozen = false;
     let freezePosition = null; // مكان التجميد
+    let isUserAtBottom = true; // التحقق إذا كان المستخدم في أسفل المحادثة
+    let isUserInteracting = false; // التحقق إذا كان المستخدم يتفاعل يدويًا
 
     // وظيفة لفحص إذا كان المستخدم في أسفل المحتوى
     function checkIfUserAtBottom() {
@@ -44,9 +46,28 @@ $(document).ready(function () {
 
     // مراقبة التمرير
     messagesContainer.on('scroll', function () {
-        if (isFrozen) {
-            // إذا كان التجميد مفعلًا، يتم منع التمرير أسفل الحاجز
+        // التحقق إذا كان المستخدم قد تفاعل يدويًا
+        if (checkIfUserAtBottom()) {
+            isUserAtBottom = true;
+            isUserInteracting = false; // عندما يكون في الأسفل نمنع التفاعل اليدوي
+        } else {
+            isUserAtBottom = false;
+        }
+
+        if (isFrozen && !isUserInteracting) {
+            // إذا كان التجميد مفعلًا ولم يتفاعل المستخدم، إبقاء التمرير ثابتًا في المكان المحدد
             messagesContainer.scrollTop(freezePosition);
         }
+
+        // إذا كان المستخدم في الأسفل والتمرير لا يزال مفعلًا، لا نمنع التمرير التلقائي
+        if (isUserAtBottom && !isFrozen) {
+            // يسمح بالتنقل للأسفل عند الوصول لأسفل الصفحة بشكل طبيعي
+            messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 500);
+        }
+    });
+
+    // إذا بدأ المستخدم في التمرير يدويًا، يمكنه التفاعل
+    messagesContainer.on('mousedown', function () {
+        isUserInteracting = true;
     });
 });
