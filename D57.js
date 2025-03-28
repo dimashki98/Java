@@ -63,4 +63,9 @@ $(document).ready(function () {
             freezeButton.hide(); // إخفاء زر التجميد إذا كنت في الأسفل
         }
     });
+
+    // إخفاء زر التجميد عند تحميل الصفحة إذا كنت في الأسفل
+    if (checkIfUserAtBottom()) {
+        freezeButton.hide();
+    }
 });
