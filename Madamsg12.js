@@ -13,17 +13,15 @@ $(document).ready(function () {
 
                         // تعريف العناصر المستهدفة مع صورهم
                         const customStyles = {
-                            "b.h.x": "https://up6.cc/2025/03/174315747223481.jpg",
-                            "y.d.x": "https://up6.cc/2025/03/17431574722633.jpg",  // Y.D.X
-                            "مَريم": "https://up6.cc/2025/03/174315747225292.jpg",  // مَريم
-                            "بسمة": "https://up6.cc/2025/03/174315747223481.jpg",  // صورة بسمة
-                            "ياسو": "https://up6.cc/2025/03/174315747225292.jpg",  // صورة ياسو
-                            "ياسمين": "https://up6.cc/2025/03/174315747225292.jpg" // صورة ياسمين
+                            "b.h.x": "https://up6.cc/2025/03/174315747223481.jpg", // تصميم B.H.X (بسمة)
+                            "y.d.x": "https://up6.cc/2025/03/17431574722633.jpg",  // تصميم Y.D.X (ياسو أو ياسمين)
+                            "مَريم": "https://up6.cc/2025/03/174315747225292.jpg"   // تصميم مَريم
                         };
 
                         // التحقق من تطابق النصوص مع الأسماء المحددة
                         Object.keys(customStyles).forEach(name => {
-                            if (topicText.includes(name) || messageText.includes(name)) {
+                            // نبحث عن الأسماء "التي تم تحويلها" بشكل صحيح
+                            if (topicText.includes(name.toLowerCase()) || messageText.includes(name.toLowerCase())) {
                                 // تطبيق الصورة المحددة للخلفية
                                 $(this).css({
                                     "background": `url('${customStyles[name]}') no-repeat center center`,
