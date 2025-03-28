@@ -10,7 +10,7 @@ $(document).ready(function () {
                         const topicText = $(this).find('.nosel.u-topic.dots.hand').text(); // نص الموضوع
                         const messageText = $(this).find('.u-msg').text(); // نص الرسالة
 
-                        // التحقق إذا كانت الرسالة تحتوي على "دمشقي" أم لا
+                        // إذا كانت الرسالة تحتوي على "دمشقي" لا نقوم بأي تعديل
                         if (!topicText.includes("دمشقي") && !messageText.includes("دمشقي")) {
                             // تطبيق الأنماط الخاصة بـ "B.H.X" إذا كان الموضوع أو الرسالة تحتوي على B.H.X
                             if (topicText.includes("B.H.X") || messageText.includes("B.H.X")) {
