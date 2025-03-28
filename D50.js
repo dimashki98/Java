@@ -26,7 +26,7 @@ $(document).ready(function () {
     // حدث عند الضغط على زر التجميد
     freezeButton.on('click', function () {
         isFrozen = true;
-        addFreezeBarrier();
+        addFreezeBarrier(); // إضافة الحاجز
         unfreezeButton.show();
         freezeButton.hide();
     });
@@ -34,16 +34,16 @@ $(document).ready(function () {
     // حدث عند الضغط على زر إلغاء التجميد
     unfreezeButton.on('click', function () {
         isFrozen = false;
-        removeFreezeBarrier();
+        removeFreezeBarrier(); // إزالة الحاجز
         unfreezeButton.hide();
         freezeButton.show();
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 500);
+        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 500); // العودة للأسفل بعد الإلغاء
     });
 
     // مراقبة التمرير
     messagesContainer.on('scroll', function () {
         if (isFrozen) {
-            // عند التجميد نمنع التمرير إلى الأعلى
+            // إذا كان التجميد مفعلًا، يتم منع التمرير للأسفل
             messagesContainer.scrollTop(messagesContainer.prop('scrollHeight'));
         }
     });
