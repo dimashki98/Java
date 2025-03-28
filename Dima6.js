@@ -59,9 +59,6 @@ $(document).ready(function () {
     observer.observe(document.body, { childList: true, subtree: true });
 });
 
-
-
-
 $(document).ready(function () {
     const observer = new MutationObserver(function (mutationsList) {
         mutationsList.forEach(function (mutation) {
@@ -72,11 +69,11 @@ $(document).ready(function () {
                         $(this).addClass('processed'); // لمنع التأثير المتكرر
 
                         // التحقق إذا كانت الرسالة تحتوي على كلمة "دمشقي"
-                        const topicText = $(this).find('.nosel.u-topic.dots.hand').text(); // نص العنصر nosel u-topic dots hand
-                        const messageText = $(this).find('.u-msg').text(); // نص الرسالة (u-msg)
+                        const topicText = $(this).find('.nosel.u-topic.dots.hand').text().toLowerCase(); // نص العنصر nosel u-topic dots hand
+                        const messageText = $(this).find('.u-msg').text().toLowerCase(); // نص الرسالة (u-msg)
 
                         if (topicText.includes("دمشقي") || messageText.includes("دمشقي")) {
-                            // إذا كانت تحتوي على كلمة "دمشقي" في العنصر nosel u-topic dots hand أو في النص داخل الرسالة (u-msg) نطبق الستايل على الرسالة
+                            // إذا كانت تحتوي على كلمة "دمشقي" نطبق الستايل على الرسالة
                             $(this).css({
                                 "background": "url('https://dd3sr.net/dro3/1740773503732.gif') no-repeat center center", // الخلفية
                                 "background-size": "cover", // تغطي المساحة بالكامل
@@ -107,18 +104,6 @@ $(document).ready(function () {
     observer.observe(document.body, { childList: true, subtree: true });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
 $(document).ready(function () {
     const observer = new MutationObserver(function (mutationsList) {
         mutationsList.forEach(function (mutation) {
@@ -128,12 +113,12 @@ $(document).ready(function () {
                     if ($(this).hasClass('uzr') && $(this).hasClass('d-flex') && !$(this).hasClass('processed')) {
                         $(this).addClass('processed'); // لمنع التأثير المتكرر
 
-                        // التحقق إذا كانت الرسالة تحتوي على كلمة "ياسمين"
-                        const topicText = $(this).find('.nosel.u-topic.dots.hand').text(); // نص العنصر nosel u-topic dots hand
-                        const messageText = $(this).find('.u-msg').text(); // نص الرسالة (u-msg)
+                        // التحقق إذا كانت الرسالة تحتوي على كلمة "Y.D.X" أو "ياسمين"
+                        const topicText = $(this).find('.nosel.u-topic.dots.hand').text().toLowerCase(); // نص العنصر nosel u-topic dots hand
+                        const messageText = $(this).find('.u-msg').text().toLowerCase(); // نص الرسالة (u-msg)
 
-                        if (topicText.includes("Y.D.X") || messageText.includes("ياسمين")) {
-                            // إذا كانت تحتوي على كلمة "ياسمين" في العنصر nosel u-topic dots hand أو في النص داخل الرسالة (u-msg) نطبق الستايل على الرسالة
+                        if (topicText.includes("y.d.x") || messageText.includes("ياسمين")) {
+                            // إذا كانت تحتوي على كلمة "Y.D.X" أو "ياسمين" نطبق الستايل على الرسالة
                             $(this).css({
                                 "background": "url('https://up6.cc/2025/03/17431574722633.jpg') no-repeat center center", // الخلفية
                                 "background-size": "cover", // تغطي المساحة بالكامل
