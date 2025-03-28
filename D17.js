@@ -1,8 +1,11 @@
 $(document).ready(function () {
     const messagesContainer = $('#d2');
 
-    // زر التجميد والإلغاء
+    // زر التجميد
     const freezeButton = $('<button class="freezeButton" style="display: none; position: fixed; bottom: 50px; right: 10px; z-index: 1000; padding: 10px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">🛑 تجميد</button>').appendTo('body');
+
+    // زر إلغاء التجميد
+    const unfreezeButton = $('<button class="unfreezeButton" style="display: none; position: fixed; bottom: 100px; right: 10px; z-index: 1000; padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">❌ إلغاء التجميد</button>').appendTo('body');
 
     let isFrozen = false;
     let blockScriptInterval = null;
@@ -32,7 +35,8 @@ $(document).ready(function () {
             }
         });
 
-        freezeButton.text('❌ إلغاء التجميد').css('background', '#28a745');
+        freezeButton.fadeOut();
+        unfreezeButton.fadeIn();
         isFrozen = true;
         isAutoScrollEnabled = false;
     }
@@ -45,21 +49,23 @@ $(document).ready(function () {
         // استعادة وظيفة scrollTop الأصلية
         Object.defineProperty(HTMLElement.prototype, 'scrollTop', originalScrollTop);
 
-        freezeButton.text('🛑 تجميد').css('background', '#dc3545');
+        unfreezeButton.fadeOut();
+        freezeButton.fadeIn();
         isFrozen = false;
         isAutoScrollEnabled = true;
     }
 
-    // زر التجميد / إلغاء التجميد
+    // زر التجميد
     freezeButton.on('click', function () {
-        if (isFrozen) {
-            unfreezeScrolling();
-        } else {
-            freezeScrolling();
-        }
+        freezeScrolling();
     });
 
-    // إظهار زر التجميد فقط عند ظهور زر "رسائل جديدة"
+    // زر إلغاء التجميد
+    unfreezeButton.on('click', function () {
+        unfreezeScrolling();
+    });
+
+    // إظهار زر التجميد فقط عند ظهور رسالة جديدة
     const observer = new MutationObserver(function (mutationsList) {
         mutationsList.forEach(function (mutation) {
             $(mutation.addedNodes).each(function () {
