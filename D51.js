@@ -4,17 +4,18 @@ $(document).ready(function () {
     const unfreezeButton = $('<button class="unfreezeBtn" style="position: fixed; bottom: 100px; right: 10px; z-index: 1000; padding: 10px; background: #00ff00; color: white; border: none; border-radius: 5px; cursor: pointer; display: none;">إلغاء التجميد</button>').appendTo('body');
 
     let isFrozen = false;
+    let freezePosition = null; // مكان التجميد
 
-    // وظيفة لفحص إذا كان المستخدم في الأسفل
+    // وظيفة لفحص إذا كان المستخدم في أسفل المحتوى
     function checkIfUserAtBottom() {
         const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
         const scrollHeight = messagesContainer.prop('scrollHeight');
         return scrollPosition >= scrollHeight - 5;
     }
 
-    // وظيفة لإضافة الحاجز
-    function addFreezeBarrier() {
-        const barrier = $('<div class="freezeBarrier" style="position: absolute; top: 0; left: 0; right: 0; height: 1px; background: transparent; pointer-events: none;"></div>');
+    // وظيفة لتجميد التمرير في مكان معين
+    function freezeAtPosition(position) {
+        const barrier = $('<div class="freezeBarrier" style="position: absolute; top: ' + position + 'px; left: 0; right: 0; height: 1px; background: transparent; pointer-events: none;"></div>');
         messagesContainer.append(barrier);
     }
 
@@ -26,7 +27,8 @@ $(document).ready(function () {
     // حدث عند الضغط على زر التجميد
     freezeButton.on('click', function () {
         isFrozen = true;
-        addFreezeBarrier(); // إضافة الحاجز
+        freezePosition = messagesContainer.scrollTop(); // تخزين مكان التجميد الحالي
+        freezeAtPosition(freezePosition); // إضافة الحاجز عند المكان المحدد
         unfreezeButton.show();
         freezeButton.hide();
     });
@@ -37,14 +39,14 @@ $(document).ready(function () {
         removeFreezeBarrier(); // إزالة الحاجز
         unfreezeButton.hide();
         freezeButton.show();
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 500); // العودة للأسفل بعد الإلغاء
+        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 500); // العودة للأسفل بعد إلغاء التجميد
     });
 
     // مراقبة التمرير
     messagesContainer.on('scroll', function () {
         if (isFrozen) {
-            // إذا كان التجميد مفعلًا، يتم منع التمرير للأسفل
-            messagesContainer.scrollTop(messagesContainer.prop('scrollHeight'));
+            // إذا كان التجميد مفعلًا، يتم منع التمرير أسفل الحاجز
+            messagesContainer.scrollTop(freezePosition);
         }
     });
 });
