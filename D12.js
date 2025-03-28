@@ -11,7 +11,9 @@ $(document).ready(function () {
     let isScrollLocked = false;
     let isFrozen = false;
     let blockScriptInterval;
-    let originalScrollTop = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTop');
+    
+    // حفظ الخاصية الأصلية للتمرير
+    const originalScrollTop = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(messagesContainer[0]), 'scrollTop');
 
     function checkIfUserAtBottom() {
         const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
@@ -61,7 +63,7 @@ $(document).ready(function () {
                 }
             }, 100);
 
-            Object.defineProperty(HTMLElement.prototype, 'scrollTop', {
+            Object.defineProperty(Object.getPrototypeOf(messagesContainer[0]), 'scrollTop', {
                 set: function (value) {
                     if (!userAtBottom) {
                         console.warn("🚨 محاولة إجبار التمرير التلقائي تم منعها!");
@@ -76,11 +78,10 @@ $(document).ready(function () {
             freezeButton.text('❌ إلغاء التجميد').css('background', '#28a745');
             isFrozen = true;
         } else {
-            // إلغاء التجميد
+            // إلغاء التجميد واستعادة التمرير الطبيعي
             clearInterval(blockScriptInterval);
-            if (originalScrollTop) {
-                Object.defineProperty(HTMLElement.prototype, 'scrollTop', originalScrollTop);
-            }
+
+            Object.defineProperty(Object.getPrototypeOf(messagesContainer[0]), 'scrollTop', originalScrollTop);
 
             freezeButton.text('🛑 تجميد').css('background', '#dc3545');
             isFrozen = false;
