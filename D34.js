@@ -45,15 +45,11 @@ $(document).ready(function () {
         monitorScroll();  // تحديث حالة الزر عند التمرير
     });
 
-    // عندما يصل المستخدم للأسفل، لا يحتاج إلى حركة بطيئة إضافية
+    // إذا كان في الأسفل، نعرض الزر مباشرة
     if (checkIfUserAtBottom()) {
         scrollDownButton.hide();
+    } else {
+        scrollToBottomSlowly(); // التمرير ببطء إذا لم يكن في الأسفل
     }
 
-    // إذا لم يكن في الأسفل، نضيف الحركة البطيئة عند التمرير للأسفل
-    messagesContainer.on('mouseenter', function () {
-        if (!checkIfUserAtBottom()) {
-            scrollToBottomSlowly(); // التمرير ببطء فقط إذا لم يكن المستخدم في الأسفل
-        }
-    });
 });
