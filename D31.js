@@ -17,10 +17,8 @@ $(document).ready(function () {
         }
     }
 
-    // وظيفة لمراقبة التمرير بشكل مستمر باستخدام requestAnimationFrame
+    // مراقبة التمرير داخل الحاوية
     function monitorScroll() {
-        requestAnimationFrame(monitorScroll);
-        
         const isAtBottom = checkIfUserAtBottom();
         if (isAtBottom) {
             // إذا كان في الأسفل، لا نعرض زر التجميد
@@ -30,18 +28,14 @@ $(document).ready(function () {
             freezeButton.show();
         }
 
-        if (isFrozen) {
-            // إذا كان التجميد مفعل، لا نقوم بالتمرير التلقائي
-            return;
-        }
-
-        if (!isAtBottom) {
+        if (!isFrozen && !isAtBottom) {
+            // إذا كان التجميد غير مفعل وكان المستخدم ليس في الأسفل، نقوم بالتمرير للأسفل
             scrollToBottom();
         }
     }
 
-    // مراقبة التمرير باستخدام requestAnimationFrame
-    monitorScroll();
+    // مراقبة التمرير باستخدام setInterval
+    setInterval(monitorScroll, 100);
 
     // **❌ تعطيل أي محاولات إجبار التمرير عبر `scrollTop`**
     let originalScrollTop = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTop');
