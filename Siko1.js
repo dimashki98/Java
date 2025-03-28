@@ -13,13 +13,6 @@ $(document).ready(function () {
         return scrollPosition >= scrollHeight - 5;
     }
 
-    // وظيفة لفحص إذا كان المستخدم قد سحب للأعلى (أي لا يوجد في الأسفل)
-    function checkIfUserNotAtBottom() {
-        const scrollPosition = messagesContainer.scrollTop() + messagesContainer.innerHeight();
-        const scrollHeight = messagesContainer.prop('scrollHeight');
-        return scrollPosition < scrollHeight - 5;
-    }
-
     // وظيفة لتجميد التمرير في مكان معين
     function freezeAtPosition(position) {
         const barrier = $('<div class="freezeBarrier" style="position: absolute; top: ' + position + 'px; left: 0; right: 0; height: 1px; background: transparent; pointer-events: none;"></div>');
@@ -52,20 +45,11 @@ $(document).ready(function () {
     // مراقبة التمرير
     messagesContainer.on('scroll', function () {
         if (isFrozen) {
-            // إذا كان التجميد مفعلًا، يتم منع التمرير أسفل الحاجز
-            messagesContainer.scrollTop(freezePosition);
-        }
-
-        // إظهار أو إخفاء زر التجميد بناءً على مكان التمرير
-        if (checkIfUserNotAtBottom()) {
-            freezeButton.show(); // إظهار زر التجميد إذا تم سحب الصفحة للأعلى
-        } else {
-            freezeButton.hide(); // إخفاء زر التجميد إذا كنت في الأسفل
+            const currentScroll = messagesContainer.scrollTop();
+            // إذا كان التمرير للأسفل أو محاولة النزول بعد التجميد، إعادة التمرير إلى الموقع المحدد
+            if (currentScroll > freezePosition) {
+                messagesContainer.scrollTop(freezePosition);
+            }
         }
     });
-
-    // إخفاء زر التجميد عند تحميل الصفحة إذا كنت في الأسفل
-    if (checkIfUserAtBottom()) {
-        freezeButton.hide();
-    }
 });
