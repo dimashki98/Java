@@ -66,7 +66,7 @@ $(document).ready(function () {
         isScrollLocked = false;  // استئناف التمرير التلقائي
         unfreezeButton.hide(); // إخفاء زر إلغاء التجميد
         freezeButton.show(); // إظهار زر التجميد
-        scrollToBottom(); // التمرير للأسفل عند إلغاء التجميد
+        resumeAutoScroll(); // استئناف التمرير التلقائي عند إلغاء التجميد
     });
 
     // منع التمرير التلقائي عندما يكون التجميد مفعل
