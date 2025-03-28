@@ -5,7 +5,7 @@ $(document).ready(function () {
     
     let userAtBottom = true;
     let isFrozen = false; // التجميد مفعل أو لا
-    let isScrollLocked = false; // لمنع التمرير التلقائي
+    let isScrollLocked = false; // لمنع التمرير التلقائي عند التجميد
 
     // وظيفة لفحص إذا كان المستخدم في الأسفل
     function checkIfUserAtBottom() {
@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     // وظيفة للتمرير للأسفل
     function scrollToBottom() {
-        if (!isFrozen) {
+        if (!isFrozen) { // التمرير فقط إذا لم يكن التجميد مفعل
             messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
         }
     }
@@ -61,7 +61,7 @@ $(document).ready(function () {
 
     // زر تجميد
     freezeButton.on('click', function () {
-        isFrozen = true;
+        isFrozen = true; // تفعيل التجميد
         stopAutoScroll();  // تعطيل التمرير التلقائي
         freezeButton.hide(); // إخفاء زر التجميد
         unfreezeButton.show(); // إظهار زر إلغاء التجميد
@@ -69,7 +69,7 @@ $(document).ready(function () {
 
     // زر إلغاء التجميد
     unfreezeButton.on('click', function () {
-        isFrozen = false;
+        isFrozen = false; // إلغاء التجميد
         resumeAutoScroll(); // استئناف التمرير التلقائي
         unfreezeButton.hide(); // إخفاء زر إلغاء التجميد
         freezeButton.show(); // إظهار زر التجميد
@@ -98,4 +98,5 @@ $(document).ready(function () {
             }
         }
     });
+
 });
