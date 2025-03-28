@@ -32,11 +32,6 @@ $(document).ready(function () {
                                     "transform": "translateY(0) translateX(0)" // تتحرك إلى مكانها الطبيعي
                                 });
                             }, 50);
-
-                            // تغيير شكل الصورة الشخصية إلى دائرة
-                            $(this).find('.fitimg.u-pic.borderg').css({
-                                "border-radius": "50%" // تحويل الصورة إلى دائرية
-                            });
                         }
                     }
                 });
