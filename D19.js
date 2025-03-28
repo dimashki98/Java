@@ -81,4 +81,8 @@ $(document).ready(function () {
     });
 
     observer.observe(messagesContainer[0], { childList: true, subtree: true });
+
+    // تحقق إذا كان التجميد قد تم تفعيله أو إلغاءه
+    console.log("زر التجميد مفعل: ", freezeButton.is(':visible'));
+    console.log("زر إلغاء التجميد مفعل: ", unfreezeButton.is(':visible'));
 });
