@@ -1,5 +1,6 @@
 $(document).ready(function () {
     const messagesContainer = $('#d2');
+    
     // زر التجميد
     const freezeButton = $('<button class="freezeButton" style="display: none; position: fixed; bottom: 50px; right: 10px; z-index: 1000; padding: 10px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">🛑 تجميد</button>').appendTo('body');
 
@@ -8,22 +9,31 @@ $(document).ready(function () {
 
     let isFrozen = false;
 
-    // وظيفة للتجميد
+    // وظيفة للتجميد (منع التمرير تمامًا للنظام والمستخدم)
     function freezeScrolling() {
         if (isFrozen) return; // تجنب التكرار إذا كان التجميد مفعلًا بالفعل
 
         console.log("تجميد التمرير...");
 
-        // تعطيل التمرير عن طريق overflow: hidden
+        // تعطيل التمرير عن طريق overflow: hidden لمنع التمرير اليدوي
         messagesContainer.css('overflow', 'hidden');
         messagesContainer.css('pointer-events', 'none'); // تعطيل أي تفاعل مع الرسائل أثناء التجميد
+
+        // إيقاف أي محاولة لتمرير النظام عبر "scrollTop"
+        let originalScrollTop = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTop');
+        Object.defineProperty(HTMLElement.prototype, 'scrollTop', {
+            set: function(value) {
+                console.warn("🚨 محاولة إجبار التمرير التلقائي تم منعها!");
+                return; // منع التمرير التلقائي
+            }
+        });
 
         freezeButton.fadeOut();
         unfreezeButton.fadeIn();
         isFrozen = true;
     }
 
-    // وظيفة لإلغاء التجميد
+    // وظيفة لإلغاء التجميد (إعادة التمرير للنظام والمستخدم)
     function unfreezeScrolling() {
         if (!isFrozen) return; // تجنب التكرار إذا لم يكن التجميد مفعلًا
 
@@ -32,6 +42,14 @@ $(document).ready(function () {
         // إعادة تمكين التمرير عن طريق overflow: auto
         messagesContainer.css('overflow', 'auto');
         messagesContainer.css('pointer-events', 'auto'); // تمكين التفاعل مع الرسائل
+
+        // استعادة قدرة النظام على التمرير
+        let originalScrollTop = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTop');
+        Object.defineProperty(HTMLElement.prototype, 'scrollTop', {
+            set: function(value) {
+                originalScrollTop.set.call(this, value); // السماح بالتمرير التلقائي
+            }
+        });
 
         unfreezeButton.fadeOut();
         freezeButton.fadeIn();
