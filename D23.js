@@ -1,6 +1,6 @@
 $(document).ready(function () {
     const messagesContainer = $('#d2');
-    
+
     // زر التجميد
     const freezeButton = $('<button class="freezeButton" style="display: none; position: fixed; bottom: 50px; right: 10px; z-index: 1000; padding: 10px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">🛑 تجميد</button>').appendTo('body');
 
