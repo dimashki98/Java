@@ -4,8 +4,8 @@ $(document).ready(function () {
     const unfreezeButton = $('<button class="unfreezeBtn" style="position: fixed; bottom: 100px; right: 10px; z-index: 1000; padding: 10px; background: #00ff00; color: white; border: none; border-radius: 5px; cursor: pointer; display: none;">إلغاء التجميد</button>').appendTo('body');
     
     let userAtBottom = true;
+    let isFrozen = false; // التجميد مفعل أو لا
     let isScrollLocked = false; // لمنع التمرير التلقائي
-    let isFrozen = false; // للتأكد من أن التجميد مفعل أو لا
 
     // وظيفة لفحص إذا كان المستخدم في الأسفل
     function checkIfUserAtBottom() {
@@ -16,7 +16,9 @@ $(document).ready(function () {
 
     // وظيفة للتمرير للأسفل
     function scrollToBottom() {
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
+        if (!isFrozen) {
+            messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);
+        }
     }
 
     // إيقاف التمرير التلقائي
@@ -33,6 +35,11 @@ $(document).ready(function () {
     // مراقبة التمرير داخل الحاوية
     messagesContainer.on('scroll', function () {
         userAtBottom = checkIfUserAtBottom();
+        if (userAtBottom) {
+            freezeButton.hide(); // إخفاء زر التجميد عندما يكون في الأسفل
+        } else {
+            freezeButton.show(); // إظهار زر التجميد إذا كان في الأعلى
+        }
     });
 
     // مراقبة التغييرات في DOM
@@ -42,7 +49,7 @@ $(document).ready(function () {
                 $(mutation.addedNodes).each(function () {
                     if ($(this).hasClass('uzr')) { // تحقق من إضافة رسالة جديدة
                         if (!userAtBottom && !isScrollLocked) {
-                            stopAutoScroll(); // إذا لم يكن المستخدم في الأسفل، إيقاف التمرير التلقائي
+                            stopAutoScroll(); // إيقاف التمرير التلقائي إذا لم يكن المستخدم في الأسفل
                         }
                     }
                 });
@@ -55,7 +62,7 @@ $(document).ready(function () {
     // زر تجميد
     freezeButton.on('click', function () {
         isFrozen = true;
-        isScrollLocked = true;  // تعطيل التمرير التلقائي
+        stopAutoScroll();  // تعطيل التمرير التلقائي
         freezeButton.hide(); // إخفاء زر التجميد
         unfreezeButton.show(); // إظهار زر إلغاء التجميد
     });
@@ -63,18 +70,17 @@ $(document).ready(function () {
     // زر إلغاء التجميد
     unfreezeButton.on('click', function () {
         isFrozen = false;
-        isScrollLocked = false;  // استئناف التمرير التلقائي
+        resumeAutoScroll(); // استئناف التمرير التلقائي
         unfreezeButton.hide(); // إخفاء زر إلغاء التجميد
         freezeButton.show(); // إظهار زر التجميد
-        resumeAutoScroll(); // استئناف التمرير التلقائي عند إلغاء التجميد
     });
 
-    // منع التمرير التلقائي عندما يكون التجميد مفعل
+    // تعطيل التمرير التلقائي عندما يكون التجميد مفعل
     setInterval(() => {
         if (isFrozen) {
             const forcedScroll = messagesContainer.scrollTop() + messagesContainer.innerHeight() >= messagesContainer.prop('scrollHeight') - 5;
             if (forcedScroll && !userAtBottom) {
-                messagesContainer.stop();
+                messagesContainer.stop();  // إيقاف التمرير التلقائي
             }
         }
     }, 100);
