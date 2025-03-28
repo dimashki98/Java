@@ -12,9 +12,16 @@ $(document).ready(function () {
         return scrollPosition >= scrollHeight - 5;
     }
 
-    // وظيفة للتمرير للأسفل
-    function scrollToBottom() {
-        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 300);  // حركة سلسة للتمرير للأسفل
+    // وظيفة للتمرير للأسفل ببطء
+    function scrollToBottomSlowly() {
+        if (!isFrozen) {
+            messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 1000);  // بطيء جدًا (1000 ملي ثانية)
+        }
+    }
+
+    // وظيفة للتمرير للأسفل بسرعة عند الضغط على السهم
+    function scrollToBottomFast() {
+        messagesContainer.stop().animate({ scrollTop: messagesContainer.prop('scrollHeight') }, 100);  // سريع جدًا (100 ملي ثانية)
     }
 
     // مراقبة التمرير
@@ -44,13 +51,13 @@ $(document).ready(function () {
 
     // حدث عند الضغط على زر التنقل للأسفل
     scrollToBottomButton.on('click', function () {
-        scrollToBottom();
+        scrollToBottomFast();  // التمرير السريع عند الضغط على السهم
     });
-    
+
     // وظيفة إلغاء التجميد والتأثير السلس عند التمرير للأسفل
     function enableAutoScroll() {
         if (userAtBottom) {
-            scrollToBottom();
+            scrollToBottomSlowly();  // التمرير ببطء عند إضافة رسائل جديدة
         }
     }
 
