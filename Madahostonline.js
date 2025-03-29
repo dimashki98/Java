@@ -411,7 +411,7 @@ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
 
 
 
-$.getScript("https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Dimashkuser.js");
+$.getScript("https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Dimashkus.js");
 
 $.getScript("https://raw.githack.com/dimashki98/Java/refs/heads/main/Reklam5.js");
 
