@@ -580,7 +580,7 @@ $(document).ready(function () {
 
 
 
-$.getScript("Xb.js");
+$.getScript("https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Xb.js");
 
 
 
