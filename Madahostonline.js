@@ -426,7 +426,7 @@ $.getScript("https://raw.githack.com/dimashki98/Java/refs/heads/main/Calling1.js
 $.getScript("https://raw.githack.com/dimashki98/Java/refs/heads/main/Kurdistan3.js");
 
 
-$.getScript("https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Sony.js");
+$.getScript("https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/FreezX.js");
 
 
 
@@ -582,7 +582,7 @@ $(document).ready(function () {
 
 
 
-$.getScript("...");
+$.getScript("Xb.js");
 
 
 
