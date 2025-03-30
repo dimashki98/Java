@@ -7,22 +7,13 @@ $(document).ready(function () {
         messagesContainer.scrollTop(messagesContainer[0].scrollHeight);
     }
 
-    // مراقبة الحاوية باستخدام setInterval فقط عند الحاجة
-    let lastHeight = messagesContainer[0].scrollHeight;
-
-    function checkForNewMessages() {
-        const currentHeight = messagesContainer[0].scrollHeight;
-        if (currentHeight > lastHeight) {
-            scrollToBottom(); // التمرير للأسفل عند إضافة رسالة جديدة
-            lastHeight = currentHeight; // تحديث الطول
-        }
-    }
-
-    // استخدم MutationObserver لمراقبة إضافة رسائل جديدة
+    // مراقبة التغييرات داخل الحاوية باستخدام MutationObserver
     const observer = new MutationObserver(function (mutationsList) {
         mutationsList.forEach(function (mutation) {
-            if (mutation.type === 'childList') {
-                checkForNewMessages(); // التمرير بعد إضافة رسالة
+            // إذا تمت إضافة عنصر جديد (رسالة)
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                // التمرير إلى أسفل بعد إضافة رسالة جديدة
+                scrollToBottom();
             }
         });
     });
@@ -32,4 +23,7 @@ $(document).ready(function () {
         childList: true, // مراقبة إضافة عناصر جديدة
         subtree: true // مراقبة كافة التغييرات داخل الحاوية
     });
+
+    // التمرير للأسفل عندما يتم تحميل الصفحة أو تحديث الرسائل
+    scrollToBottom();
 });
