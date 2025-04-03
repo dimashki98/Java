@@ -25,21 +25,24 @@ $(document).ready(function () {
     // التحقق مما إذا كان وضع "لايت" مفعلًا
     let isLiteMode = localStorage.getItem("isLiteMode") === "true";
 
-    // إنشاء الزر
+    // إنشاء الزر وتغيير النص بناءً على الوضع الحالي
     $("<div id='light-mode-btn'>" + (isLiteMode ? "عادي" : "لايت") + "</div>").appendTo("body");
 
     // إذا كان الوضع "لايت" مفعلًا، تحميل السكربت
     if (isLiteMode) {
-        $.getScript("https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Liteee.js");
+        $.getScript("https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Liteeee.js");
     }
 
     // عند الضغط على الزر
     $("#light-mode-btn").on("click", function () {
         if (isLiteMode) {
-            localStorage.removeItem("isLiteMode"); // إيقاف وضع لايت
+            // إيقاف وضع لايت
+            localStorage.removeItem("isLiteMode");
+            location.reload(); // إعادة تحميل الصفحة
         } else {
-            localStorage.setItem("isLiteMode", "true"); // تفعيل وضع لايت
+            // تفعيل وضع لايت
+            localStorage.setItem("isLiteMode", "true");
+            location.reload(); // إعادة تحميل الصفحة لتفعيل الكود
         }
-        location.reload(); // إعادة تحميل الصفحة
     });
 });
