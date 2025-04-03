@@ -4,7 +4,7 @@ console.log("وضع لايت مفعل ✅");
 $("script").each(function () {
     let scriptSrc = $(this).attr("src");
 
-    // استثناء Lite.js حتى لا يحذف نفسه
+    // استثناء هذا السكربت حتى لا يحذف نفسه
     if (scriptSrc && scriptSrc.includes("Lite.js")) return;
 
     $(this).remove(); // إزالة السكربت من الصفحة
@@ -14,7 +14,7 @@ $("script").each(function () {
 $(document).off(); // تعطيل جميع الأحداث على document
 $("*").off(); // تعطيل جميع الأحداث على جميع العناصر
 
-// تعطيل كل الأنماط المتحركة والانتقالات
+// تعطيل الأنماط المتحركة والانتقالات
 $("*").css({
     "animation": "none",
     "transition": "none"
