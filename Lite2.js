@@ -30,7 +30,7 @@ $(document).ready(function () {
 
     // إذا كان الوضع "لايت" مفعلًا، تحميل السكربت
     if (isLiteMode) {
-        $.getScript("https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Litee.js");
+        $.getScript("https://cdn.jsdelivr.net/gh/dimashki98/Java@refs/heads/main/Liteee.js");
     }
 
     // عند الضغط على الزر
