@@ -7,7 +7,8 @@ $("script").each(function () {
     // استثناء هذا السكربت حتى لا يحذف نفسه
     if (scriptSrc && scriptSrc.includes("Lite.js")) return;
 
-    $(this).remove(); // إزالة السكربت من الصفحة
+    // إيقاف السكربتات عبر إزالته من DOM
+    $(this).remove();
 });
 
 // تعطيل جميع الأحداث المرتبطة بالعناصر
