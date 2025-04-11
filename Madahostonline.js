@@ -66,7 +66,7 @@ $(document).ready(function() {
 
 
 
-$('<link rel="stylesheet" type="text/css" href="">\n<link rel="stylesheet" href="">\n<style>\n\n#wall .fitimg.u-pic.borderg {\nheight: 52px !important;\nborder: 1px solid;\nborder-radius: 100px ;\nbox-shadow: 0 0 0px rgb(0, 0, 0), inset 0 0 4px rgb(0, 0, 0), 0 0 0 0px #707070;\nmargin-top: 2px;\nmargin-right: 2px;\n}\n\n#chats .fitimg.u-pic {\nheight: 52px !important;\nborder: 1px solid;\nborder-radius: 100px ;\nbox-shadow: 0 0 0px rgb(0, 0, 0), inset 0 0 4px rgb(0, 0, 0), 0 0 0 0px #707070;\nmargin-left: -10px;\n}\n\n#chats img.ustat {\n    width: 11px !important;\n    height: 11px !important;\n    min-height: 0%!important;\n    margin-right: 0;\n\n    z-index: 999999;\n    border-radius: 50px;\n    margin-left: 1px;\n    margin-top: 1px;\n    border: 1px solid #000;\n    box-shadow: inset 0 0 0 rgb(0 0 0 / 8%), 0 0 2px #f0c01f;\nbox-shadow: 0 0 3px rgb(0, 0, 0), inset 0 0 4px rgb(0, 0, 0), 0 0 0 0px #000;\n      \n    }\n\n#chats .d-flex.fl{background-color:#d4cfd2!important;background-image: url(https://madahost.online/dro3/1740773503732.gif);\n  background-size: cover;}\n\n\n#chats .mini.u-msg.dots{color:#000!important;}\n\n\n\n#chats{background-color:#d4cfd2!important;background-image: url(https://madahost.online/dro3/1740761118761.jpg);\n  background-size: cover;}\n\n\n</style>').insertBefore("body");
+$('<link rel="stylesheet" type="text/css" href="">\n<link rel="stylesheet" href="">\n<style>\n\n#wall .fitimg.u-pic.borderg {\nheight: 52px !important;\nborder: 1px solid;\nborder-radius: 100px ;\nbox-shadow: 0 0 0px rgb(0, 0, 0), inset 0 0 4px rgb(0, 0, 0), 0 0 0 0px #707070;\nmargin-top: 2px;\nmargin-right: 2px;\n}\n\n#chats .fitimg.u-pic {\nheight: 52px !important;\nborder: 1px solid;\nborder-radius: 100px ;\nbox-shadow: 0 0 0px rgb(0, 0, 0), inset 0 0 4px rgb(0, 0, 0), 0 0 0 0px #707070;\nmargin-left: -10px;\n}\n\n#chats img.ustat {\n    width: 11px !important;\n    height: 11px !important;\n    min-height: 0%!important;\n    margin-right: 0;\n\n    z-index: 999999;\n    border-radius: 50px;\n    margin-left: 1px;\n    margin-top: 1px;\n    border: 1px solid #000;\n    box-shadow: inset 0 0 0 rgb(0 0 0 / 8%), 0 0 2px #f0c01f;\nbox-shadow: 0 0 3px rgb(0, 0, 0), inset 0 0 4px rgb(0, 0, 0), 0 0 0 0px #000;\n      \n    }\n\n#chats .d-flex.fl{background-color:#d4cfd2!important;background-image: url(https://madahost.online/dro3/1740773503732.gif);\n  background-size: cover;}\n\n\n#chats .mini.u-msg.dots{color:#000!important;}\n\n\n\n#chats{background-color:#d4cfd2!important;background-image: url(https);\n  background-size: cover;}\n\n\n</style>').insertBefore("body");
 
 
 $(`<link rel="stylesheet" type="text/css" href="">
@@ -197,38 +197,7 @@ $(function() {
 
 
 
-$(document).ready(function() {
-    $('<div class="fr borderg minix" style="color:gray; font-size: 16px!important; font-family:\'Ruqaa\', sans-serif; height: 26px; padding: 2px; background-color: white; text-align: right; width: auto; padding-right: 10px; display: inline-block;">' +
-        'تصميم وبرمجة : <span id="typingEffect"></span>' +
-        '</div>').insertBefore('div[title="المتواجدين الآن"]');
 
-    var text = 'دمــشق هوست';
-    var index = 0;
-
-    function typeWriter() {
-        if (index < text.length) {
-            $('#typingEffect').html($('#typingEffect').html() + text.charAt(index));
-            index++;
-            setTimeout(typeWriter, 100);
-        } else {
-            $('#typingEffect').html('<a title="DimashkHoSt" href="https://dimashki98.github.io/madahost/" style="color:gray; font-weight:bold;">' + text + '</a>');
-            setTimeout(function() {
-                blinkEffect();
-                setTimeout(function() {
-                    index = 0;
-                    $('#typingEffect').html('');
-                    typeWriter();
-                }, 4000);
-            }, 2000);
-        }
-    }
-
-    function blinkEffect() {
-        $('#typingEffect').fadeOut(500).fadeIn(500, blinkEffect);
-    }
-
-    typeWriter();
-});
 
 
 
