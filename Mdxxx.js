@@ -41,7 +41,6 @@ $(function () {
                     </div>
                 `);
 
-                // ustat
                 container.append(ustat.css({
                     "position": "absolute",
                     "top": "5px",
@@ -53,7 +52,6 @@ $(function () {
                     "object-fit": "contain"
                 }));
 
-                // uico
                 container.append(uico.css({
                     "position": "absolute",
                     "top": "10px",
@@ -61,7 +59,6 @@ $(function () {
                     "z-index": "1000"
                 }));
 
-                // upic
                 upic.css({
                     "position": "absolute",
                     "top": "0",
@@ -76,15 +73,19 @@ $(function () {
                 });
                 container.append(upic);
 
-                // إخفاء co ico
                 container.find('.co.ico').hide();
 
-                // تأثير تدريجي على upic (تكرار كل ثانيتين)
-                setInterval(() => {
-                    upic.fadeOut(1000, function () {
-                        upic.fadeIn(1000);
+                // upic تظهر 2 ثانية وتختفي 5 ثواني
+                function fadeLoop() {
+                    upic.fadeIn(1000, function () {
+                        setTimeout(function () {
+                            upic.fadeOut(1000, function () {
+                                setTimeout(fadeLoop, 5000);
+                            });
+                        }, 2000);
                     });
-                }, 2000);
+                }
+                fadeLoop();
             }
         });
     });
