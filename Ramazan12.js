@@ -76,6 +76,4 @@ $(document).ready(function () {
 
 
 
-$(document).ready(function() {
-    window.location.href = "https://madahost.online";
-  });
+
