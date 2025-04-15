@@ -1,11 +1,6 @@
 $(function () {
   let lastTriggerTime = 0;
 
-  // مراقبة وجود الصورة وحذفها فورًا إذا ظهرت
-  setInterval(function () {
-    $('img[src="imgs/12.gif"]').remove();
-  }, 100); // تحقق كل 100 ملي ثانية
-
   function showRoyalImageWithSound() {
     const now = Date.now();
     if (now - lastTriggerTime < 3000) return; // منع التكرار خلال 3 ثواني
@@ -15,7 +10,7 @@ $(function () {
     const audio = new Audio('https://github.com/dimashki98/Java/raw/refs/heads/main/intro-205584.mp3');
     audio.play().catch(() => {});
 
-    // عرض الصورة المتحركة
+    // إنشاء وعرض الصورة
     const royalImg = $('<img>', {
       src: 'https://up6.cc/2025/04/174469794046571.png',
       class: 'royal-entry-img'
@@ -65,4 +60,7 @@ $(function () {
     childList: true,
     subtree: true
   });
-});
+}); 
+
+
+
