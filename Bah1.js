@@ -1,6 +1,7 @@
 $(document).ready(function () {
-    let isAudioPausedTemporarily = false;
+    let isPausedForFiveMinutes = false;
     let audioResumeTimeout;
+    let pingInterval;
 
     const socialButton = $('<label></label>')
         .text('مشاهدة سوشيال ميديا')
@@ -14,27 +15,38 @@ $(document).ready(function () {
         })
         .prepend('<span class="fl fa fa-clock-o" style="font-family: FontAwesome, sans-serif;"></span> ')
         .click(function () {
-            isAudioPausedTemporarily = true;
+            isPausedForFiveMinutes = true;
 
             clearTimeout(audioResumeTimeout);
+            clearInterval(pingInterval); // إيقاف Ping
+
             audioResumeTimeout = setTimeout(() => {
-                isAudioPausedTemporarily = false;
-                console.log("تم تفعيل الصوت مجددًا بعد انتهاء المهلة.");
+                isPausedForFiveMinutes = false;
+                pingInterval = setInterval(sendPing, 15000); // استعادة Ping
+                console.log("تم تفعيل الصوت وPing مجددًا بعد انتهاء المهلة.");
             }, 300000); // 5 دقائق
 
-            alert('تم تعطيل صوت التنبيه مؤقتًا لمدة 5 دقائق');
+            alert('تم تعطيل صوت التنبيه و Ping مؤقتًا لمدة 5 دقائق');
         });
 
     $('#newoption .not_geri').append(socialButton);
 
-    // تعديل بسيط داخل الـ pongo الأصلي
+    // تعديل على مستمع pongo
     if (typeof socket !== 'undefined') {
         socket.on("pongo", () => {
-            if (!isAudioPausedTemporarily && isPageHidden && silentAudio.paused) {
+            if (isPausedForFiveMinutes) {
+                console.log("تم تعطيل pongo مؤقتًا.");
+                return;
+            }
+
+            if (isPageHidden && silentAudio.paused) {
                 silentAudio.play().catch(err => {
                     console.warn("Autoplay blocked:", err);
                 });
             }
         });
     }
+
+    // حفظ معرف interval في متغير لتوقيفه لاحقًا
+    pingInterval = setInterval(sendPing, 15000);
 });
