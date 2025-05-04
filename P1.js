@@ -29,7 +29,7 @@ $(document).ready(function() {
     `);
 
     // إدراج العنصر قبل زر "حفظ"
-    $("button:contains('حفظ')").before(pingWithWiFi);
+    $("button:contains('حـفـظ')").before(pingWithWiFi);
 
     // تحميل خط Tajawal من Google Fonts إذا لم يكن موجودًا
     if (!$('link[href*="Tajawal"]').length) {
