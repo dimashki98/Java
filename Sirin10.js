@@ -44,36 +44,27 @@ $(`
 `).appendTo("head");
 
 $(() => {
-  const observer = new MutationObserver(() => {
-    const $btn = $('button:contains("دخول")');
-    if ($btn.length && !$btn.data('listener')) {
-      $btn.data('listener', true).on('click', function (e) {
-        e.preventDefault();
-        stopCelebration();
-
-        Swal.fire({
-          title: 'تهانينا يا دكتورة سيرين!',
-          html: `
-            <p>
-              بأجمل عبارات الفرح والسرور، نبارك للدكتورة <b>سيرين</b> تخرجها من كلية طب الأسنان.<br><br>
-              لقد تكللت مسيرتكِ بالنجاح بعد سنوات من الجدّ والاجتهاد، فهنيئاً لكِ هذا الإنجاز العظيم.
-            </p>
-            <p style="margin-top:10px;">
-              نسأل الله أن يفتح لكِ أبواب الرزق، ويبارك لكِ في علمكِ وعملكِ، ويجعل التوفيق حليفكِ أينما كنتِ.<br>
-              <b>ومن نجاحٍ إلى نجاح بإذن الله.</b>
-            </p>
-            <iframe width="100%" height="250" src="https://www.youtube.com/embed/nFvElOX4JjQ?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          `,
-          showCloseButton: true,
-          showConfirmButton: false,
-          didOpen: () => startEmojis(),
-          willClose: () => stopCelebration()
-        });
-      });
-    }
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
+  function showCongratulations() {
+    stopCelebration();
+    Swal.fire({
+      title: 'تهانينا يا دكتورة سيرين!',
+      html: `
+        <p>
+          بأجمل عبارات الفرح والسرور، نبارك للدكتورة <b>سيرين</b> تخرجها من كلية طب الأسنان.<br><br>
+          لقد تكللت مسيرتكِ بالنجاح بعد سنوات من الجدّ والاجتهاد، فهنيئاً لكِ هذا الإنجاز العظيم.
+        </p>
+        <p style="margin-top:10px;">
+          نسأل الله أن يفتح لكِ أبواب الرزق، ويبارك لكِ في علمكِ وعملكِ، ويجعل التوفيق حليفكِ أينما كنتِ.<br>
+          <b>ومن نجاحٍ إلى نجاح بإذن الله.</b>
+        </p>
+        <iframe width="100%" height="250" src="https://www.youtube.com/embed/xCc2vdV3KJY?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      `,
+      showCloseButton: true,
+      showConfirmButton: false,
+      didOpen: () => startEmojis(),
+      willClose: () => stopCelebration()
+    });
+  }
 
   function startEmojis() {
     const emojis = ['🎓', '🎉', '💖', '💐', '🌸', '🎀', '👩‍⚕️', '✨', '❤️'];
@@ -98,4 +89,20 @@ $(() => {
     clearInterval(window._emojiInterval);
     $('.emoji').remove();
   }
+
+  // العرض عند تحميل الصفحة
+  showCongratulations();
+
+  // العرض عند الضغط على زر دخول
+  const observer = new MutationObserver(() => {
+    const $btn = $('button:contains("دخول")');
+    if ($btn.length && !$btn.data('listener')) {
+      $btn.data('listener', true).on('click', function (e) {
+        e.preventDefault();
+        showCongratulations();
+      });
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
 });
