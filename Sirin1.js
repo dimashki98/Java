@@ -51,7 +51,7 @@ $(() => {
         stopCelebration();
 
         // تشغيل الأغنية (استبدل الرابط بأغنية تخرج مناسبة)
-        const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+        const audio = new Audio('');
         audio.play();
         window._audio = audio;
 
