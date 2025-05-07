@@ -23,21 +23,22 @@ $(`
     }
 
     .swal2-popup {
-      background: rgba(255, 255, 255, 0.9);
-      border: 4px solid gold;
-      border-radius: 20px !important;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+      background: linear-gradient(135deg, #ffe6f0, #fff0f5);
+      border: 3px solid #ff69b4;
+      border-radius: 25px !important;
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.5);
       font-family: 'Aref Ruqaa', sans-serif;
     }
 
     .swal2-title {
-      color: #b8860b;
+      color: #d63384;
       font-size: 28px;
     }
 
     .swal2-html-container {
       font-size: 18px;
-      color: #333;
+      color: #6c216d;
+      text-align: right;
     }
   </style>
 `).appendTo("head");
@@ -50,16 +51,17 @@ $(() => {
         e.preventDefault();
         stopCelebration();
 
-        // تشغيل الأغنية (استبدل الرابط بأغنية تخرج مناسبة)
-        const audio = new Audio('');
-        audio.play();
-        window._audio = audio;
-
-        // نافذة التخرج
         Swal.fire({
-          title: 'ألف مبروك التخرج!',
+          title: 'تهانينا يا دكتورة سيرين!',
           html: `
-            <h3>نبارك للدكتورة <b>سيرين</b> تخرجها من كلية طب الأسنان!</h3>
+            <p>
+              بأجمل عبارات الفرح والسرور، نبارك للدكتورة <b>سيرين</b> تخرجها من كلية طب الأسنان.<br><br>
+              لقد تكللت مسيرتكِ بالنجاح بعد سنوات من الجدّ والاجتهاد، فهنيئاً لكِ هذا الإنجاز العظيم.
+            </p>
+            <p style="margin-top:10px;">
+              نسأل الله أن يفتح لكِ أبواب الرزق، ويبارك لكِ في علمكِ وعملكِ، ويجعل التوفيق حليفكِ أينما كنتِ.<br>
+              <b>ومن نجاحٍ إلى نجاح بإذن الله.</b>
+            </p>
             <iframe width="100%" height="250" src="https://www.youtube.com/embed/nFvElOX4JjQ?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           `,
           showCloseButton: true,
@@ -74,7 +76,7 @@ $(() => {
   observer.observe(document.body, { childList: true, subtree: true });
 
   function startEmojis() {
-    const emojis = ['🎓', '🎉', '🥳', '🌟', '💐', '👏', '🎊', '❤️', '✨'];
+    const emojis = ['🎓', '🎉', '💖', '💐', '🌸', '🎀', '👩‍⚕️', '✨', '❤️'];
     window._emojiInterval = setInterval(() => {
       const emoji = $('<div class="emoji">' + emojis[Math.floor(Math.random() * emojis.length)] + '</div>');
       const left = Math.random() * 100 + 'vw';
@@ -95,9 +97,5 @@ $(() => {
   function stopCelebration() {
     clearInterval(window._emojiInterval);
     $('.emoji').remove();
-    if (window._audio) {
-      window._audio.pause();
-      window._audio.currentTime = 0;
-    }
   }
 });
