@@ -12,8 +12,8 @@ $(document).ready(function () {
   function normalizeText(text) {
     return text
       .normalize("NFD").replace(/[\u064B-\u065F\u0610-\u061A\u06D6-\u06ED\u0300-\u036f]/g, "") // إزالة التشكيل
-      .replace(/[^ء-يa-zA-Z0-9]/g, "") // إزالة الزخرفة
-      .replace(/(.)\1{2,}/g, "$1") // إزالة التكرار الزائد للحروف (أكثر من مرتين)
+      .replace(/[^ء-يa-zA-Z0-9\s]/g, "") // إزالة الزخرفة
+      .replace(/(.)\1{2,}/g, "$1") // إزالة تكرار الحروف الزائد
       .toLowerCase();
   }
 
@@ -23,7 +23,8 @@ $(document).ready(function () {
       let cleaned = normalizeText(text);
 
       for (let word of badWords) {
-        if (cleaned.includes(word)) {
+        let pattern = new RegExp("\\b" + word + "\\b", "i"); // يطابق الكلمة فقط
+        if (pattern.test(cleaned)) {
           $(this).html(warningMsg);
           break;
         }
