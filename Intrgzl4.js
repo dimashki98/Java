@@ -16,9 +16,9 @@ $(function () {
       class: 'royal-entry-img'
     }).css({
       position: 'fixed',
-      top: '20px',
+      top: '5px', // مرفوعة لفوق
       left: '-400px',
-      width: '320px',
+      width: '260px',
       height: 'auto',
       zIndex: 9999,
       borderRadius: '0px',
@@ -27,15 +27,15 @@ $(function () {
 
     $('body').append(royalImg);
 
-    royalImg.animate({ left: '20px', opacity: 1, width: '370px' }, 800, function () {
-      $(this).animate({ width: '320px' }, 400);
+    royalImg.animate({ left: '20px', opacity: 1, width: '300px' }, 800, function () {
+      $(this).animate({ width: '260px' }, 400);
     });
 
     setTimeout(function () {
       royalImg.animate({
         opacity: 0,
         top: '-100px',
-        width: '390px',
+        width: '320px',
         height: 'auto'
       }, 1000, function () {
         $(this).remove();
