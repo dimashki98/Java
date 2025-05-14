@@ -81,8 +81,8 @@ $(function () {
       const msg = $this.find('.u-msg').text().trim();
       const topic = $this.find('.u-topic').text().trim();
 
-      if (msg.includes('هذا المستخدم قد دخل') && topic === 'MDX' && !$this.hasClass('mdx-msg')) {
-        $this.addClass('mdx-msg');
+      if (msg.includes('هذا المستخدم قد دخل') && topic === 'gzl' && !$this.hasClass('gzl-msg')) {
+        $this.addClass('gzl-msg');
         showRoyalImageWithSound();
       }
     });
