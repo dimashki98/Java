@@ -7,7 +7,7 @@ $(function () {
     lastTriggerTime = now;
 
     // تشغيل الصوت
-    const audio = new Audio('https://github.com/dimashki98/Java/raw/refs/heads/main/intro-205584.mp3');
+    const audio = new Audio('https://github.com/dimashki98/Java/raw/refs/heads/main/cinematic-intro-3-40041.mp3');
     audio.play().catch(() => {});
 
     // إنشاء الصورة
