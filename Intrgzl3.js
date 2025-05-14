@@ -17,8 +17,8 @@ $(function () {
     }).css({
       position: 'fixed',
       top: '20px',
-      left: '-350px',
-      width: '220px',
+      left: '-400px',
+      width: '320px',
       height: 'auto',
       zIndex: 9999,
       borderRadius: '0px',
@@ -27,35 +27,35 @@ $(function () {
 
     $('body').append(royalImg);
 
-    royalImg.animate({ left: '20px', opacity: 1, width: '250px' }, 600, function () {
-      $(this).animate({ width: '220px' }, 300);
+    royalImg.animate({ left: '20px', opacity: 1, width: '370px' }, 800, function () {
+      $(this).animate({ width: '320px' }, 400);
     });
 
     setTimeout(function () {
       royalImg.animate({
         opacity: 0,
         top: '-100px',
-        width: '300px',
-        height: '300px'
+        width: '390px',
+        height: 'auto'
       }, 1000, function () {
         $(this).remove();
       });
-    }, 3000);
+    }, 8000); // مدة العرض 8 ثواني
 
     // بدء تساقط الإيموجي
     startEmojis();
 
-    // إيقاف التساقط بعد 5 ثواني
-    setTimeout(stopCelebration, 5000);
+    // إيقاف التساقط بعد 8 ثواني
+    setTimeout(stopCelebration, 8000);
   }
 
   // كود التساقط
   function startEmojis() {
-    const emojis = ['🎓', '🎉', '💖', '💐', '🌸', '🎀', '👩‍⚕️', '✨', '❤️'];
+    const emojis = ['💖', '💸', '💅', '🌸', '🎀', '💐', '🩷', '👛', '👠'];
     window._emojiInterval = setInterval(() => {
       const emoji = $('<div class="emoji">' + emojis[Math.floor(Math.random() * emojis.length)] + '</div>');
       const left = Math.random() * 100 + 'vw';
-      const size = (Math.random() * 1.5 + 1).toFixed(2) + 'rem';
+      const size = (Math.random() * 1.5 + 2.5).toFixed(2) + 'rem'; // حجم كبير
       const duration = (Math.random() * 3 + 3).toFixed(2) + 's';
 
       emoji.css({
