@@ -12,7 +12,7 @@ $(function () {
 
     // إنشاء الصورة
     const royalImg = $('<img>', {
-      src: 'https://up6.cc/2025/04/174469794046571.png',
+      src: 'https://up6.cc/2025/05/174723614328581.png',
       class: 'royal-entry-img'
     }).css({
       position: 'fixed',
