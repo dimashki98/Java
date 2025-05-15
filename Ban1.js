@@ -57,7 +57,7 @@ $(document).ready(function () {
     });
   }
 
-  // تشغيل كل ثانية
+  // تنفيذ الفحص كل ثانية
   filterBadWords();
   setInterval(filterBadWords, 1000);
 });
