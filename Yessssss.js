@@ -1,13 +1,13 @@
 $(function () {
   // مجموعة مفاتيح API محسنة
   const apiKeys = [
-    'AIzaSyB37niCuiDfhIyVV2w1oSG6cU4VDCkzy7A',
-    'AIzaSyC2HIGFO8YLZViBpy7DnncGFxNcDKA4VXE',
-    'AIzaSyABOHkjTyppyD-Qkq8izOBAHWFd2gvBnq4',
-    'AIzaSyDznztxGatwgaIfaNUwj6zc8hst7DErflU',
-    'AIzaSyDjfMpqr1BdT5Hs7V4vdpNSZGYzSwpp3oU',
+    'AIzaSyB37niCuiDfhIyVV2w1oSG6cU4VDCkzy7s',
+    'AIzaSyC2HIGFO8YLZViBpy7DnncGFxNcDKA4VXf',
+    'AIzaSyABOHkjTyppyD-Qkq8izOBAHWFd2gvBnqy',
+    'AIzaSyDznztxGatwgaIfaNUwj6zc8hst7DErflo',
+    'AIzaSyDjfMpqr1BdT5Hs7V4vdpNSZGYzSwpp3ol',
     'AIzaSyDNFoPab_dburA_ksrS8M4DAbWP3fFPBzA',
-    'AIzaSyAWPwwpHA7IXqZq2DVGdKFHohBZGCOK7DQ'
+    'AIzaSyAWPwwpHA7IXqZq2DVGdKFHohBZGCOK7Do'
   ];
 
   // نظام إدارة المفاتيح المتقدم (مخفي عن المستخدم)
