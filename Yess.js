@@ -1,7 +1,7 @@
 $(function () {
   // مجموعة مفاتيح API متعددة للتناوب
   const apiKeys = [
-    'AIzaSyAWPwwpHA7IXqZq2DVGdKFHohBZGCOK7DQ',
+    'AIzaSyAWPwwpHA7IXqZq2DVGdKFHohBZGCOK7DD',
     'AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw',
     'AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30',
     'AIzaSyDdVgKwhZl-aNLqKiDhPaKWH8qArGosAOk',
