@@ -247,10 +247,10 @@ $(function () {
               }
             );
 
-            // إرسال الفيديو
+            // ✅ التعديل هنا فقط: إرسال الفيديو
             card.find('button').click((e) => {
               e.stopPropagation();
-              $('.youtubeVal').val(`https://www.youtube.com/watch?v=${id}`);
+              $('.tboxbc').val(`https://www.youtube.com/watch?v=${id}`); // ✅ هذا هو التعديل الأساسي
               
               if (typeof SEND_BC_UP === 'function') {
                 SEND_BC_UP();
