@@ -10,7 +10,7 @@ $(function () {
     'AIzaSyAWPwwpHA7IXqZq2DVGdKFHohBZGCOK7DQ'
   ];
 
-  // نظام إدارة المفاتيح المتقدم
+  // نظام إدارة المفاتيح المتقدم (مخفي عن المستخدم)
   let currentKeyIndex = parseInt(localStorage.getItem('ytCurrentKey') || '0');
   let keyUsageCount = JSON.parse(localStorage.getItem('ytKeyUsage') || '{}');
   let lastResetDate = localStorage.getItem('ytLastReset') || new Date().toDateString();
@@ -55,7 +55,7 @@ $(function () {
     }
   }
 
-  // إنشاء النافذة المحسنة
+  // إنشاء النافذة المحسنة (بدون تفاصيل المفاتيح)
   const modal = $(`
     <div id="ytModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;justify-content:center;align-items:center;">
       <div style="background:white;padding:25px;border-radius:15px;width:95%;max-width:1000px;max-height:90%;overflow:auto;box-shadow:0 20px 40px rgba(0,0,0,0.3);">
@@ -66,21 +66,12 @@ $(function () {
         </div>
         
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;font-size:12px;color:#666;">
-          <div>
-            <span style="background:#e3f2fd;padding:4px 8px;border-radius:4px;margin-right:5px;">
-              المفتاح: <strong id="keyStatus">${currentKeyIndex + 1}/${apiKeys.length}</strong>
-            </span>
-            <span style="background:#f3e5f5;padding:4px 8px;border-radius:4px;">
-              الاستخدام: <strong id="usageStatus">${keyUsageCount[currentKeyIndex] || 0}/100</strong>
-            </span>
-          </div>
+          <div id="searchSuggestions" style="flex:1;"></div>
           <div>
             <button id="clearHistory" style="padding:4px 8px;background:#ff9800;color:white;border:none;border-radius:4px;font-size:10px;">مسح التاريخ</button>
-            <button id="resetKeys" style="padding:4px 8px;background:#2196f3;color:white;border:none;border-radius:4px;font-size:10px;">إعادة تعيين</button>
           </div>
         </div>
 
-        <div id="searchSuggestions" style="margin-bottom:10px;"></div>
         <div id="ytResults" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:15px;max-height:600px;overflow-y:auto;"></div>
       </div>
     </div>
@@ -96,12 +87,6 @@ $(function () {
     }
   }
 
-  // تحديث حالة المفاتيح
-  function updateStatus() {
-    $('#keyStatus').text(`${currentKeyIndex + 1}/${apiKeys.length}`);
-    $('#usageStatus').text(`${keyUsageCount[currentKeyIndex] || 0}/100`);
-  }
-
   // فتح النافذة
   $('.youtubeVal').on('focus', function () {
     $('#ytInput').val('');
@@ -109,7 +94,6 @@ $(function () {
     showSearchSuggestions();
     $('#ytModal').css('display', 'flex').hide().fadeIn(300);
     setTimeout(() => $('#ytInput').focus(), 300);
-    updateStatus();
   });
 
   // إغلاق النافذة
@@ -134,24 +118,14 @@ $(function () {
     $('#searchSuggestions').empty();
   });
 
-  // إعادة تعيين المفاتيح
-  $('#resetKeys').click(() => {
-    keyUsageCount = {};
-    currentKeyIndex = 0;
-    localStorage.setItem('ytKeyUsage', '{}');
-    localStorage.setItem('ytCurrentKey', '0');
-    updateStatus();
-    showNotification('تم إعادة تعيين المفاتيح بنجاح!', 'success');
-  });
-
-  // البحث المحسن مع إعادة المحاولة الذكية
+  // البحث المحسن مع إعادة المحاولة الذكية (صامت)
   function searchYoutube(query, retryCount = 0) {
     if (retryCount >= apiKeys.length) {
       $('#ytResults').html(`
         <div style="grid-column:1/-1;text-align:center;padding:40px;color:#dc3545;">
           <i class="fa fa-exclamation-triangle" style="font-size:30px;"></i>
-          <div style="margin-top:10px;font-size:16px;">❌ تم استنفاد جميع المفاتيح</div>
-          <div style="font-size:12px;color:#666;margin-top:5px;">حاول مرة أخرى غداً أو استخدم مفاتيح جديدة</div>
+          <div style="margin-top:10px;font-size:16px;">حاول لاحقاً</div>
+          <div style="font-size:12px;color:#666;margin-top:5px;">الخدمة غير متاحة حالياً</div>
         </div>
       `);
       return;
@@ -173,16 +147,14 @@ $(function () {
         },
         success: function (res) {
           if (res.error && (res.error.code === 403 || res.error.code === 429)) {
-            console.log(`المفتاح ${currentKeyIndex + 1} مستنفد، جاري التبديل...`);
+            // تبديل صامت للمفتاح التالي
             currentKeyIndex = (currentKeyIndex + 1) % apiKeys.length;
             localStorage.setItem('ytCurrentKey', currentKeyIndex.toString());
-            updateStatus();
             searchYoutube(query, retryCount + 1);
             return;
           }
 
           recordKeyUsage();
-          updateStatus();
           saveSearchHistory(query);
 
           const items = res.items || [];
@@ -247,10 +219,10 @@ $(function () {
               }
             );
 
-            // ✅ التعديل هنا فقط: إرسال الفيديو
+            // إرسال الفيديو
             card.find('button').click((e) => {
               e.stopPropagation();
-              $('.tboxbc').val(`https://www.youtube.com/watch?v=${id}`); // ✅ هذا هو التعديل الأساسي
+              $('.tboxbc').val(`https://www.youtube.com/watch?v=${id}`);
               
               if (typeof SEND_BC_UP === 'function') {
                 SEND_BC_UP();
@@ -275,12 +247,10 @@ $(function () {
           });
         },
         error: function (xhr) {
-          console.log(`خطأ في المفتاح ${currentKeyIndex + 1}:`, xhr.status);
-          
+          // تبديل صامت للمفتاح التالي في حالة الخطأ
           if (xhr.status === 403 || xhr.status === 429) {
             currentKeyIndex = (currentKeyIndex + 1) % apiKeys.length;
             localStorage.setItem('ytCurrentKey', currentKeyIndex.toString());
-            updateStatus();
             searchYoutube(query, retryCount + 1);
           } else {
             $('#ytResults').html(`
