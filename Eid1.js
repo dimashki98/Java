@@ -1,4 +1,22 @@
 $(function () {
+  // إدراج أنيميشن للخروف عبر CSS
+  const style = `
+    <style>
+      @keyframes wiggle {
+        0% { transform: rotate(0deg); }
+        25% { transform: rotate(5deg); }
+        50% { transform: rotate(0deg); }
+        75% { transform: rotate(-5deg); }
+        100% { transform: rotate(0deg); }
+      }
+
+      #eid-btn {
+        animation: wiggle 1s infinite;
+      }
+    </style>
+  `;
+  $('head').append(style);
+
   // إضافة الخيط والزر
   $('body').append(`
     <div id="eid-thread" style="position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; align-items: center;">
@@ -12,10 +30,36 @@ $(function () {
   // تحريك الخيط من الأعلى للأسفل
   $('#eid-thread').animate({ top: '10px' }, 1000, 'swing');
 
+  let emojiInterval;
+
   // تحميل SweetAlert2
   $.getScript("https://cdn.jsdelivr.net/npm/sweetalert2@11", function () {
     // عند الضغط على زر الخروف
     $('#eid-btn').on('click', function () {
+      // بدء تساقط الإيموجي
+      emojiInterval = setInterval(function () {
+        const emojis = ['🐑', '🌙', '🕌', '🎉', '🎊', '✨', '💫'];
+        const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+        const size = Math.random() * 24 + 24;
+        const left = Math.random() * $(window).width();
+        const duration = Math.random() * 3000 + 3000;
+
+        const $el = $('<div>').text(emoji).css({
+          position: 'fixed',
+          top: '-50px',
+          left: left + 'px',
+          fontSize: size + 'px',
+          zIndex: 9999,
+          opacity: 0.9,
+          pointerEvents: 'none'
+        }).appendTo('body');
+
+        $el.animate({ top: $(window).height() + 'px', opacity: 0.1 }, duration, function () {
+          $el.remove();
+        });
+      }, 400);
+
+      // عرض نافذة العيد
       Swal.fire({
         title: '🎉 عيد أضحى مبارك! 🎉',
         html: `
@@ -31,30 +75,11 @@ $(function () {
           left top
           no-repeat
         `,
-        color: '#b8860b'
+        color: '#b8860b',
+        willClose: () => {
+          clearInterval(emojiInterval); // إيقاف الإيموجي عند الإغلاق
+        }
       });
     });
   });
-
-  // تساقط الإيموجيات
-  setInterval(function () {
-    const emojis = ['🐑', '🌙', '🕌', '🎉', '🎊', '✨', '💫'];
-    const emoji = emojis[Math.floor(Math.random() * emojis.length)];
-    const size = Math.random() * 24 + 24;
-    const left = Math.random() * $(window).width();
-    const duration = Math.random() * 3000 + 3000;
-
-    const $el = $('<div>').text(emoji).css({
-      position: 'fixed',
-      top: '-50px',
-      left: left + 'px',
-      fontSize: size + 'px',
-      zIndex: 9999,
-      opacity: 0.9
-    }).appendTo('body');
-
-    $el.animate({ top: $(window).height() + 'px', opacity: 0.1 }, duration, function () {
-      $el.remove();
-    });
-  }, 500);
 });
