@@ -1,17 +1,39 @@
 $(function () {
-  // إدراج أنيميشن للخروف عبر CSS
+  // إدراج أنيميشن وتحسينات تصميم عبر CSS
   const style = `
     <style>
-      @keyframes wiggle {
-        0% { transform: rotate(0deg); }
-        25% { transform: rotate(5deg); }
-        50% { transform: rotate(0deg); }
-        75% { transform: rotate(-5deg); }
-        100% { transform: rotate(0deg); }
+      @keyframes swing-left-right {
+        0% { transform: translateX(-50%) rotate(0deg); }
+        25% { transform: translateX(-50%) rotate(3deg); }
+        50% { transform: translateX(-50%) rotate(0deg); }
+        75% { transform: translateX(-50%) rotate(-3deg); }
+        100% { transform: translateX(-50%) rotate(0deg); }
+      }
+
+      #eid-thread {
+        animation: swing-left-right 3s ease-in-out infinite;
+      }
+
+      .gold-thread {
+        width: 3px;
+        height: 100px;
+        background: linear-gradient(to bottom, #ffd700, #fff8dc);
+        box-shadow: 0 0 5px #ffd700;
       }
 
       #eid-btn {
-        animation: wiggle 1s infinite;
+        background: radial-gradient(circle at top left, #fffbe6, #ffefb0);
+        border: none;
+        border-radius: 50%;
+        font-size: 30px;
+        padding: 10px;
+        cursor: pointer;
+        box-shadow: 0 0 15px gold, 0 0 5px #fff;
+        transition: transform 0.3s;
+      }
+
+      #eid-btn:hover {
+        transform: scale(1.1);
       }
     </style>
   `;
@@ -19,22 +41,19 @@ $(function () {
 
   // إضافة الخيط والزر
   $('body').append(`
-    <div id="eid-thread" style="position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; align-items: center;">
-      <div style="width: 2px; height: 100px; background: #aaa;"></div>
-      <button id="eid-btn" style="background: #fffbe6; border: 2px solid #ffd700; border-radius: 50%; font-size: 30px; padding: 10px; cursor: pointer; box-shadow: 0 0 10px gold;">
-        🐑
-      </button>
+    <div id="eid-thread" style="position: fixed; top: -120px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; align-items: center;">
+      <div class="gold-thread"></div>
+      <button id="eid-btn">🐑</button>
     </div>
   `);
 
-  // تحريك الخيط من الأعلى للأسفل
+  // تحريك الخيط للأسفل أول مرة
   $('#eid-thread').animate({ top: '10px' }, 1000, 'swing');
 
   let emojiInterval;
 
   // تحميل SweetAlert2
   $.getScript("https://cdn.jsdelivr.net/npm/sweetalert2@11", function () {
-    // عند الضغط على زر الخروف
     $('#eid-btn').on('click', function () {
       // بدء تساقط الإيموجي
       emojiInterval = setInterval(function () {
@@ -59,7 +78,7 @@ $(function () {
         });
       }, 400);
 
-      // عرض نافذة العيد
+      // عرض نافذة SweetAlert
       Swal.fire({
         title: '🎉 عيد أضحى مبارك! 🎉',
         html: `
@@ -77,7 +96,7 @@ $(function () {
         `,
         color: '#b8860b',
         willClose: () => {
-          clearInterval(emojiInterval); // إيقاف الإيموجي عند الإغلاق
+          clearInterval(emojiInterval); // إيقاف الإيموجيات
         }
       });
     });
