@@ -118,4 +118,4 @@ if (window.location.hostname !== "madahost.online") {
 
     observer.observe(document.body, { childList: true, subtree: true });
   });
-}
+
