@@ -54,7 +54,7 @@ $(function () {
   }
 
   function startEmojis() {
-    const emojis = ['💖', '🍇', '💅', '🌸', '🎀', '💐', '🩷', '🪷', '🪻'];
+    const emojis = ['', '', '', '', '', '', '', '', ''];
     window._emojiInterval = setInterval(() => {
       const emoji = $('<div class="emoji">' + emojis[Math.floor(Math.random() * emojis.length)] + '</div>');
       const left = Math.random() * 100 + 'vw';
