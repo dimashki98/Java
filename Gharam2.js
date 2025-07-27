@@ -259,7 +259,7 @@ $(() => {
     // إضافة زر الإغلاق
     $('body').append(`
       <button class="close-celebration-btn" onclick="closeCelebration()">
-        ❌ إغلاق الاحتفال
+        ❌ إغلاق
       </button>
     `);
     
