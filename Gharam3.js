@@ -7,7 +7,7 @@ $(`
     .emoji {
       position: fixed;
       top: -50px;
-      font-size: 2.5rem;
+      font-size: 2rem;
       animation: fall linear;
       z-index: 99999;
       pointer-events: none;
@@ -36,8 +36,8 @@ $(`
     
     .confetti {
       position: fixed;
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       animation: confetti-fall linear;
       z-index: 99998;
       border-radius: 50%;
@@ -56,13 +56,13 @@ $(`
     
     .sparkle {
       position: fixed;
-      width: 4px;
-      height: 4px;
+      width: 3px;
+      height: 3px;
       background: gold;
       border-radius: 50%;
       animation: sparkle-animation linear;
       z-index: 99997;
-      box-shadow: 0 0 6px gold;
+      box-shadow: 0 0 4px gold;
     }
     
     @keyframes sparkle-animation {
@@ -80,33 +80,38 @@ $(`
       }
     }
     
+    /* تجاوب SweetAlert مع الشاشات */
     .swal2-popup {
-      background: linear-gradient(135deg, #fff0f8 0%, #ffe6f2 25%, #ffd6e8 50%, #ffb3d9 75%, #ff99cc 100%);
-      border: 4px solid;
+      background: linear-gradient(135deg, #fff0f8 0%, #ffe6f2 25%, #ffd6e8 50%, #ffb3d9 75%, #ff99cc 100%) !important;
+      border: 3px solid;
       border-image: linear-gradient(45deg, #ff1493, #ff69b4, #ffc0cb, #ff1493) 1;
-      border-radius: 35px !important;
+      border-radius: 25px !important;
       box-shadow: 
-        0 0 40px rgba(255, 20, 147, 0.8),
-        0 0 80px rgba(255, 105, 180, 0.4),
-        inset 0 0 30px rgba(255, 255, 255, 0.3);
-      font-family: 'Aref Ruqaa', 'Cairo', sans-serif;
-      position: relative;
-      overflow: hidden;
-      animation: popup-glow 3s ease-in-out infinite;
+        0 0 30px rgba(255, 20, 147, 0.8),
+        0 0 60px rgba(255, 105, 180, 0.4),
+        inset 0 0 20px rgba(255, 255, 255, 0.3) !important;
+      font-family: 'Aref Ruqaa', 'Cairo', sans-serif !important;
+      position: relative !important;
+      overflow: hidden !important;
+      animation: popup-glow 3s ease-in-out infinite !important;
+      width: 90% !important;
+      max-width: 600px !important;
+      max-height: 90vh !important;
+      margin: auto !important;
     }
     
     @keyframes popup-glow {
       0%, 100% { 
         box-shadow: 
-          0 0 40px rgba(255, 20, 147, 0.8),
-          0 0 80px rgba(255, 105, 180, 0.4),
-          inset 0 0 30px rgba(255, 255, 255, 0.3);
+          0 0 30px rgba(255, 20, 147, 0.8),
+          0 0 60px rgba(255, 105, 180, 0.4),
+          inset 0 0 20px rgba(255, 255, 255, 0.3) !important;
       }
       50% { 
         box-shadow: 
-          0 0 60px rgba(255, 20, 147, 1),
-          0 0 120px rgba(255, 105, 180, 0.6),
-          inset 0 0 50px rgba(255, 255, 255, 0.5);
+          0 0 50px rgba(255, 20, 147, 1),
+          0 0 100px rgba(255, 105, 180, 0.6),
+          inset 0 0 40px rgba(255, 255, 255, 0.5) !important;
       }
     }
     
@@ -135,13 +140,14 @@ $(`
     }
     
     .swal2-title {
-      color: #c2185b;
-      font-size: 36px;
+      color: #c2185b !important;
+      font-size: clamp(20px, 4vw, 32px) !important;
       text-shadow: 
         2px 2px 4px rgba(194, 24, 91, 0.5),
-        0 0 20px rgba(255, 20, 147, 0.3);
-      margin-bottom: 25px;
-      animation: title-pulse 2s ease-in-out infinite;
+        0 0 15px rgba(255, 20, 147, 0.3) !important;
+      margin-bottom: 15px !important;
+      animation: title-pulse 2s ease-in-out infinite !important;
+      line-height: 1.2 !important;
     }
     
     @keyframes title-pulse {
@@ -150,11 +156,14 @@ $(`
     }
     
     .swal2-html-container {
-      font-size: 19px;
-      color: #880e4f;
-      text-align: center;
-      line-height: 2;
-      text-shadow: 1px 1px 2px rgba(136, 14, 79, 0.1);
+      font-size: clamp(14px, 2.5vw, 18px) !important;
+      color: #880e4f !important;
+      text-align: center !important;
+      line-height: 1.6 !important;
+      text-shadow: 1px 1px 2px rgba(136, 14, 79, 0.1) !important;
+      max-height: 60vh !important;
+      overflow-y: auto !important;
+      padding: 10px !important;
     }
     
     .birthday-text {
@@ -177,12 +186,12 @@ $(`
       display: inline-block;
       animation: heart-float 2s ease-in-out infinite;
       color: #ff1493;
-      filter: drop-shadow(0 0 5px #ff1493);
+      filter: drop-shadow(0 0 3px #ff1493);
     }
     
     @keyframes heart-float {
       0%, 100% { transform: translateY(0px) scale(1); }
-      50% { transform: translateY(-10px) scale(1.1); }
+      50% { transform: translateY(-8px) scale(1.1); }
     }
     
     .gift-shake {
@@ -192,56 +201,93 @@ $(`
     
     @keyframes gift-shake {
       0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(-3deg); }
-      75% { transform: rotate(3deg); }
+      25% { transform: rotate(-2deg); }
+      75% { transform: rotate(2deg); }
     }
     
     iframe {
-      border-radius: 20px !important;
+      border-radius: 15px !important;
       box-shadow: 
-        0 8px 25px rgba(233, 30, 99, 0.4),
-        0 0 20px rgba(255, 105, 180, 0.3) !important;
-      border: 3px solid rgba(255, 20, 147, 0.3) !important;
-      transition: all 0.3s ease;
+        0 6px 20px rgba(233, 30, 99, 0.4),
+        0 0 15px rgba(255, 105, 180, 0.3) !important;
+      border: 2px solid rgba(255, 20, 147, 0.3) !important;
+      transition: all 0.3s ease !important;
+      width: 100% !important;
+      height: clamp(200px, 30vw, 280px) !important;
     }
     
     iframe:hover {
       transform: scale(1.02);
       box-shadow: 
-        0 12px 35px rgba(233, 30, 99, 0.6),
-        0 0 30px rgba(255, 105, 180, 0.5) !important;
+        0 8px 25px rgba(233, 30, 99, 0.6),
+        0 0 20px rgba(255, 105, 180, 0.5) !important;
     }
     
-    /* زر الإغلاق المخصص */
+    /* زر الإغلاق المحسن */
     .close-celebration-btn {
       position: fixed !important;
-      top: 20px !important;
-      right: 20px !important;
+      top: 15px !important;
+      right: 15px !important;
       z-index: 999999 !important;
-      background: linear-gradient(45deg, #ff1493, #ff69b4) !important;
+      background: linear-gradient(45deg, #dc3545, #c82333) !important;
       color: white !important;
       border: none !important;
-      padding: 12px 25px !important;
-      border-radius: 30px !important;
+      padding: 10px 20px !important;
+      border-radius: 25px !important;
       cursor: pointer !important;
-      font-size: 16px !important;
+      font-size: clamp(12px, 2vw, 16px) !important;
       font-weight: bold !important;
-      box-shadow: 0 6px 20px rgba(255,20,147,0.5) !important;
+      box-shadow: 0 4px 15px rgba(220, 53, 69, 0.5) !important;
       transition: all 0.3s ease !important;
-      animation: close-btn-glow 2s ease-in-out infinite !important;
+      animation: close-btn-pulse 2s ease-in-out infinite !important;
     }
     
     .close-celebration-btn:hover {
-      transform: translateY(-3px) scale(1.05) !important;
-      box-shadow: 0 10px 30px rgba(255,20,147,0.7) !important;
+      transform: translateY(-2px) scale(1.05) !important;
+      box-shadow: 0 6px 20px rgba(220, 53, 69, 0.7) !important;
     }
     
-    @keyframes close-btn-glow {
+    @keyframes close-btn-pulse {
       0%, 100% { 
-        box-shadow: 0 6px 20px rgba(255,20,147,0.5) !important;
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.5) !important;
       }
       50% { 
-        box-shadow: 0 8px 25px rgba(255,20,147,0.8) !important;
+        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.8) !important;
+      }
+    }
+    
+    /* تجاوب للشاشات الصغيرة */
+    @media (max-width: 768px) {
+      .swal2-popup {
+        width: 95% !important;
+        margin: 10px auto !important;
+        border-radius: 20px !important;
+      }
+      
+      .close-celebration-btn {
+        top: 10px !important;
+        right: 10px !important;
+        padding: 8px 15px !important;
+        font-size: 14px !important;
+      }
+      
+      .emoji {
+        font-size: 1.5rem !important;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .swal2-popup {
+        width: 98% !important;
+        margin: 5px auto !important;
+      }
+      
+      .swal2-html-container {
+        padding: 5px !important;
+      }
+      
+      iframe {
+        height: 180px !important;
       }
     }
   </style>
@@ -259,37 +305,36 @@ $(() => {
     // إضافة زر الإغلاق
     $('body').append(`
       <button class="close-celebration-btn" onclick="closeCelebration()">
-        ❌ إغلاق
+        ❌ إغلاق الاحتفال
       </button>
     `);
     
     Swal.fire({
       title: '🎂 كل عام وأنتِ بخير غرام! 🎂',
       html: `
-        <div style="text-align: center; padding: 25px;">
-          <div style="font-size: 28px; margin-bottom: 20px;">
+        <div style="text-align: center; padding: 15px;">
+          <div style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 15px;">
             ✨ <span class="birthday-text">عيد ميلاد سعيد يا أجمل غرام</span> ✨
           </div>
           
-          <div style="background: linear-gradient(45deg, rgba(255,182,193,0.3), rgba(255,20,147,0.1)); padding: 20px; border-radius: 15px; margin: 20px 0; border: 2px solid rgba(255,105,180,0.3);">
-            <p style="margin-bottom: 15px; font-size: 20px;">
-              في هذا اليوم المميز، نتمنى لكِ عاماً مليئاً بالفرح والسعادة والأحلام المحققة
+          <div style="background: linear-gradient(45deg, rgba(255,182,193,0.3), rgba(255,20,147,0.1)); padding: 15px; border-radius: 12px; margin: 15px 0; border: 2px solid rgba(255,105,180,0.3);">
+            <p style="margin-bottom: 10px; font-size: clamp(14px, 3vw, 18px);">
+              في هذا اليوم المميز، نتمنى لكِ عاماً مليئاً بالفرح والسعادة
               <span class="heart-float">💖</span>
             </p>
-            <p style="margin-bottom: 15px;">
-              <span class="birthday-text">كل عام وأنتِ نور يضيء حياة من حولكِ</span> 🌟<br>
-              وأن تكون كل أيامكِ مليئة بالحب والضحك والبهجة
+            <p style="margin-bottom: 10px; font-size: clamp(13px, 2.5vw, 16px);">
+              <span class="birthday-text">كل عام وأنتِ نور يضيء حياة من حولكِ</span> 🌟
             </p>
           </div>
           
-          <div style="background: rgba(255,255,255,0.7); padding: 15px; border-radius: 12px; margin: 15px 0;">
-            <p style="color: #c2185b; font-weight: bold; font-size: 18px;">
+          <div style="background: rgba(255,255,255,0.7); padding: 12px; border-radius: 10px; margin: 12px 0;">
+            <p style="color: #c2185b; font-weight: bold; font-size: clamp(14px, 3vw, 16px);">
               🌸 نسأل الله أن يحفظكِ ويسعدكِ 🌸<br>
-              <span class="birthday-text">وأن يحقق لكِ كل ما تتمنينه قلبكِ الطيب</span>
+              <span class="birthday-text">وأن يحقق لكِ كل ما تتمنينه</span>
             </p>
           </div>
           
-          <div style="font-size: 24px; margin: 20px 0;">
+          <div style="font-size: clamp(16px, 4vw, 20px); margin: 15px 0;">
             <span class="gift-shake">🎁</span>
             <span class="heart-float">💕</span>
             <span class="gift-shake">🎈</span>
@@ -297,24 +342,23 @@ $(() => {
             <span class="gift-shake">🎀</span>
           </div>
           
-          <p style="font-size: 22px; color: #e91e63; font-weight: bold; margin: 20px 0;">
+          <p style="font-size: clamp(16px, 3.5vw, 20px); color: #e91e63; font-weight: bold; margin: 15px 0;">
             🎈 <span class="birthday-text">عقبال 100 سنة يا غالية</span> 🎈
           </p>
           
-          <iframe width="100%" height="300" 
-                  src="https://www.youtube.com/embed/Uy_C_th5dn0?autoplay=1&loop=1&playlist=Uy_C_th5dn0" 
+          <iframe src="https://www.youtube.com/embed/Uy_C_th5dn0?autoplay=1&loop=1&playlist=Uy_C_th5dn0" 
                   frameborder="0" 
                   allow="autoplay; encrypted-media" 
                   allowfullscreen>
           </iframe>
           
-          <p style="font-size: 16px; color: #c2185b; margin-top: 15px; font-style: italic;">
+          <p style="font-size: clamp(12px, 2.5vw, 14px); color: #c2185b; margin-top: 10px; font-style: italic;">
             🎵 أغنية خاصة لأجمل غرام في الدنيا 🎵
           </p>
           
-          <div style="margin-top: 20px; padding: 15px; background: rgba(255,20,147,0.1); border-radius: 10px;">
-            <p style="color: #c2185b; font-size: 14px;">
-              💡 <strong>نصيحة:</strong> يمكنك إغلاق الاحتفال بالضغط على الزر الأحمر في أعلى الصفحة
+          <div style="margin-top: 15px; padding: 10px; background: rgba(220,53,69,0.1); border-radius: 8px; border: 1px solid rgba(220,53,69,0.3);">
+            <p style="color: #dc3545; font-size: clamp(11px, 2vw, 13px); font-weight: bold;">
+              💡 اضغطي على الزر الأحمر في أعلى الصفحة لإغلاق الاحتفال
             </p>
           </div>
         </div>
@@ -323,17 +367,28 @@ $(() => {
       showConfirmButton: false,
       allowOutsideClick: false,
       allowEscapeKey: false,
-      width: '700px',
+      customClass: {
+        popup: 'birthday-popup'
+      },
       willClose: () => closeCelebration()
     });
   }
 
-  // دالة إغلاق الاحتفال
+  // دالة إغلاق الاحتفال المحسنة
   window.closeCelebration = function() {
     celebrationActive = false;
     stopAllEffects();
     $('.close-celebration-btn').remove();
-    Swal.close();
+    
+    // إغلاق SweetAlert بالقوة
+    if (Swal.isVisible()) {
+      Swal.close();
+    }
+    
+    // تنظيف إضافي للتأكد
+    $('.swal2-container').remove();
+    $('body').removeClass('swal2-shown swal2-height-auto');
+    $('html').removeClass('swal2-shown swal2-height-auto');
   };
 
   function startAllEffects() {
@@ -356,8 +411,8 @@ $(() => {
         '</div>');
       
       const left = Math.random() * 100 + 'vw';
-      const size = (Math.random() * 2 + 2).toFixed(2) + 'rem';
-      const duration = (Math.random() * 5 + 5).toFixed(2) + 's';
+      const size = (Math.random() * 1.5 + 1.5).toFixed(2) + 'rem';
+      const duration = (Math.random() * 4 + 4).toFixed(2) + 's';
       
       emoji.css({
         left: left,
@@ -367,7 +422,7 @@ $(() => {
       
       $('body').append(emoji);
       setTimeout(() => emoji.remove(), parseFloat(duration) * 1000);
-    }, 150);
+    }, 200);
   }
 
   function startConfetti() {
@@ -376,33 +431,33 @@ $(() => {
     window._confettiInterval = setInterval(() => {
       if (!celebrationActive) return;
       
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 6; i++) {
         const confetti = $('<div class="confetti"></div>');
         const left = Math.random() * 100 + 'vw';
         const color = colors[Math.floor(Math.random() * colors.length)];
-        const duration = (Math.random() * 4 + 3).toFixed(2) + 's';
+        const duration = (Math.random() * 3 + 3).toFixed(2) + 's';
         
         confetti.css({
           left: left,
           background: color,
           animationDuration: duration,
-          boxShadow: `0 0 6px ${color}`
+          boxShadow: `0 0 4px ${color}`
         });
         
         $('body').append(confetti);
         setTimeout(() => confetti.remove(), parseFloat(duration) * 1000);
       }
-    }, 200);
+    }, 250);
   }
 
   function startSparkles() {
     window._sparkleInterval = setInterval(() => {
       if (!celebrationActive) return;
       
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 3; i++) {
         const sparkle = $('<div class="sparkle"></div>');
         const left = Math.random() * 100 + 'vw';
-        const duration = (Math.random() * 3 + 2).toFixed(2) + 's';
+        const duration = (Math.random() * 2 + 2).toFixed(2) + 's';
         
         sparkle.css({
           left: left,
@@ -412,7 +467,7 @@ $(() => {
         $('body').append(sparkle);
         setTimeout(() => sparkle.remove(), parseFloat(duration) * 1000);
       }
-    }, 300);
+    }, 400);
   }
 
   function stopAllEffects() {
