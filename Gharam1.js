@@ -211,12 +211,57 @@ $(`
         0 12px 35px rgba(233, 30, 99, 0.6),
         0 0 30px rgba(255, 105, 180, 0.5) !important;
     }
+    
+    /* زر الإغلاق المخصص */
+    .close-celebration-btn {
+      position: fixed !important;
+      top: 20px !important;
+      right: 20px !important;
+      z-index: 999999 !important;
+      background: linear-gradient(45deg, #ff1493, #ff69b4) !important;
+      color: white !important;
+      border: none !important;
+      padding: 12px 25px !important;
+      border-radius: 30px !important;
+      cursor: pointer !important;
+      font-size: 16px !important;
+      font-weight: bold !important;
+      box-shadow: 0 6px 20px rgba(255,20,147,0.5) !important;
+      transition: all 0.3s ease !important;
+      animation: close-btn-glow 2s ease-in-out infinite !important;
+    }
+    
+    .close-celebration-btn:hover {
+      transform: translateY(-3px) scale(1.05) !important;
+      box-shadow: 0 10px 30px rgba(255,20,147,0.7) !important;
+    }
+    
+    @keyframes close-btn-glow {
+      0%, 100% { 
+        box-shadow: 0 6px 20px rgba(255,20,147,0.5) !important;
+      }
+      50% { 
+        box-shadow: 0 8px 25px rgba(255,20,147,0.8) !important;
+      }
+    }
   </style>
 `).appendTo("head");
 
 $(() => {
+  let celebrationActive = false;
+  
   function showBirthdayCelebration() {
-    stopAllEffects();
+    if (celebrationActive) return;
+    
+    celebrationActive = true;
+    startAllEffects();
+    
+    // إضافة زر الإغلاق
+    $('body').append(`
+      <button class="close-celebration-btn" onclick="closeCelebration()">
+        ❌ إغلاق الاحتفال
+      </button>
+    `);
     
     Swal.fire({
       title: '🎂 كل عام وأنتِ بخير غرام! 🎂',
@@ -266,18 +311,30 @@ $(() => {
           <p style="font-size: 16px; color: #c2185b; margin-top: 15px; font-style: italic;">
             🎵 أغنية خاصة لأجمل غرام في الدنيا 🎵
           </p>
+          
+          <div style="margin-top: 20px; padding: 15px; background: rgba(255,20,147,0.1); border-radius: 10px;">
+            <p style="color: #c2185b; font-size: 14px;">
+              💡 <strong>نصيحة:</strong> يمكنك إغلاق الاحتفال بالضغط على الزر الأحمر في أعلى الصفحة
+            </p>
+          </div>
         </div>
       `,
-      showCloseButton: true,
+      showCloseButton: false,
       showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
       width: '700px',
-      didOpen: () => {
-        startAllEffects();
-        addSoundEffect();
-      },
-      willClose: () => stopAllEffects()
+      willClose: () => closeCelebration()
     });
   }
+
+  // دالة إغلاق الاحتفال
+  window.closeCelebration = function() {
+    celebrationActive = false;
+    stopAllEffects();
+    $('.close-celebration-btn').remove();
+    Swal.close();
+  };
 
   function startAllEffects() {
     startBirthdayEmojis();
@@ -292,6 +349,8 @@ $(() => {
     ];
     
     window._emojiInterval = setInterval(() => {
+      if (!celebrationActive) return;
+      
       const emoji = $('<div class="emoji">' + 
         birthdayEmojis[Math.floor(Math.random() * birthdayEmojis.length)] + 
         '</div>');
@@ -315,6 +374,8 @@ $(() => {
     const colors = ['#ff1493', '#ff69b4', '#ffc0cb', '#e91e63', '#f06292', '#ffb3d9'];
     
     window._confettiInterval = setInterval(() => {
+      if (!celebrationActive) return;
+      
       for (let i = 0; i < 8; i++) {
         const confetti = $('<div class="confetti"></div>');
         const left = Math.random() * 100 + 'vw';
@@ -336,6 +397,8 @@ $(() => {
 
   function startSparkles() {
     window._sparkleInterval = setInterval(() => {
+      if (!celebrationActive) return;
+      
       for (let i = 0; i < 5; i++) {
         const sparkle = $('<div class="sparkle"></div>');
         const left = Math.random() * 100 + 'vw';
@@ -352,11 +415,6 @@ $(() => {
     }, 300);
   }
 
-  function addSoundEffect() {
-    // محاكاة صوت الاحتفال
-    console.log('🎵 Birthday celebration sounds activated! 🎵');
-  }
-
   function stopAllEffects() {
     clearInterval(window._emojiInterval);
     clearInterval(window._confettiInterval);
@@ -364,10 +422,10 @@ $(() => {
     $('.emoji, .confetti, .sparkle').remove();
   }
 
-  // تشغيل فوري عند التحميل
+  // تشغيل تلقائي عند التحميل
   setTimeout(() => {
     showBirthdayCelebration();
-  }, 500);
+  }, 1000);
 
   // مراقب للأزرار الديناميكية
   const observer = new MutationObserver(() => {
