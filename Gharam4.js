@@ -310,7 +310,7 @@ $(() => {
     `);
     
     Swal.fire({
-      title: '🎂 كل عام وأنتِ بخير غرام! 🎂',
+      title: '🎂 كل عام وأنتِ بخير غرمرم! 🎂',
       html: `
         <div style="text-align: center; padding: 15px;">
           <div style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 15px;">
@@ -346,9 +346,10 @@ $(() => {
             🎈 <span class="birthday-text">عقبال 100 سنة يا غالية</span> 🎈
           </p>
           
-          <iframe src="https://www.youtube.com/embed/Uy_C_th5dn0?autoplay=1&loop=1&playlist=Uy_C_th5dn0" 
+          <iframe id="birthday-video" 
+                  src="https://www.youtube.com/embed/Uy_C_th5dn0?autoplay=1&mute=0&loop=1&playlist=Uy_C_th5dn0&controls=1&showinfo=0&rel=0&modestbranding=1&start=0&enablejsapi=1" 
                   frameborder="0" 
-                  allow="autoplay; encrypted-media" 
+                  allow="autoplay; encrypted-media; fullscreen" 
                   allowfullscreen>
           </iframe>
           
@@ -369,6 +370,16 @@ $(() => {
       allowEscapeKey: false,
       customClass: {
         popup: 'birthday-popup'
+      },
+      didOpen: () => {
+        // محاولة تشغيل الفيديو تلقائياً
+        setTimeout(() => {
+          const iframe = document.getElementById('birthday-video');
+          if (iframe) {
+            // إعادة تحميل الفيديو لضمان التشغيل التلقائي
+            iframe.src = iframe.src;
+          }
+        }, 500);
       },
       willClose: () => closeCelebration()
     });
