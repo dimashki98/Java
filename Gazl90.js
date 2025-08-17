@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
     let welcomeShown = false;
-    let emojiInterval; // لحفظ الـ interval حتى نقدر نوقفه
+    let emojiInterval; // لحفظ الـ interval حتى نوقفه
 
     $('button.btn.btn-primary').on('click', function () {
         const checkExist = setInterval(function () {
@@ -16,10 +16,10 @@ $(document).ready(function () {
                             top: 50%;
                             left: 50%;
                             transform: translate(-50%, -50%);
-                            background: linear-gradient(135deg, #ffb6c1, #ffc0cb, #ff69b4);
+                            background: linear-gradient(135deg, #ff9ecb, #ff66a3, #ff1a75);
                             border-radius: 25px;
                             padding: 40px 25px;
-                            box-shadow: 0 0 40px rgba(255, 105, 180, 0.8);
+                            box-shadow: 0 0 50px rgba(255, 0, 150, 0.9);
                             z-index: 1; /* الرسالة أسفل الإيموجي */
                             text-align: center;
                             font-size: 22px;
@@ -53,42 +53,44 @@ $(document).ready(function () {
                             to { opacity: 1; transform: translate(-50%, -50%); }
                         }
 
-                        /* عنوان نابض */
+                        /* عنوان فخم نابض */
                         .pulse-title {
                             font-weight: bold;
-                            font-size: 30px;
-                            background: linear-gradient(45deg, #ffd700, #ff69b4, #ff4500);
+                            font-size: 32px;
+                            background: linear-gradient(90deg, #fffacd, #ffd700, #ff69b4);
                             -webkit-background-clip: text;
                             -webkit-text-fill-color: transparent;
-                            animation: pulseTitle 2s infinite;
+                            animation: pulseTitle 1.8s infinite;
+                            text-shadow: 0 0 8px #fff, 0 0 15px #ff69b4;
                         }
                         @keyframes pulseTitle {
-                            0%, 100% { text-shadow: 0 0 8px #fff, 0 0 15px #ff69b4; transform: scale(1); }
-                            50% { text-shadow: 0 0 20px #ffd700, 0 0 35px #ff4500; transform: scale(1.1); }
+                            0%,100% { transform: scale(1); text-shadow: 0 0 8px #fff, 0 0 15px #ff69b4; }
+                            50% { transform: scale(1.1); text-shadow: 0 0 20px #fff, 0 0 35px #ffd700; }
                         }
 
-                        /* النصوص تنبض */
+                        /* النصوص نابضة وواضحة */
                         .pulse-text span {
                             display: inline-block;
+                            font-weight: bold;
+                            font-size: 20px;
+                            color: #fff;
+                            text-shadow: 0 0 5px #ffb6c1, 0 0 10px #ff69b4;
                             animation: pulseText 2s infinite;
-                            background: linear-gradient(45deg, #fff, #ffe4e1, #ff69b4);
-                            -webkit-background-clip: text;
-                            -webkit-text-fill-color: transparent;
                         }
                         @keyframes pulseText {
-                            0%, 100% { transform: scale(1); opacity: 1; }
-                            50% { transform: scale(1.05); opacity: 0.85; }
+                            0%,100% { transform: scale(1); opacity: 1; }
+                            50% { transform: scale(1.05); opacity: 0.9; }
                         }
 
-                        /* ايموجي المطر فوق الرسالة */
+                        /* ايموجي فوق الرسالة */
                         .emoji {
                             position: fixed;
                             top: -50px;
                             font-size: 32px;
-                            z-index: 2; /* الإيموجي فوق الرسالة */
+                            z-index: 2; /* فوق الرسالة */
                             pointer-events: none;
                             animation: fall linear forwards;
-                            text-shadow: 0 0 5px #fff;
+                            text-shadow: 0 0 5px #fff, 0 0 10px #ff69b4;
                         }
                         @keyframes fall {
                             to {
@@ -103,7 +105,7 @@ $(document).ready(function () {
                         <div class="pulse-title">
                             🎉 عيد ميلاد سعيد يا غزل 💖
                         </div>
-                        <div style="line-height:1.8; font-size:20px; margin-top:15px;" class="pulse-text">
+                        <div style="line-height:1.8; margin-top:15px;" class="pulse-text">
                             <span>اليوم مو عادي… اليوم يوم فرحة واحتفال مميز عشانك إنتِ ✨</span><br>
                             <span>كل لحظة اليوم تنور باسمك وتكبر فرحتنا فيك 🌹🔥</span><br>
                             <span>يا أجمل هدية، اليوم الدنيا كلها محتفلة فيك 🎂🎊</span><br>
@@ -123,7 +125,7 @@ $(document).ready(function () {
         $('#welcome-message').fadeOut(600, function () {
             $(this).remove();
         });
-        clearInterval(emojiInterval); // ايقاف تساقط الإيموجي فور اغلاق الرسالة
+        clearInterval(emojiInterval); // ايقاف تساقط الإيموجي فور الإغلاق
     }
 
     function birthdayEmojiRain() {
