@@ -15,10 +15,10 @@ $(document).ready(function () {
                             top: 50%;
                             left: 50%;
                             transform: translate(-50%, -50%);
-                            background: linear-gradient(135deg, #ff8ac7, #ff4fa3, #ff1493);
+                            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
                             border-radius: 25px;
                             padding: 40px 25px;
-                            box-shadow: 0 0 40px rgba(255, 0, 150, 0.8);
+                            box-shadow: 0 0 40px rgba(255, 0, 100, 0.8);
                             z-index: 99999;
                             text-align: center;
                             font-size: 22px;
@@ -27,13 +27,13 @@ $(document).ready(function () {
                             max-width: 90%;
                             width: 500px;
                             animation: fadeIn 0.8s ease;
-                            border: 3px solid #fff;
+                            border: 2px solid #ff0066;
                         }
                         #welcome-message .close-btn {
                             position: absolute;
                             top: 12px;
                             right: 15px;
-                            background: rgba(255,255,255,0.2);
+                            background: rgba(255,255,255,0.1);
                             border: none;
                             border-radius: 50%;
                             color: #fff;
@@ -44,7 +44,7 @@ $(document).ready(function () {
                             transition: 0.3s;
                         }
                         #welcome-message .close-btn:hover {
-                            background: rgba(255,255,255,0.6);
+                            background: rgba(255,0,100,0.6);
                             transform: scale(1.2);
                         }
                         @keyframes fadeIn {
@@ -52,31 +52,37 @@ $(document).ready(function () {
                             to { opacity: 1; transform: translate(-50%, -50%); }
                         }
 
-                        /* العنوان ينبض */
+                        /* عنوان فخم ينبض */
                         .pulse-title {
-                            animation: pulse 1.5s infinite;
                             font-weight: bold;
-                            background: linear-gradient(45deg, #fff, #ffebf5, #ff69b4);
+                            font-size: 30px;
+                            background: linear-gradient(45deg, #ffd700, #ff8c00, #ff0066);
                             -webkit-background-clip: text;
                             -webkit-text-fill-color: transparent;
+                            animation: pulseTitle 2s infinite;
                         }
 
-                        /* النصوص الرئيسية تنبض */
+                        @keyframes pulseTitle {
+                            0%, 100% { text-shadow: 0 0 8px #ff0080, 0 0 15px #ff6600; transform: scale(1); }
+                            50% { text-shadow: 0 0 20px #ffd700, 0 0 35px #ff0066; transform: scale(1.1); }
+                        }
+
+                        /* النصوص تنبض */
                         .pulse-text span {
                             display: inline-block;
-                            animation: pulse 2s infinite;
+                            animation: pulseText 2s infinite;
                         }
 
-                        @keyframes pulse {
-                            0%, 100% { transform: scale(1); text-shadow: 0 0 5px #fff, 0 0 15px #ff69b4; }
-                            50% { transform: scale(1.08); text-shadow: 0 0 15px #fff, 0 0 25px #ff1493; }
+                        @keyframes pulseText {
+                            0%, 100% { transform: scale(1); opacity: 1; }
+                            50% { transform: scale(1.05); opacity: 0.85; }
                         }
 
                         /* ايموجي المطر */
                         .emoji {
                             position: fixed;
                             top: -50px;
-                            font-size: 30px;
+                            font-size: 32px;
                             z-index: 9999;
                             pointer-events: none;
                             animation: fall linear forwards;
@@ -92,14 +98,14 @@ $(document).ready(function () {
 
                     <div id="welcome-message">
                         <button class="close-btn">×</button>
-                        <div style="font-size:28px; margin-bottom:15px;" class="pulse-title">
-                            🎂🎉 عيد ميلاد سعيد يا غزل 🎉🎂
+                        <div class="pulse-title">
+                            🎉 عيد ميلاد سعيد يا غزل 💖
                         </div>
-                        <div style="line-height:1.8; font-size:20px;" class="pulse-text">
-                            <span>اليوم مو عادي… اليوم يوم فرحة واحتفال مميز عشانك إنتِ 💖✨</span><br>
+                        <div style="line-height:1.8; font-size:20px; margin-top:15px;" class="pulse-text">
+                            <span>اليوم مو عادي… اليوم يوم فرحة واحتفال مميز عشانك إنتِ ✨</span><br>
                             <span>كل لحظة اليوم تنور باسمك وتكبر فرحتنا فيك 🌹🔥</span><br>
-                            <span>يا أجمل هدية، اليوم الدنيا كلها محتفلة فيك 💎🎉</span><br>
-                            <span>الله يجعل أيامك كلها بياض وفرح متل هاليوم العظيم ✨🌸</span>
+                            <span>يا أجمل هدية، اليوم الدنيا كلها محتفلة فيك 🎂🎊</span><br>
+                            <span>الله يجعل أيامك كلها بياض وفرح متل هاليوم العظيم 🌸💎</span>
                         </div>
                     </div>
                 `);
@@ -127,6 +133,6 @@ $(document).ready(function () {
             });
             $('body').append(emoji);
             setTimeout(() => emoji.remove(), 8000);
-        }, 200);
+        }, 250);
     }
 });
