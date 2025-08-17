@@ -1,6 +1,7 @@
 
 $(document).ready(function () {
     let welcomeShown = false;
+    let emojiInterval; // لحفظ الـ interval حتى نقدر نوقفه
 
     $('button.btn.btn-primary').on('click', function () {
         const checkExist = setInterval(function () {
@@ -15,7 +16,7 @@ $(document).ready(function () {
                             top: 50%;
                             left: 50%;
                             transform: translate(-50%, -50%);
-                            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+                            background: linear-gradient(135deg, #ffb6c1, #ffc0cb, #ff69b4);
                             border-radius: 25px;
                             padding: 40px 25px;
                             box-shadow: 0 0 40px rgba(255, 105, 180, 0.8);
@@ -52,7 +53,7 @@ $(document).ready(function () {
                             to { opacity: 1; transform: translate(-50%, -50%); }
                         }
 
-                        /* عنوان فخم نابض */
+                        /* عنوان نابض */
                         .pulse-title {
                             font-weight: bold;
                             font-size: 30px;
@@ -122,17 +123,18 @@ $(document).ready(function () {
         $('#welcome-message').fadeOut(600, function () {
             $(this).remove();
         });
+        clearInterval(emojiInterval); // ايقاف تساقط الإيموجي فور اغلاق الرسالة
     }
 
     function birthdayEmojiRain() {
         const emojis = ['🎂','🎉','🎈','🎊','🎁','💖','✨','🌸'];
-        setInterval(() => {
+        emojiInterval = setInterval(() => {
             const emoji = $('<div class="emoji">' + emojis[Math.floor(Math.random() * emojis.length)] + '</div>');
             emoji.css({
                 left: Math.random() * window.innerWidth + 'px',
                 animationDuration: (Math.random() * 4 + 3) + 's',
             });
-            $('body').append(emoji); // خارج الرسالة
+            $('body').append(emoji);
             setTimeout(() => emoji.remove(), 8000);
         }, 250);
     }
