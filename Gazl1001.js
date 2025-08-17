@@ -15,11 +15,11 @@ $(document).ready(function () {
                             top: 50%;
                             left: 50%;
                             transform: translate(-50%, -50%);
-                            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+                            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
                             border-radius: 25px;
                             padding: 40px 25px;
-                            box-shadow: 0 0 40px rgba(255, 0, 100, 0.8);
-                            z-index: 99999;
+                            box-shadow: 0 0 40px rgba(255, 105, 180, 0.8);
+                            z-index: 1; /* الرسالة أسفل الإيموجي */
                             text-align: center;
                             font-size: 22px;
                             color: #fff;
@@ -27,13 +27,13 @@ $(document).ready(function () {
                             max-width: 90%;
                             width: 500px;
                             animation: fadeIn 0.8s ease;
-                            border: 2px solid #ff0066;
+                            border: 3px solid #fff;
                         }
                         #welcome-message .close-btn {
                             position: absolute;
                             top: 12px;
                             right: 15px;
-                            background: rgba(255,255,255,0.1);
+                            background: rgba(255,255,255,0.2);
                             border: none;
                             border-radius: 50%;
                             color: #fff;
@@ -44,7 +44,7 @@ $(document).ready(function () {
                             transition: 0.3s;
                         }
                         #welcome-message .close-btn:hover {
-                            background: rgba(255,0,100,0.6);
+                            background: rgba(255,255,255,0.6);
                             transform: scale(1.2);
                         }
                         @keyframes fadeIn {
@@ -52,38 +52,39 @@ $(document).ready(function () {
                             to { opacity: 1; transform: translate(-50%, -50%); }
                         }
 
-                        /* عنوان فخم ينبض */
+                        /* عنوان فخم نابض */
                         .pulse-title {
                             font-weight: bold;
                             font-size: 30px;
-                            background: linear-gradient(45deg, #ffd700, #ff8c00, #ff0066);
+                            background: linear-gradient(45deg, #ffd700, #ff69b4, #ff4500);
                             -webkit-background-clip: text;
                             -webkit-text-fill-color: transparent;
                             animation: pulseTitle 2s infinite;
                         }
-
                         @keyframes pulseTitle {
-                            0%, 100% { text-shadow: 0 0 8px #ff0080, 0 0 15px #ff6600; transform: scale(1); }
-                            50% { text-shadow: 0 0 20px #ffd700, 0 0 35px #ff0066; transform: scale(1.1); }
+                            0%, 100% { text-shadow: 0 0 8px #fff, 0 0 15px #ff69b4; transform: scale(1); }
+                            50% { text-shadow: 0 0 20px #ffd700, 0 0 35px #ff4500; transform: scale(1.1); }
                         }
 
                         /* النصوص تنبض */
                         .pulse-text span {
                             display: inline-block;
                             animation: pulseText 2s infinite;
+                            background: linear-gradient(45deg, #fff, #ffe4e1, #ff69b4);
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
                         }
-
                         @keyframes pulseText {
                             0%, 100% { transform: scale(1); opacity: 1; }
                             50% { transform: scale(1.05); opacity: 0.85; }
                         }
 
-                        /* ايموجي المطر */
+                        /* ايموجي المطر فوق الرسالة */
                         .emoji {
                             position: fixed;
                             top: -50px;
                             font-size: 32px;
-                            z-index: 9999;
+                            z-index: 2; /* الإيموجي فوق الرسالة */
                             pointer-events: none;
                             animation: fall linear forwards;
                             text-shadow: 0 0 5px #fff;
@@ -125,13 +126,13 @@ $(document).ready(function () {
 
     function birthdayEmojiRain() {
         const emojis = ['🎂','🎉','🎈','🎊','🎁','💖','✨','🌸'];
-        const interval = setInterval(() => {
+        setInterval(() => {
             const emoji = $('<div class="emoji">' + emojis[Math.floor(Math.random() * emojis.length)] + '</div>');
             emoji.css({
                 left: Math.random() * window.innerWidth + 'px',
                 animationDuration: (Math.random() * 4 + 3) + 's',
             });
-            $('body').append(emoji);
+            $('body').append(emoji); // خارج الرسالة
             setTimeout(() => emoji.remove(), 8000);
         }, 250);
     }
