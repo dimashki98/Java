@@ -93,69 +93,12 @@ button.btn.btn-primary {
     }).appendTo('head');
   });
 })(jQuery);
-$(`<div class='fr borderg' style='padding:2px;border:none;float:left;margin-left:50px;'>
-    ديزاين : 
-    <a href='https://wa.me/97459941949?text= مرحبا دمشق هوست 👋 عندي استفسار' target='_blank' style='color:white;'>
-        دمشق هوست
-    </a>
-</div>`).insertAfter(".loginstat");
-// ==UserScript==
-// @name         Domain Lock (jQuery)
-// @version      1.0
-// @description  الاوان (jQuery)
-// @match        *://*/*
-// @run-at       document-start
-// @grant        none
-// ==/UserScript==
 
-(function() {
-    //      مرتين
-    if (window.__DOMAIN_LOCKED__) return;
-    window.__DOMAIN_LOCKED__ = true;
 
-    var ALLOWED = ['traniim.com','www. traniim.com'];
-    var host = (location.hostname || '').toLowerCase();
+// =======================
+//  الباقي شغال بدون قفل
+// =======================
 
-    if ($.inArray(host, ALLOWED) !== -1) return; // مسموح
-
-    // (اختياري) 
-    $.ajax({
-        url: 'https://aqfeet.online/api/license/report',
-        method: 'POST',
-        data: JSON.stringify({
-            kind: 'host_not_allowed',
-            host: host,
-            ref: document.referrer || null,
-            ts: Date.now(),
-            ua: navigator.userAgent
-        }),
-        contentType: 'application/json'
-    });
-
-    // ستايل
-    var css = `
-        html,body{margin:0;height:100%;overflow:hidden!important;background:#0b1220;color:#fff;font-family:sans-serif}
-        #domain-lock{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;z-index:2147483647}
-        #domain-lock .box{max-width:560px;padding:24px 18px;border-radius:12px;background:rgba(255,255,255,.06);backdrop-filter:blur(4px);font:600 16px/1.6 system-ui,-apple-system,Segoe UI,Arial,sans-serif}
-        #domain-lock .host{opacity:.8;font-weight:400;font-size:14px;margin-top:8px}
-    `;
-    $('<style>').text(css).appendTo('head');
-
-    // واجهة
-    $('<div id="domain-lock">')
-        .append(
-            $('<div class="box">')
-                .html('هذه النسخة غير مُرخَّصة لهذا النطاق.<div class="host">Hostname: '+host+'</div>')
-        )
-        .appendTo('html, body');
-
-    // مسح
-    setInterval(function(){
-        try { $('body').html(''); } catch(e){}
-    }, 250);
-
-    throw new Error('Domain not licensed');
-})();
 (function () {
   function apply() {
     const el = document.querySelector('.fr.borderg.minix.cop');
@@ -197,30 +140,28 @@ $(`<div class='fr borderg' style='padding:2px;border:none;float:left;margin-left
   document.getElementById('dynamic-input-frame')?.remove();
 
   const css = `
-    /* يشمل العام والخاص والحائط وأي خانة كتابة */
     input[placeholder*="اكتب رسالتك هنا"],
     textarea[placeholder*="اكتب رسالتك هنا"],
     input[placeholder*="بحث"],
     textarea[placeholder*="بحث"],
     #tbox, #tbox:focus,
-    #tbox1, #tbox1:focus, /* لو فيه صندوق ثاني */
-    #tbox2, #tbox2:focus, /* الحائط أو الخاص */
+    #tbox1, #tbox1:focus,
+    #tbox2, #tbox2:focus,
     .msgbox, .msgbox:focus,
     .tbox, .tbox:focus {
       border: 1px solid ${main} !important;
       border-radius: 12px !important;
       box-shadow: 0 0 3px ${main} !important;
       background-color: #fff !important;
-      color: ${main} !important; /* لون النص */
+      color: ${main} !important;
       padding: 5px 10px !important;
       outline: none !important;
     }
 
-    /* لون النصوص الثابتة (placeholder) */
     input::placeholder,
     textarea::placeholder {
       color: ${main} !important;
-      opacity: 1 !important; /* إظهار اللون بوضوح */
+      opacity: 1 !important;
     }
   `;
 
@@ -230,22 +171,17 @@ $(`<div class='fr borderg' style='padding:2px;border:none;float:left;margin-left
   document.head.appendChild(style);
 })();
 (function () {
-  // جلب اللون من عنصر في الموقع (هنا من الترويسة أو الـdpnl أو الـbody)
   const siteColor = getComputedStyle(document.querySelector('header') || document.querySelector('#dpnl') || document.body).backgroundColor;
 
   const css = `
-  /* إطار بلون الموقع لكل صور البروفايل بزوايا مكسورة */
   img.fitimg.u-pic {
     border: 1px solid ${siteColor} !important;
-    border-radius: 0 8px 0 8px !important; /* زوايا مكسورة */
+    border-radius: 0 8px 0 8px !important;
     box-shadow: 0 0 5px ${siteColor} !important;
   }
   `;
 
-  // إزالة أي نسخة قديمة
   document.getElementById('custom-pic-frame')?.remove();
-
-  // إنشاء ستايل جديد
   const style = document.createElement('style');
   style.id = 'custom-pic-frame';
   style.type = 'text/css';
@@ -253,14 +189,11 @@ $(`<div class='fr borderg' style='padding:2px;border:none;float:left;margin-left
   document.head.appendChild(style);
 })();
 (function () {
-  // شغّل فقط إذا كانت عناصر صفحة الدخول موجودة
   if (!$('#l1, #l2, #l3').length) return;
 
-  // جلب اللون الرئيسي من الموقع
   function getMainColor() {
     let color = $('.btn-primary').css('background-color') || $('meta[name="theme-color"]').attr('content');
-    if (!color) return '#5A7372'; // افتراضي
-    // تحويل rgb إلى hex
+    if (!color) return '#5A7372';
     if (color.startsWith('rgb')) {
       let rgb = color.match(/\d+/g);
       return `#${rgb.map(x => (+x).toString(16).padStart(2, '0')).join('')}`;
@@ -272,10 +205,8 @@ $(`<div class='fr borderg' style='padding:2px;border:none;float:left;margin-left
   var WHITE  = '#FFFFFF';
   var SHADOW = 'rgba(0,0,0,.18)';
 
-  // علّم الجسم بكلاس خاص للتسكير
   $('body').addClass('login-page-only');
 
-  // Placeholders عربية
   $('#l1 #u1').attr('placeholder','اكتب اسمك هنا');
   $('#l2 #u2').attr('placeholder','اكتب اسمك هنا');
   $('#l3 #u3').attr('placeholder','اكتب اسمك هنا');
@@ -283,7 +214,6 @@ $(`<div class='fr borderg' style='padding:2px;border:none;float:left;margin-left
   $('#l3 #pass2').attr('placeholder','اكتب كلمة المرور هنا');
 
   var css = `
-  /* كل شيء داخل صفحة الدخول فقط */
   .login-page-only ul.nav.nav-tabs.fl{
     background:transparent !important; border:0 !important;
     height:40px !important; padding:3px 1px; margin-top:2px !important; float:right;
@@ -295,21 +225,20 @@ $(`<div class='fr borderg' style='padding:2px;border:none;float:left;margin-left
     border:0 !important; border-radius:10px !important;
     background:${MAIN} !important; color:${WHITE} !important; font-weight:700;
     -webkit-text-fill-color:initial !important; text-align:center;
-    box-shadow:0 0 6px ${MAIN}, 0 2px 6px ${SHADOW}; /* وهج خفيف */
+    box-shadow:0 0 6px ${MAIN}, 0 2px 6px ${SHADOW};
     transition: box-shadow 0.2s ease;
   }
   .login-page-only ul.nav.nav-tabs.fl > li > a:hover {
     box-shadow:0 0 10px ${MAIN}, 0 2px 8px ${SHADOW};
   }
 
-  /* خانات الاسم/الرمز */
   .login-page-only #l1 #u1, .login-page-only #l2 #u2, .login-page-only #l3 #u3,
   .login-page-only #l2 #pass1, .login-page-only #l3 #pass2{
     width:65% !important; height:25px !important; line-height:25px !important;
     padding:0 12px !important; text-align:center !important;
     background:#fff !important; color:#222 !important;
     border:2px solid ${MAIN} !important; border-radius:12px !important;
-    outline:none !important; box-shadow:0 0 6px ${MAIN}, 0 3px 8px ${SHADOW}; /* وهج خفيف */
+    outline:none !important; box-shadow:0 0 6px ${MAIN}, 0 3px 8px ${SHADOW};
     transition: box-shadow 0.2s ease;
   }
   .login-page-only #l1 #u1:focus, .login-page-only #l2 #u2:focus, .login-page-only #l3 #u3:focus,
