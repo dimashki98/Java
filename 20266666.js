@@ -1,7 +1,7 @@
 $(function(){
 
     // 🍾 دالة سقوط الإيموجي
-    let emojiInterval; // ← لحفظ الـ interval وإيقافه لاحقاً
+    let emojiInterval;
 
     function fallingEmojis() {
         const emojis = ["🎉","✨","🎊","🌟","🕯️","🥳"];
@@ -34,20 +34,19 @@ $(function(){
         Swal.fire({
             title: "🎉✨ عام 2026 سعيد ✨🎉",
             html: `
+                <img src="https://www.bilalmania.com/images/cards/2025/10/happy-new-year-2026-gif-for-whatsapp.gif"
+                     style="width:100%;border-radius:12px;margin-bottom:15px;">
                 <div style='font-size:18px;line-height:1.7;'>
                 شات هواك يتقدّم بأجمل التهاني والتبريكات بمناسبة قدوم العام الجديد،<br>
                 راجين من الله أن يجعله عامًا عامرًا بالخير والبركات 🌙✨ <br>
                 ونسأله تعالى أن يرزق أعضاءنا الكرام السعادة والتوفيق،<br>
-                وأن يحقق لهم ما يتمنّون 🤍<br>
+                وأن يحقق لهم ما يتمنّون 🤍<br><br>
                 <b>وكلُّ عامٍ وأنتم بخير 🌟</b>
                 </div>
             `,
             confirmButtonText: "🎆 احتفل معنا",
             backdrop: `
                 rgba(0,0,0,0.7)
-                url("https://www.bilalmania.com/images/cards/2025/10/happy-new-year-2026-gif-for-whatsapp.gif")
-                center top
-                no-repeat
             `,
             color: "#fff",
             background: "rgba(0,0,0,0.85)",
@@ -55,7 +54,6 @@ $(function(){
                 popup: "rounded-2xl"
             }
         }).then(()=>{
-            // 🛑 عند إغلاق النافذة → أوقف هطول الإيموجي
             clearInterval(emojiInterval);
         });
 
