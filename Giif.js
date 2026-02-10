@@ -49,7 +49,7 @@ $(function () {
   gifBox.on('click', e => e.stopPropagation());
   $(document).on('click', () => gifBox.hide());
 
-  /* تحميل GIFs جاهزة */
+  /* GIFs جاهزة */
   function loadTrending() {
     $('.gif-results').html('⏳');
     $.ajax({
@@ -110,7 +110,7 @@ $(function () {
     });
   }
 
-  /* إدراج الرابط وإرسال */
+  /* إرسال GIF */
   function sendGif(url) {
     const tbox = $('#tbox');
     if (!tbox.length) return;
@@ -124,24 +124,40 @@ $(function () {
 
 });
 
-/* ===== تحويل رابط Tenor داخل الرسالة إلى GIF ===== */
+/* ===== تحويل رابط Tenor إلى GIF فقط (بدون تخريب الأزرار) ===== */
 setInterval(function () {
+
   $('.u-msg').each(function () {
 
     if ($(this).data('gifdone')) return;
 
-    const html = $(this).html();
-    const reg = /(https:\/\/media\.tenor\.com\/[^\s]+)/g;
+    const msg = $(this);
 
-    if (reg.test(html)) {
-      $(this)
-        .html(
-          html.replace(reg, url =>
-            `<img src="${url}" style="max-width:180px;border-radius:6px">`
-          )
-        )
-        .data('gifdone', true);
-    }
+    // استخراج النص فقط بدون العناصر
+    const textOnly = msg.clone().children().remove().end().text();
+
+    const reg = /(https:\/\/media\.tenor\.com\/[^\s]+)/;
+    const match = textOnly.match(reg);
+    if (!match) return;
+
+    const url = match[1];
+
+    // حذف الرابط من النص الأصلي فقط
+    msg.contents().filter(function () {
+      return this.nodeType === 3 && this.nodeValue.includes(url);
+    }).each(function () {
+      this.nodeValue = this.nodeValue.replace(url, '');
+    });
+
+    // إضافة GIF لوحده
+    msg.prepend(`
+      <div class="gif-only" style="margin-bottom:4px">
+        <img src="${url}" style="max-width:180px;border-radius:6px">
+      </div>
+    `);
+
+    msg.data('gifdone', true);
 
   });
-}, 500);
+
+}, 400);
