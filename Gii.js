@@ -5,11 +5,17 @@ $(function () {
 
   const TENOR_KEY = "LIVDSRZULELA";
 
+  /* ============================= */
+  /* ===== إنشاء نظام GIF ===== */
+  /* ============================= */
+
   function createGifSystem(config) {
 
     if (!$(config.buttonAnchor).length || !$(config.tbox).length) return;
 
-    /* ===== زر خاص بهالنظام ===== */
+    if ($('.gifbtn-' + config.id).length) return;
+
+    /* ===== زر ===== */
     const gifBtn = $('<img>', {
       src: 'imgs/emoii.gif',
       class: 'fl nosel gifbtn-' + config.id,
@@ -24,7 +30,7 @@ $(function () {
 
     $(config.buttonAnchor).after(gifBtn);
 
-    /* ===== بوكس خاص بهالنظام ===== */
+    /* ===== بوكس ===== */
     const gifBox = $(`
       <div class="gif-box-${config.id}" style="
         position:fixed;
@@ -53,6 +59,7 @@ $(function () {
 
     $('body').append(gifBox);
 
+    /* ===== تمركز ===== */
     function positionBox() {
 
       const tbox = $(config.tbox);
@@ -84,6 +91,7 @@ $(function () {
     gifBox.on('click', e => e.stopPropagation());
     $(document).on('click', () => gifBox.hide());
 
+    /* ===== تحميل ترند ===== */
     function loadTrending() {
       $('.gif-results-' + config.id).html('⏳');
 
@@ -95,6 +103,7 @@ $(function () {
       });
     }
 
+    /* ===== بحث ===== */
     let timer = null;
 
     $(document).on('input', '.gif-search-' + config.id, function () {
@@ -118,6 +127,7 @@ $(function () {
 
     });
 
+    /* ===== عرض النتائج ===== */
     function renderGifs(res) {
 
       const container = $('.gif-results-' + config.id);
@@ -150,7 +160,7 @@ $(function () {
 
   }
 
-  /* ===== نظام 1 ===== */
+  /* ===== نظام BC ===== */
   createGifSystem({
     id: "bc",
     buttonAnchor: ".emobc",
@@ -160,7 +170,7 @@ $(function () {
     }
   });
 
-  /* ===== نظام 2 ===== */
+  /* ===== نظام OLD ===== */
   createGifSystem({
     id: "old",
     buttonAnchor: ".emobox",
@@ -171,3 +181,46 @@ $(function () {
   });
 
 });
+
+
+/* ======================================= */
+/* ===== تحويل روابط Tenor لصور ===== */
+/* ======================================= */
+
+if (!window.__TENOR_RENDER_ACTIVE__) {
+
+  window.__TENOR_RENDER_ACTIVE__ = true;
+
+  setInterval(function () {
+
+    $('.u-msg, .msg').each(function () {
+
+      if ($(this).data('gifdone')) return;
+
+      const msg = $(this);
+      const textOnly = msg.clone().children().remove().end().text();
+
+      const reg = /(https:\/\/(media|c)\.tenor\.com\/[^\s]+)/;
+      const match = textOnly.match(reg);
+      if (!match) return;
+
+      const url = match[1];
+
+      msg.contents().filter(function () {
+        return this.nodeType === 3 && this.nodeValue.includes(url);
+      }).each(function () {
+        this.nodeValue = this.nodeValue.replace(url, '');
+      });
+
+      msg.prepend(`
+        <div class="gif-only" style="margin-bottom:4px">
+          <img src="${url}" style="max-width:200px;border-radius:8px">
+        </div>
+      `);
+
+      msg.data('gifdone', true);
+
+    });
+
+  }, 400);
+}
