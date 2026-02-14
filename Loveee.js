@@ -320,13 +320,90 @@ $(function () {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.5; transform: scale(0.7); }
     }
+
+    /* ===== زر إغلاق الاحتفال ===== */
+    .valentine-close-btn {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 99999999;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 45, 85, 0.3);
+      background: rgba(20, 0, 5, 0.7);
+      backdrop-filter: blur(12px);
+      color: #ff6b8a;
+      font-size: 18px;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 1s forwards;
+      line-height: 1;
+    }
+
+    .valentine-close-btn:hover {
+      background: rgba(255, 45, 85, 0.25);
+      border-color: rgba(255, 45, 85, 0.6);
+      color: #fff;
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(255, 45, 85, 0.3);
+    }
+
+    .valentine-close-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* ===== تأثير الإغلاق ===== */
+    .valentine-fadeout {
+      transition: opacity 0.8s ease !important;
+      opacity: 0 !important;
+    }
   </style>
   `;
 
   $("head").append(style);
 
+  // مصفوفة لتخزين كل الـ intervals عشان نوقفها عند الإغلاق
+  var activeIntervals = [];
+  var celebrationActive = true;
+
+  // ===== زر إغلاق الاحتفال =====
+  var closeBtn = $('<button class="valentine-close-btn" title="إغلاق الاحتفال">&times;</button>');
+  $("body").append(closeBtn);
+
+  closeBtn.on("click", function () {
+    celebrationActive = false;
+
+    // إيقاف كل الـ intervals
+    for (var i = 0; i < activeIntervals.length; i++) {
+      clearInterval(activeIntervals[i]);
+    }
+    activeIntervals = [];
+
+    // إزالة كل العناصر مع تأثير تلاشي
+    $(".valentine-heart, .heart-burst, .sparkle, .mouse-trail").remove();
+
+    $(".mada-overlay, .big-heart, .members-ribbon, .love-quotes, .valentine-bg-orb")
+      .addClass("valentine-fadeout");
+
+    // إزالة أحداث الماوس والنقر
+    $(document).off("click.valentine");
+    $(document).off("mousemove.valentine");
+
+    // حذف كل شيء بعد انتهاء التلاشي
+    setTimeout(function () {
+      $(".mada-overlay, .big-heart, .members-ribbon, .love-quotes, .valentine-bg-orb").remove();
+      closeBtn.remove();
+    }, 800);
+  });
+
   // ===== شريط الأعضاء =====
-  const ribbon = $(`
+  var ribbon = $(`
     <div class="members-ribbon">
       <div class="dot"></div>
       <span>شات مدى يحتفل بعيد الحب مع جميع الأعضاء</span>
@@ -336,7 +413,7 @@ $(function () {
   $("body").append(ribbon);
 
   // ===== الخلفية المتوهجة =====
-  const orbColors = ["rgba(255, 45, 85, 0.3)", "rgba(255, 107, 157, 0.2)", "rgba(200, 30, 80, 0.25)"];
+  var orbColors = ["rgba(255, 45, 85, 0.3)", "rgba(255, 107, 157, 0.2)", "rgba(200, 30, 80, 0.25)"];
   for (var i = 0; i < 3; i++) {
     var orb = $("<div class='valentine-bg-orb'></div>");
     var size = Math.random() * 300 + 200;
@@ -353,9 +430,10 @@ $(function () {
   }
 
   // ===== القلوب المتساقطة =====
-  const hearts = ["💖", "💗", "💘", "❤️", "💕", "💝", "🌹", "✨"];
+  var hearts = ["💖", "💗", "💘", "❤️", "💕", "💝", "🌹", "✨"];
 
   function createHeart() {
+    if (!celebrationActive) return;
     var emoji = hearts[Math.floor(Math.random() * hearts.length)];
     var heart = $("<div class='valentine-heart'>" + emoji + "</div>");
 
@@ -375,7 +453,10 @@ $(function () {
   }
 
   // ===== انفجار القلوب عند النقر =====
-  $(document).on("click", function (e) {
+  $(document).on("click.valentine", function (e) {
+    if (!celebrationActive) return;
+    if ($(e.target).hasClass("valentine-close-btn")) return;
+
     for (var i = 0; i < 12; i++) {
       var angle = (360 / 12) * i;
       var distance = Math.random() * 100 + 60;
@@ -425,7 +506,8 @@ $(function () {
 
   // ===== أثر حركة الماوس =====
   var lastTrail = 0;
-  $(document).on("mousemove", function (e) {
+  $(document).on("mousemove.valentine", function (e) {
+    if (!celebrationActive) return;
     var now = Date.now();
     if (now - lastTrail < 80) return;
     lastTrail = now;
@@ -459,7 +541,7 @@ $(function () {
   $("body").append(bigHeart);
 
   setTimeout(function () {
-    bigHeart.addClass("active");
+    if (celebrationActive) bigHeart.addClass("active");
   }, 5500);
 
   // ===== اقتباسات خاصة بشات مدى =====
@@ -479,6 +561,7 @@ $(function () {
 
   var quoteIndex = 0;
   function showQuote() {
+    if (!celebrationActive) return;
     quoteEl.removeClass("show");
     setTimeout(function () {
       quoteEl.text(quotes[quoteIndex]);
@@ -489,19 +572,25 @@ $(function () {
 
   setTimeout(function () {
     showQuote();
-    setInterval(showQuote, 4000);
+    var qi = setInterval(showQuote, 4000);
+    activeIntervals.push(qi);
   }, 4000);
 
   // ===== تشغيل القلوب =====
   var intervalFast = setInterval(createHeart, 100);
+  activeIntervals.push(intervalFast);
 
   setTimeout(function () {
     clearInterval(intervalFast);
+    if (!celebrationActive) return;
     var intervalMedium = setInterval(createHeart, 300);
+    activeIntervals.push(intervalMedium);
 
     setTimeout(function () {
       clearInterval(intervalMedium);
-      setInterval(createHeart, 800);
+      if (!celebrationActive) return;
+      var intervalSlow = setInterval(createHeart, 800);
+      activeIntervals.push(intervalSlow);
     }, 5000);
   }, 5000);
 
