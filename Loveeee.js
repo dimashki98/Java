@@ -325,7 +325,7 @@ $(function () {
     .valentine-close-btn {
       position: fixed;
       top: 14px;
-      right: 14px;
+      left: 14px;
       z-index: 99999999;
       width: 38px;
       height: 38px;
