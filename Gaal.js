@@ -12,30 +12,20 @@ $(document).ready(function() {
         'background-repeat': 'no-repeat'
     });
 
-    // إضافة زر اختيار صورة أقصى اليسار
-    const uploadBtn = $(`
-        <a class="fl openGallery"
-           style="padding: 0px 7px;
-                  width: 26px;
-                  height: 30px !important;
-                  position: absolute;
-                  left: 20px;
-                  top: 30%;
-                  transform: translateY(-50%);
-                  cursor: pointer;">
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149852.png"
-                 style="width:30px;height:30px;">
-        </a>
-    `);
+    // نخلي كلمة شات مدى للجوال قابلة للضغط
+    const title = $('div[width="99.5%"] font');
 
-    $('div[width="99.5%"]').append(uploadBtn);
+    title.css({
+        'cursor': 'pointer',
+        'transition': '0.3s'
+    });
 
     // input مخفي
     const fileInput = $('<input type="file" accept="image/*" style="display:none;">');
     $('body').append(fileInput);
 
-    // فتح الاستديو
-    $('.openGallery').on('click', function() {
+    // عند الضغط على العنوان
+    title.on('click', function() {
         fileInput.click();
     });
 
@@ -64,4 +54,3 @@ $(document).ready(function() {
     });
 
 });
-
