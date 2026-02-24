@@ -9,12 +9,12 @@ $(function () {
       pointer-events: none;
       z-index: 999999;
       animation: fall linear forwards;
-      filter: drop-shadow(0 0 6px rgba(255, 200, 0, 0.5));
+      filter: drop-shadow(0 0 8px rgba(255, 0, 150, 0.6));
     }
 
     @keyframes fall {
       0% {
-        transform: translateY(0) scale(1) rotate(0deg) translateX(0);
+        transform: translateY(0) scale(1) rotate(0deg);
         opacity: 1;
       }
       100% {
@@ -46,14 +46,18 @@ $(function () {
       justify-content: center;
       pointer-events: none;
       perspective: 1000px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(20, 0, 15, 0.6);
     }
 
     .mada-card {
       text-align: center;
-      padding: 40px 55px;
+      padding: 45px 60px;
       border-radius: 24px;
-      background: radial-gradient(ellipse at center, rgba(255,215,0,0.15), rgba(0,0,0,0));
-      border: 1px solid rgba(255,215,0,0.2);
+      background: rgba(150, 0, 120, 0.85);
+      border: 1px solid rgba(255, 0, 180, 0.4);
+      box-shadow: 0 0 40px rgba(255, 0, 150, 0.4);
       opacity: 0;
       transform: scale(0.5) rotateY(90deg);
       animation: cardReveal 1.5s cubic-bezier(0.34,1.56,0.64,1) 0.8s forwards;
@@ -67,26 +71,26 @@ $(function () {
 
     .mada-card h1 {
       font-size: 3em;
-      color: #ffcc00;
+      color: #ffffff;
       margin: 10px 0;
-      text-shadow: 0 0 30px rgba(255,200,0,0.6);
+      text-shadow: 0 0 25px rgba(255, 0, 200, 0.8);
       animation: glow 2s infinite alternate;
     }
 
     @keyframes glow {
-      from { text-shadow:0 0 20px rgba(255,200,0,0.4); }
-      to { text-shadow:0 0 40px rgba(255,200,0,0.9); }
+      from { text-shadow:0 0 15px rgba(255,0,200,0.5); }
+      to { text-shadow:0 0 35px rgba(255,0,200,1); }
     }
 
     .mada-card h2 {
       font-size: 2em;
-      color: #ff4da6;
+      color: #ff80df;
       margin: 10px 0;
     }
 
     .mada-card p {
       font-size: 1.2em;
-      color: #fff;
+      color: #ffffff;
       margin: 8px 0;
       line-height: 1.8;
       opacity: 0;
@@ -112,6 +116,7 @@ $(function () {
       top:16%;
       transform: translate(-50%, -50%);
       animation: pulse 1.5s infinite;
+      filter: drop-shadow(0 0 20px rgba(255, 0, 180, 0.8));
     }
 
     @keyframes pulse {
@@ -128,10 +133,11 @@ $(function () {
       height:38px;
       border-radius:50%;
       border:none;
-      background:rgba(0,0,0,0.6);
+      background:rgba(150,0,120,0.8);
       color:#fff;
       font-size:18px;
       cursor:pointer;
+      box-shadow:0 0 10px rgba(255,0,180,0.6);
     }
 
     .fadeout { opacity:0 !important; transition:0.8s ease !important; }
